@@ -22,15 +22,15 @@
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password">sql@2019</property> -->
         
-         <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="connection.url">jdbc:sqlserver://192.168.180.180;databaseName=DInvoice;instanceName=sqlexpress;</property>
-        <property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.connection.password">sql@2019</property>
+<!--          <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
+<!--         <property name="connection.url">jdbc:sqlserver://192.168.180.180;databaseName=DInvoice;instanceName=sqlexpress;</property> -->
+<!--         <property name="hibernate.connection.username">sa</property> -->
+<!--         <property name="hibernate.connection.password">sql@2019</property> -->
 		
 
 		 
-		<property name="show_sql">false</property>
-		<property name="hbm2ddl.auto">create/update</property>
+<!-- 		<property name="show_sql">false</property> -->
+<!-- 		<property name="hbm2ddl.auto">create/update</property> -->
 		<!-- performance bean -->
 		
       	<mapping class="com.di.bean.UserBean"/>
