@@ -124,12 +124,7 @@
             <div class="card-body collapse in">
                 <!-- <p class="card-subtitle line-on-side text-muted text-xs-center font-small-3 mx-2 my-1"><span></span></p> -->
                 <div class="card-block">
-                	<%if(request.getRequestURL().toString().contains("view")){ %>
-                		 <form class="form-horizontal" action="login" method="post" >
-                	<%}else{%>
                 		 <form class="form-horizontal" action="controller/login" method="post" >
-                	<%} %>
-                   
                         <fieldset class="form-group position-relative has-icon-left">
                             <input type="text" class="form-control" id="username" name="username" placeholder="Your username" required>
                             <div class="form-control-position"  style="margin-top:10px">

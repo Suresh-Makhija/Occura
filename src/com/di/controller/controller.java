@@ -31,7 +31,7 @@ public class controller {
 	AllLiveUpdateDAO allLiveUpdateDAO = new AllLiveUpdateDAO();
 
 	
-	@RequestMapping(value = "/deactiveInvoice", method = RequestMethod.GET) // Mapping for Call the controller
+	@RequestMapping(value = "/controller/login", method = RequestMethod.GET) // Mapping for Call the controller
 	public String deactiveInvoice(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.sendRedirect("redirect?p=aW52b2ljZUxpc3Q=");
 		return null;

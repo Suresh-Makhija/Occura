@@ -48,17 +48,17 @@ public class LoginLogout extends HttpServlet {
       String encodeText = new AESEncrypt().encrypt(password);
       // String encodeText = new EncodeDecode().encodeString(password);
 		
-		UserBean userBean = allListDAO.checkLogin(userName, encodeText);
+//		UserBean userBean = allListDAO.checkLogin(userName, encodeText);
 		
 		String page = "";
 		HttpSession session = request.getSession();
 		
-		if(userBean != null) {
+//		if(userBean != null) {
 			
-			final String custId = String.valueOf(userBean.getCustomer_id());
+//			final String custId = String.valueOf(userBean.getCustomer_id());
 			
 			String diamondSession = new EncodeDecode().encodeString("diamondSession");
-			session.setAttribute(diamondSession, userBean);
+//			session.setAttribute(diamondSession, new Us);
 			
 				
 			/*Syncing process for local to live & live to local*/
@@ -137,19 +137,19 @@ public class LoginLogout extends HttpServlet {
 			}).start();
 			*/
 			
-			if(userBean.getAuthority() == 4) {
-				
-			page = "userPage";
-			
-			}else {
-				page = "challanMaster";
-			}
-		}else {
-			request.setAttribute("loginError","Username & Password not match.");
-			page = "login";
-		}
+//			if(userBean.getAuthority() == 4) {
+//				
+//			page = "userPage";
+//			
+//			}else {
+//				page = "challanMaster";
+//			}
+//		}else {
+//			request.setAttribute("loginError","Username & Password not match.");
+//			page = "login";
+//		}
 		
-		return page;
+		return "dashboard";
 	}
 	
 	
