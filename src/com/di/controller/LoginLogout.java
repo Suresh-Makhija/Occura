@@ -193,7 +193,7 @@ public class LoginLogout extends HttpServlet {
 	}
 	
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.GET) // Mapping for Call the controller
+	@RequestMapping(value = "/logout", method = RequestMethod.POST) // Mapping for Call the controller
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException 
 	{
 	

@@ -24,7 +24,7 @@
     <mvc:annotation-driven/>
    
    
-  <!--  <bean class = "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+   <bean class = "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
       <property name = "exceptionMappings">
          <props>
             <prop key = "com.controller.SpringException">
@@ -33,6 +33,6 @@
          </props>
       </property>
       <property name = "defaultErrorView" value = "error"/>
-   </bean> -->
+    </bean>
  
 </beans>

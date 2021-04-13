@@ -1,7 +1,7 @@
 
 <!-- 
-Created by 	: Akash Ramani
-Date 		: 29-06-2019 
+Created by 	: Suresh makhija
+Date 		: 12-04-2021 
 -->
 
 <%@page import="com.di.dao.AllListDAO"%>
@@ -24,7 +24,7 @@ Date 		: 29-06-2019
 <meta name="keywords"
 	content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app">
 <meta name="author" content="PIXINVENT">
-<title>SLTL Expo</title>
+<title>Occura</title>
 <link rel="apple-touch-icon" sizes="60x60"
 	href="img/sltlICO.png">
 <link rel="apple-touch-icon" sizes="76x76"
