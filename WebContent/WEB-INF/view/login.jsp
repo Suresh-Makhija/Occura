@@ -1,53 +1,20 @@
-<!-- VENDOR CSS -->
-<link rel="stylesheet" href="app-assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="app-assets/fontawesome/css/font-awesome.min.css">
 
-<!-- MAIN CSS -->
-<link rel="stylesheet" href="app-assets/css/main.css">
-<link rel="stylesheet" href="app-assets/css/color_skins.css">
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Login</title>
+   
+
 </head>
-
-<body class="theme-cyan">
-	<!-- WRAPPER -->
-	<div id="wrapper">
-		<div class="vertical-align-wrap">
-			<div class="vertical-align-middle auth-main">
-				<div class="auth-box">
-                    <div class="top">
-                        <img src="app-assets/images/logo/Occura-logo.png" alt="Occura">
-                    </div>
-					<div class="card">
-                        <div class="header">
-                            <p class="lead">Login to your account</p>
-                        </div>
-                        <div class="body">
-                            <form class="form-auth-small" action="controller/login" method="POST">
-                                <div class="form-group" style="margin-bottom:1rem;">
-                                    <label for="signin-email" class="control-label sr-only">Email</label>
-                                    <input type="email" class="form-control" id="signin-email" value="user@domain.com" placeholder="Email">
-                                </div>
-                                <div class="form-group" style="margin-bottom:1rem;">
-                                    <label for="signin-password" class="control-label sr-only">Password</label>
-                                    <input type="password" class="form-control" id="signin-password" value="thisisthepassword" placeholder="Password">
-                                </div>
-                                <div class="form-group clearfix" style="margin-bottom:1rem;">
-                                    <label class="fancy-checkbox element-left">
-                                        <input type="checkbox">
-                                        <span>Remember me</span>
-                                    </label>								
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                                <div class="bottom">
-                                    <span class="helper-text m-b-10"><i class=""></i> <a href="page-forgot-password.html">Forgot password?</a></span>
-                                    <span>Don't have an account? <a href="page-register.html">Register</a></span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END WRAPPER -->
+ <body data-open="hover" data-menu="horizontal-menu" data-col="1-column" 
+ class="horizontal-layout horizontal-menu 1-column  blank-page blank-page">
+    
+HELLO WORLD
 </body>
+
 </html>
