@@ -3,63 +3,40 @@ package com.occura.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
 
 @Entity
-@Table(name = "user_tbl")
-public class UserBean implements Serializable {
+@Table(name = "master_medicine_tbl")
+public class MasterMedicineBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private int user_id;
-	private String name;
-	private String email;
-	private String password;
+	private int master_medicine_id;
+	private String medicine_description;
 	private Date crt_date;
+	private long medicine_price;
 	
-	public UserBean() {
-	}
-
-	
-	
+	private MasterDiagnoBean masterDiagnoBean;
 	@Id
-	public int getUser_id() {
-		return user_id;
+	public int getMaster_medicine_id() {
+		return master_medicine_id;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setMaster_medicine_id(int master_medicine_id) {
+		this.master_medicine_id = master_medicine_id;
 	}
 
-	public String getName() {
-		return name;
+	public String getMedicine_description() {
+		return medicine_description;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMedicine_description(String medicine_description) {
+		this.medicine_description = medicine_description;
 	}
 
 	public Date getCrt_date() {
@@ -70,23 +47,27 @@ public class UserBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public UserBean(int user_id, String name, String email, String password, Date crt_date) {
-		super();
-		this.user_id = user_id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.crt_date = crt_date;
+	public long getMedicine_price() {
+		return medicine_price;
 	}
-	
 
 	
+	public void setMedicine_price(long medicine_price) {
+		this.medicine_price = medicine_price;
+	}
 
+	@ManyToMany
+	@JoinColumn(name = "master_diagno_id")
+	public MasterDiagnoBean getMasterDiagnoBean() {
+		return masterDiagnoBean;
+	}
 
+	public void setMasterDiagnoBean(MasterDiagnoBean masterDiagnoBean) {
+		this.masterDiagnoBean = masterDiagnoBean;
+	}
 
-
-
-
+	
+	
 	
 	
 	
