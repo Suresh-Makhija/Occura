@@ -1,9 +1,7 @@
 package com.occura.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,82 +9,42 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "user_tbl")
-public class UserBean implements Serializable {
+@Table(name = "master_operation_tbl")
+public class MasterOperationBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int user_id;
-	private String name;
-	private String email;
-	private String password;
-	private Date crt_date;
-	
-	public UserBean() {
-	}
-
-	
-	
-	@Id
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Date getCrt_date() {
-		return crt_date;
-	}
-
-	public void setCrt_date(Date crt_date) {
-		this.crt_date = crt_date;
-	}
-
-	public UserBean(int user_id, String name, String email, String password, Date crt_date) {
+	private int master_operation_id;
+	private String operation_description;
+	private long operation_price;
+	public MasterOperationBean(int master_operation_id, String operation_description, long operation_price) {
 		super();
-		this.user_id = user_id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.crt_date = crt_date;
+		this.master_operation_id = master_operation_id;
+		this.operation_description = operation_description;
+		this.operation_price = operation_price;
 	}
 	
-
-	
-
-
-
-
-
-
+	@Id	
+	public int getMaster_operation_id() {
+		return master_operation_id;
+	}
+	public void setMaster_operation_id(int master_operation_id) {
+		this.master_operation_id = master_operation_id;
+	}
+	public String getOperation_description() {
+		return operation_description;
+	}
+	public void setOperation_description(String operation_description) {
+		this.operation_description = operation_description;
+	}
+	public long getOperation_price() {
+		return operation_price;
+	}
+	public void setOperation_price(long operation_price) {
+		this.operation_price = operation_price;
+	}
 	
 	
 	
