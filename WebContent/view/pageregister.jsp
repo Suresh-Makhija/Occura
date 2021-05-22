@@ -9,12 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
 <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
-
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- VENDOR CSS -->
+<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/font-awesome/css/font-awesome.min.css">
-
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/sweetalert/sweetalert.css"> --%>
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
@@ -34,7 +34,7 @@
                             <p class="lead">Create an account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" id="userform">
+                            <form class="form-auth-small" name="userformName" id="userform">
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
                                     <input type="email" required="required" class="form-control ValidateInput" name="signup-email" id="signup-email" placeholder="Your email">
@@ -49,7 +49,7 @@
                                 </div>
                                 <input type="button" onclick="register();" class="btn btn-primary btn-lg btn-block" value="REGISTER"/>
                                 <div class="bottom">
-                                    <span class="helper-text">Already have an account? <a href="page-login.html">Login</a></span>
+                                    <span class="helper-text">Already have an account? <a href="page-login.jsp">Login</a></span>
                                 </div>
                             </form>
                         </div>
@@ -59,6 +59,8 @@
 		</div>
 	</div>
 	<!-- END WRAPPER -->
+<%-- 	<script src="<%=request.getContextPath()%>/vendor/sweetalert/sweetalert.min.js" type="text/javascript"></script> --%>
+	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function register()
@@ -74,7 +76,26 @@ url: "../controller/register.htm",
 data :{email : email, user : user,password:password},
 success :function(resdata,status,xhr)
 {
-
+	
+if(resdata == "match")
+	{
+	alert(resdata);
+	 swal({
+         title: 'Welcome!' +user ,
+         text: 'Success register!',
+         icon: 'success'
+       }).then(function() {
+         window.open("page-login.jsp");
+       });
+	}
+	if(resdata == "exist")
+		{
+		swal("INFO!","User Allready exit !! try diffrent one","info");
+		
+		}
+if(resdata == "notmatch"){
+	swal("ERROR!","Try again after 5 min","error");
+}
 },
 error : function(xhr, status, errorThrown) {
 
