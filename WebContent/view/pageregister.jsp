@@ -12,12 +12,12 @@
 
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- VENDOR CSS -->
-<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/font-awesome/css/font-awesome.min.css">
 
 <!-- MAIN CSS -->
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/color_skins.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
 
 <body class="theme-cyan">
@@ -34,7 +34,7 @@
                             <p class="lead">Create an account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" action="register" method="post">
+                            <form class="form-auth-small" >
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
                                     <input type="email" class="form-control" name="signup-email" id="signup-email" placeholder="Your email">
@@ -47,7 +47,7 @@
                                     <label for="signup-password" class="control-label sr-only">Password</label>
                                     <input type="password" class="form-control" name="signup-password" id="signup-password" placeholder="Password">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">REGISTER</button>
+                                <input type="button" onclick="register();" class="btn btn-primary btn-lg btn-block" value="REGISTER"/>
                                 <div class="bottom">
                                     <span class="helper-text">Already have an account? <a href="page-login.html">Login</a></span>
                                 </div>
@@ -59,6 +59,30 @@
 		</div>
 	</div>
 	<!-- END WRAPPER -->
+<script type="text/javascript">
+function register()
+{
+	var email = $("#signup-email").val(); 
+	var user = $("#signup-user").val();
+	var password = $("#signup-password").val();
+$.ajax({
+type :'POST',
+url: "register",
+data :{email : email, user : user,password:password},
+success :function(resdata,status,xhr)
+{
+
+},
+error : function(xhr, status, errorThrown) {
+
+},
+complete : function(xhr, status) {
+}
+});
+}
+
+
+</script>
 </body>
 
 </html>
