@@ -11,12 +11,11 @@ import javax.persistence.Table;
 
 
 @Entity
+
 @Table(name = "patient_appointment_tbl")
+
 public class PatientAppointmentBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int appointment_id;
 	private int patient_id;
@@ -80,9 +79,8 @@ public class PatientAppointmentBean implements Serializable {
 	}
 
 
-	public PatientAppointmentBean(int appointment_id, int patient_id, Date appointment_date_time, Date crt_date) {
+	public PatientAppointmentBean( int patient_id, Date appointment_date_time, Date crt_date) {
 		super();
-		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;
 		this.appointment_date_time = appointment_date_time;
 		this.crt_date = crt_date;

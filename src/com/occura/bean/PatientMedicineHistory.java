@@ -14,9 +14,6 @@ import javax.persistence.Table;
 @Table(name = "patient_medicine_history_tbl")
 public class PatientMedicineHistory implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int patient_medicine_history_id;
@@ -24,8 +21,8 @@ public class PatientMedicineHistory implements Serializable {
 	private int appointment_id;
 	private int patient_id;
 	
-	private double medicine_Qty;
-	private double total_price_per_medicine;
+	private Double medicine_Qty;
+	private Double total_price_per_medicine;
 	private String description;
 	private Date crt_date;
 	
@@ -65,19 +62,19 @@ public class PatientMedicineHistory implements Serializable {
 		this.patient_id = patient_id;
 	}
 
-	public double getMedicine_Qty() {
+	public Double getMedicine_Qty() {
 		return medicine_Qty;
 	}
 
-	public void setMedicine_Qty(double medicine_Qty) {
+	public void setMedicine_Qty(Double medicine_Qty) {
 		this.medicine_Qty = medicine_Qty;
 	}
 
-	public double getTotal_price_per_medicine() {
+	public Double getTotal_price_per_medicine() {
 		return total_price_per_medicine;
 	}
 
-	public void setTotal_price_per_medicine(double total_price_per_medicine) {
+	public void setTotal_price_per_medicine(Double total_price_per_medicine) {
 		this.total_price_per_medicine = total_price_per_medicine;
 	}
 
@@ -97,14 +94,10 @@ public class PatientMedicineHistory implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
-	public PatientMedicineHistory(int patient_medicine_history_id, int master_medicine_id, int appointment_id,
-			int patient_id, double medicine_Qty, double total_price_per_medicine, String description, Date crt_date) {
+	public PatientMedicineHistory(int master_medicine_id, int appointment_id,
+			int patient_id, Double medicine_Qty, Double total_price_per_medicine, String description, Date crt_date) {
 		super();
-		this.patient_medicine_history_id = patient_medicine_history_id;
 		this.master_medicine_id = master_medicine_id;
 		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;

@@ -3,7 +3,6 @@ package com.occura.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name = "patient_tbl")
 public class PatientBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int patient_id;
 	private String first_name;
@@ -193,10 +189,9 @@ public class PatientBean implements Serializable {
 
 
 
-	public PatientBean(int patient_id, String first_name, String last_name, String gender, String age, String full_name,
+	public PatientBean( String first_name, String last_name, String gender, String age, String full_name,
 			String mobile_no, String email_address, String photo, Date crt_date) {
 		super();
-		this.patient_id = patient_id;
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.gender = gender;

@@ -141,7 +141,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="page-login.html" class="icon-menu"><i class="icon-login"></i></a>
+                            <a href="../WEB-INF/view/page-login.html" class="icon-menu"><i class="icon-login"></i></a>
                         </li>
                     </ul>
                 </div>

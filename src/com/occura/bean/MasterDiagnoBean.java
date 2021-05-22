@@ -40,9 +40,8 @@ public class MasterDiagnoBean implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public MasterDiagnoBean(int master_diagno_id, String diagno_description, Date crt_date) {
+	public MasterDiagnoBean( String diagno_description, Date crt_date) {
 		super();
-		this.master_diagno_id = master_diagno_id;
 		this.diagno_description = diagno_description;
 		this.crt_date = crt_date;
 	}

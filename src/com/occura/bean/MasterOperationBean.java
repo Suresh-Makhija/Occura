@@ -18,10 +18,9 @@ public class MasterOperationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int master_operation_id;
 	private String operation_description;
-	private long operation_price;
-	public MasterOperationBean(int master_operation_id, String operation_description, long operation_price) {
+	private Double operation_price;
+	public MasterOperationBean( String operation_description, Double operation_price) {
 		super();
-		this.master_operation_id = master_operation_id;
 		this.operation_description = operation_description;
 		this.operation_price = operation_price;
 	}
@@ -39,10 +38,10 @@ public class MasterOperationBean implements Serializable {
 	public void setOperation_description(String operation_description) {
 		this.operation_description = operation_description;
 	}
-	public long getOperation_price() {
+	public Double getOperation_price() {
 		return operation_price;
 	}
-	public void setOperation_price(long operation_price) {
+	public void setOperation_price(Double operation_price) {
 		this.operation_price = operation_price;
 	}
 	

@@ -3,7 +3,6 @@ package com.occura.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -68,9 +67,8 @@ public class UserBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public UserBean(int user_id, String name, String email, String password, Date crt_date) {
+	public UserBean( String name, String email, String password, Date crt_date) {
 		super();
-		this.user_id = user_id;
 		this.name = name;
 		this.email = email;
 		this.password = password;

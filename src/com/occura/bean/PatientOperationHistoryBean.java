@@ -14,15 +14,12 @@ import javax.persistence.Table;
 @Table(name = "patient_operation_history_tbl")
 public class PatientOperationHistoryBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int Patient_operation_history_id;
 	private int master_operation_id;
 	private int appointment_id;
 	private int patient_id;
-	private String total_price_per_operation;
+	private Double total_price_per_operation;
 	private Date crt_date;
 	
 	public PatientOperationHistoryBean() {
@@ -61,11 +58,11 @@ public class PatientOperationHistoryBean implements Serializable {
 		this.patient_id = patient_id;
 	}
 
-	public String getTotal_price_per_operation() {
+	public Double getTotal_price_per_operation() {
 		return total_price_per_operation;
 	}
 
-	public void setTotal_price_per_operation(String total_price_per_operation) {
+	public void setTotal_price_per_operation(Double total_price_per_operation) {
 		this.total_price_per_operation = total_price_per_operation;
 	}
 
@@ -77,14 +74,10 @@ public class PatientOperationHistoryBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
-	public PatientOperationHistoryBean(int patient_operation_history_id, int master_operation_id, int appointment_id,
-			int patient_id, String total_price_per_operation, Date crt_date) {
+	public PatientOperationHistoryBean( int master_operation_id, int appointment_id,
+			int patient_id, Double total_price_per_operation, Date crt_date) {
 		super();
-		Patient_operation_history_id = patient_operation_history_id;
 		this.master_operation_id = master_operation_id;
 		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;

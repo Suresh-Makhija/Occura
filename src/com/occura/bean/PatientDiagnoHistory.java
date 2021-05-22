@@ -3,7 +3,6 @@ package com.occura.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,9 +13,6 @@ import javax.persistence.Table;
 @Table(name = "patient_diagno_history_tbl")
 public class PatientDiagnoHistory implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int Patient_diagno_History_id;
 	private int master_diagno_id;
@@ -68,14 +64,10 @@ public class PatientDiagnoHistory implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
-	public PatientDiagnoHistory(int patient_diagno_History_id, int master_diagno_id, int appointment_id, int patient_id,
+	public PatientDiagnoHistory( int master_diagno_id, int appointment_id, int patient_id,
 			Date crt_date) {
 		super();
-		Patient_diagno_History_id = patient_diagno_History_id;
 		this.master_diagno_id = master_diagno_id;
 		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;

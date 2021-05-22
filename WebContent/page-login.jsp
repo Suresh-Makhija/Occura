@@ -1,16 +1,23 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-<title>:: Occura :: Login</title>
 
+<head>
+<title>:: Saraswati Eye Hospital :: Login</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
+<meta name="author" content="WrapTheme, design by: ThemeMakker.com">
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- VENDOR CSS -->
-<link rel="stylesheet" href="app-assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="app-assets/fontawesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
 
 <!-- MAIN CSS -->
-<link rel="stylesheet" href="app-assets/css/main.css">
-<link rel="stylesheet" href="app-assets/css/color_skins.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
 </head>
 
 <body class="theme-cyan">
@@ -20,23 +27,23 @@
 			<div class="vertical-align-middle auth-main">
 				<div class="auth-box">
                     <div class="top">
-                        <img src="app-assets/images/logo/Occura-logo.png" alt="Occura">
+                        <img src="https://www.wrraptheme.com/templates/lucid/hospital/assets/images/logo-white.svg" alt="Saraswati Eye Hospital">
                     </div>
 					<div class="card">
                         <div class="header">
                             <p class="lead">Login to your account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" action="controller/login" method="POST">
-                                <div class="form-group" style="margin-bottom:1rem;">
+                            <form class="form-auth-small" action="https://www.wrraptheme.com/templates/lucid/hospital/light/index.html">
+                                <div class="form-group">
                                     <label for="signin-email" class="control-label sr-only">Email</label>
                                     <input type="email" class="form-control" id="signin-email" value="user@domain.com" placeholder="Email">
                                 </div>
-                                <div class="form-group" style="margin-bottom:1rem;">
+                                <div class="form-group">
                                     <label for="signin-password" class="control-label sr-only">Password</label>
                                     <input type="password" class="form-control" id="signin-password" value="thisisthepassword" placeholder="Password">
                                 </div>
-                                <div class="form-group clearfix" style="margin-bottom:1rem;">
+                                <div class="form-group clearfix">
                                     <label class="fancy-checkbox element-left">
                                         <input type="checkbox">
                                         <span>Remember me</span>
@@ -44,8 +51,8 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
                                 <div class="bottom">
-                                    <span class="helper-text m-b-10"><i class=""></i> <a href="page-forgot-password.html">Forgot password?</a></span>
-                                    <span>Don't have an account? <a href="page-register.html">Register</a></span>
+                                    <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">Forgot password?</a></span>
+                                    <span>Don't have an account? <a href="pageregister.jsp">Register</a></span>
                                 </div>
                             </form>
                         </div>
@@ -56,4 +63,5 @@
 	</div>
 	<!-- END WRAPPER -->
 </body>
+
 </html>

@@ -19,7 +19,7 @@ public class MasterMedicineBean implements Serializable {
 	private int master_medicine_id;
 	private String medicine_description;
 	private Date crt_date;
-	private long medicine_price;
+	private Double medicine_price;
 	
 	private MasterDiagnoBean masterDiagnoBean;
 	@Id
@@ -47,12 +47,12 @@ public class MasterMedicineBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public long getMedicine_price() {
+	public Double getMedicine_price() {
 		return medicine_price;
 	}
 
 	
-	public void setMedicine_price(long medicine_price) {
+	public void setMedicine_price(Double medicine_price) {
 		this.medicine_price = medicine_price;
 	}
 

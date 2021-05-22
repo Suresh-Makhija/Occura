@@ -55,7 +55,7 @@ public class HealthController {
 		  	if(fileWriteFlag) 
 		  	{
 		  		patientbean.setPhoto(DocumentName);
-			  	copyFileFromSharingToServer(response, request, DocumentName,"TestUploadFile");	
+//			  	copyFileFromSharingToServer(response, request, DocumentName,"TestUploadFile");	
 		  	}else
 		  	{
 		  		// File Not Exists..
