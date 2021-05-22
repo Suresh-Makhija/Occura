@@ -34,18 +34,18 @@
                             <p class="lead">Create an account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" >
+                            <form class="form-auth-small" id="userform">
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
-                                    <input type="email" class="form-control" name="signup-email" id="signup-email" placeholder="Your email">
+                                    <input type="email" required="required" class="form-control ValidateInput" name="signup-email" id="signup-email" placeholder="Your email">
                                 </div>
                                 <div class="form-group">
                                  <label for="signup-user" class="control-label sr-only">UserName</label>
-                                    <input type="text" class="form-control" name="signup-user" id="signup-user" placeholder="Your Username">
+                                    <input type="text" required="required" class="form-control ValidateInput" name="signup-user" id="signup-user" placeholder="Your Username">
                                 </div>
                                 <div class="form-group">
                                     <label for="signup-password" class="control-label sr-only">Password</label>
-                                    <input type="password" class="form-control" name="signup-password" id="signup-password" placeholder="Password">
+                                    <input type="password" required="required" class="form-control ValidateInput" name="signup-password" id="signup-password" placeholder="Password">
                                 </div>
                                 <input type="button" onclick="register();" class="btn btn-primary btn-lg btn-block" value="REGISTER"/>
                                 <div class="bottom">
@@ -59,15 +59,18 @@
 		</div>
 	</div>
 	<!-- END WRAPPER -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function register()
 {
+	  var flag = formValidate("userform");
+	  if(flag){
 	var email = $("#signup-email").val(); 
 	var user = $("#signup-user").val();
 	var password = $("#signup-password").val();
 $.ajax({
 type :'POST',
-url: "register",
+url: "../controller/register.htm",
 data :{email : email, user : user,password:password},
 success :function(resdata,status,xhr)
 {
@@ -80,8 +83,124 @@ complete : function(xhr, status) {
 }
 });
 }
+	  
+}
 
+function formValidate(divName)
+{
 
+            var flag=true;
+            /*for textbox , radio button , password*/
+            var dataInput=$('#'+divName+' input[type="text"].ValidateInput ,input[type="number"].ValidateInput ,#'+divName+' input[type="email"].ValidateInput, #'+divName+' input[type="file"].ValidateInput ,#'+divName+' input[type="password"].ValidateInput');
+            for(var i=0;i<dataInput.length;i++)
+            {
+                if($.trim(dataInput[i].value)=='' && dataInput[i].offsetParent !=null)
+                {
+                    $("."+dataInput[i].id).empty();
+                    $("#"+divName+" #"+dataInput[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataInput[i].id).after('<span class="error errorTag  text-danger '+dataInput[i].id+'" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+                if(dataInput[i].offsetParent == null)
+                {
+                    $("."+dataInput[i].id).empty();
+                    $("#"+divName+" #"+dataInput[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for radio button*/
+            var dataRadio=$('#'+divName+' input[type="radio"].ValidateInput');
+            for(var i=0;i<dataRadio.length;i++)
+            {
+                var radioGroupName=$("input[type='radio']#"+dataRadio[i].id)[0].attributes['name'].textContent;
+                
+                if(!$("input[name='"+radioGroupName+"']").is(":checked"))
+                { 
+                    $("input[name='"+radioGroupName+"']").addClass("validateStyle");
+                    flag=false;
+                }
+                
+            }
+            
+            /*for textarea*/
+            var dataTextArea=$('#'+divName+' textarea.ValidateInput');
+            for(var i=0;i<dataTextArea.length;i++)
+            {
+                if($.trim(dataTextArea[i].value)=='' && dataTextArea[i].offsetParent !=null)
+                {
+                    $("."+dataTextArea[i].id).empty();
+                    //console.log(dataInput[i].id);
+                    $("#"+divName+" #"+dataTextArea[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataTextArea[i].id).after('<span class="error errorTag  text-danger '+dataTextArea[i].id+'" >You Can \'t Leave this Empty</span>');
+                    
+                    flag=false;
+                }
+                if(dataTextArea[i].offsetParent == null)
+                {
+                    $("."+dataTextArea[i].id).empty();
+                    $("#"+divName+" #"+dataTextArea[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for select tag*/
+            var dataSelect=$('#'+divName+' select.ValidateInput');
+            
+            for(var i=0;i<dataSelect.length;i++)
+            {
+                if((dataSelect[i].value==''  && dataSelect[i].offsetParent !=null) || (dataSelect[i].value=='-1' && dataSelect[i].offsetParent !=null))
+                {
+                    $("."+dataSelect[i].id).empty();
+                    $("#"+divName+" #"+dataSelect[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataSelect[i].id).after('<span class="error errorTag  text-danger '+dataSelect[i].id+'" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+                if(dataSelect[i].offsetParent == null)
+                {
+                    $("."+dataSelect[i].id).empty();
+                    $("#"+divName+" #"+dataSelect[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for hidden for file only*/
+            var dataFileInput=$('#'+divName+' input[type="hidden"].ValidateInput');
+            for(var i=0;i<dataFileInput.length;i++)
+            {
+                if($.trim(dataFileInput[i].value)=='')
+                {
+                    $("."+dataFileInput[i].id+"File").empty();
+                    //console.log(dataInput[i].id);
+                    $("#"+divName+" #"+dataFileInput[i].id+"File").addClass("validateStyle");
+                    //$("#"+divName+" #"+dataFileInput[i].id+"File").after('<span class="error errorTag  text-danger '+dataFileInput[i].id+'File" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+            }
+            
+            $('#'+divName+' .validateStyle').click(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            $('#'+divName+'.validateStyle').change(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            $('#'+divName+'.validateStyle').focus(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            
+            if($('#'+divName).find(".is-invalid").length > 0 || flag==false)
+            {
+                flag = false;
+            }
+            else
+            {
+                flag=true;
+            }
+            return flag;
+}
 </script>
 </body>
 

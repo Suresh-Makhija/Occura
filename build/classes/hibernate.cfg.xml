@@ -6,7 +6,11 @@
 		<!-- For SQL Server Connection -->
 	
 		
-      
+      <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/occura</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">1234</property>
+		
         
 <!--      	<property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
 <!--         <property name="connection.url">jdbc:sqlserver://NEBULAE2SERVER;databaseName=DInvoice;instanceName=sqlexpress;</property> -->
@@ -28,22 +32,22 @@
       
 
 		 
-<!-- 		<property name="show_sql">false</property> -->
-<!-- 		<property name="hbm2ddl.auto">create/update</property> -->
+		<property name="show_sql">false</property>
+		<property name="hbm2ddl.auto">create/update</property>
 		
 		
 		
 		<!-- performance bean -->
 		
       	<mapping class="com.occura.bean.UserBean"/>
-      	<mapping class="com.occura.bean.MasterDiagnoBean"/>
-      	<mapping class="com.occura.bean.MasterMedicineBean"/>
-      	<mapping class="com.occura.bean.MasterOperationBean"/>
-      	<mapping class="com.occura.bean.PatientAppointmentBean"/>
-      	<mapping class="com.occura.bean.PatientBean"/>
-      	<mapping class="com.occura.bean.PatientDiagnoHistory"/>
-      	<mapping class="com.occura.bean.PatientMedicineHistory"/>
-      	<mapping class="com.occura.bean.PatientOperationHistoryBean"/>
+<!--       	<mapping class="com.occura.bean.MasterDiagnoBean"/> -->
+<!--       	<mapping class="com.occura.bean.MasterMedicineBean"/> -->
+<!--       	<mapping class="com.occura.bean.MasterOperationBean"/> -->
+<!--       	<mapping class="com.occura.bean.PatientAppointmentBean"/> -->
+<!--       	<mapping class="com.occura.bean.PatientBean"/> -->
+<!--       	<mapping class="com.occura.bean.PatientDiagnoHistory"/> -->
+<!--       	<mapping class="com.occura.bean.PatientMedicineHistory"/> -->
+<!--       	<mapping class="com.occura.bean.PatientOperationHistoryBean"/> -->
       
 	</session-factory>
 

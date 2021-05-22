@@ -12,7 +12,7 @@ public class AllInsertDao {
 	
 	public static boolean insertUser(UserBean user)
 	{
-		Session session =  HibernateUtil.openSession();
+		Session session = HibernateUtil.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.getTransaction();

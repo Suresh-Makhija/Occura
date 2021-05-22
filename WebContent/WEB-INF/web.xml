@@ -35,17 +35,8 @@
 
    <servlet-mapping>
       <servlet-name>dispatcher</servlet-name>
-      <url-pattern>/controller/*</url-pattern>
+      <url-pattern>*.htm</url-pattern>
    </servlet-mapping>
-   <servlet>
-    <description></description>
-    <display-name>RegisterServlet</display-name>
-    <servlet-name>RegisterServlet</servlet-name>
-    <servlet-class>com.occura.controller.RegisterServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RegisterServlet</servlet-name>
-    <url-pattern>/register</url-pattern>
-  </servlet-mapping>
+  
    
 </web-app>
