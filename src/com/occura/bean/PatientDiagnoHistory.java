@@ -11,55 +11,53 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "user_tbl")
-public class UserBean implements Serializable {
+@Table(name = "patient_diagno_history_tbl")
+public class PatientDiagnoHistory implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int user_id;
-	private String name;
-	private String email;
-	private String password;
+	private int Patient_diagno_History_id;
+	private int master_diagno_id;
+	private int appointment_id;
+	private int patient_id;
 	private Date crt_date;
 	
-	public UserBean() {
+	public PatientDiagnoHistory() {
 	}
 
-	
-	
 	@Id
-	public int getUser_id() {
-		return user_id;
+	public int getPatient_diagno_History_id() {
+		return Patient_diagno_History_id;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setPatient_diagno_History_id(int patient_diagno_History_id) {
+		Patient_diagno_History_id = patient_diagno_History_id;
 	}
 
-	public String getName() {
-		return name;
+	public int getMaster_diagno_id() {
+		return master_diagno_id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMaster_diagno_id(int master_diagno_id) {
+		this.master_diagno_id = master_diagno_id;
 	}
 
-	public String getEmail() {
-		return email;
+	public int getAppointment_id() {
+		return appointment_id;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAppointment_id(int appointment_id) {
+		this.appointment_id = appointment_id;
 	}
 
-	public String getPassword() {
-		return password;
+	public int getPatient_id() {
+		return patient_id;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPatient_id(int patient_id) {
+		this.patient_id = patient_id;
 	}
 
 	public Date getCrt_date() {
@@ -70,25 +68,19 @@ public class UserBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-	public UserBean(int user_id, String name, String email, String password, Date crt_date) {
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public PatientDiagnoHistory(int patient_diagno_History_id, int master_diagno_id, int appointment_id, int patient_id,
+			Date crt_date) {
 		super();
-		this.user_id = user_id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
+		Patient_diagno_History_id = patient_diagno_History_id;
+		this.master_diagno_id = master_diagno_id;
+		this.appointment_id = appointment_id;
+		this.patient_id = patient_id;
 		this.crt_date = crt_date;
 	}
-	
-
-	
 
 
-
-
-
-
-	
-	
-	
-	
 }
