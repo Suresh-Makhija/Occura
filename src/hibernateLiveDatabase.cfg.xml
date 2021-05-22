@@ -1,7 +1,7 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!-- <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"> -->
-<!-- <hibernate-configuration> -->
-<!-- 	<session-factory> -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory> 
 	
 		<!-- For SQL Server Connection -->
 	
@@ -33,32 +33,18 @@
 <!-- 		<property name="hbm2ddl.auto">create/update</property> -->
 		<!-- performance bean -->
 		
-<!--       	<mapping class="com.di.bean.UserBean"/> -->
-<!--       	<mapping class="com.di.bean.ProductMasterBean"/> -->
-<!--       	<mapping class="com.di.bean.CustomerBean"/> -->
-<!--       	<mapping class="com.di.bean.WorkHistoryBean"/> -->
-<!--       	<mapping class="com.di.bean.StatusBean"/> -->
-<!--       	<mapping class="com.di.bean.ProductProcessBean"/> -->
-<!--       	<mapping class="com.di.bean.CustomerProductBean"/> -->
-<!--       	<mapping class="com.di.bean.WorkProductBean"/> -->
-<!--       	<mapping class="com.di.bean.WorkProductBean"/> -->
-<!--       	<mapping class="com.di.bean.WorkProductProcessBean"/> -->
-<!--       	<mapping class="com.di.bean.CustomerTypeBean"/> -->
-<!--       	<mapping class="com.di.bean.RateCriteriaBean"/> -->
-<!--       	<mapping class="com.di.bean.InvoiceBean"/> -->
-<!--       	<mapping class="com.di.bean.InvoiceLineBean"/> -->
-<!--       	<mapping class="com.di.bean.SltlInvoiceLineBean"/> -->
-<!--       	<mapping class="com.di.bean.SltlinvoiceBean"/> -->
-<!--       	<mapping class="com.di.bean.CustomerProductRateBean"/> -->
-<!--       	<mapping class="com.di.bean.CurrencyBean"/> -->
-<!--       	<mapping class="com.di.bean.ChallanBean"/> -->
-<!--       	<mapping class="com.di.bean.ChallanLineBean"/> -->
-<!--       	<mapping class="com.di.bean.ChallanOutLineBean"/> -->
-<!--       	<mapping class="com.di.bean.ChallanOutBean"/> -->
-<!--       	<mapping class="com.di.bean.PaymentBean"/> -->
+		<mapping class="com.occura.bean.UserBean"/>
+      	<mapping class="com.occura.bean.MasterDiagnoBean"/>
+      	<mapping class="com.occura.bean.MasterMedicineBean"/>
+      	<mapping class="com.occura.bean.MasterOperationBean"/>
+      	<mapping class="com.occura.bean.PatientAppointmentBean"/>
+      	<mapping class="com.occura.bean.PatientBean"/>
+      	<mapping class="com.occura.bean.PatientDiagnoHistory"/>
+      	<mapping class="com.occura.bean.PatientMedicineHistory"/>
+      	<mapping class="com.occura.bean.PatientOperationHistoryBean"/>
       	
       	
 		
-<!-- 	</session-factory> -->
+ 	</session-factory> 
 
-<!-- </hibernate-configuration> -->
+ </hibernate-configuration> 

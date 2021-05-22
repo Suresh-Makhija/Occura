@@ -11,73 +11,86 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "user_tbl")
-public class UserBean implements Serializable {
+@Table(name = "patient_appointment_tbl")
+public class PatientAppointmentBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int user_id;
-	private String name;
-	private String email;
-	private String password;
+	private int appointment_id;
+	private int patient_id;
+	private Date appointment_date_time;
 	private Date crt_date;
 	
-	public UserBean() {
+	public PatientAppointmentBean() {
 	}
 
 	
 	
 	@Id
-	public int getUser_id() {
-		return user_id;
+	public int getAppointment_id() {
+		return appointment_id;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+
+
+	public void setAppointment_id(int appointment_id) {
+		this.appointment_id = appointment_id;
 	}
 
-	public String getName() {
-		return name;
+
+
+	public int getPatient_id() {
+		return patient_id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+
+	public void setPatient_id(int patient_id) {
+		this.patient_id = patient_id;
 	}
 
-	public String getEmail() {
-		return email;
+
+
+	
+
+
+	public Date getAppointment_date_time() {
+		return appointment_date_time;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+
+
+	public void setAppointment_date_time(Date appointment_date_time) {
+		this.appointment_date_time = appointment_date_time;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public Date getCrt_date() {
 		return crt_date;
 	}
-
 	public void setCrt_date(Date crt_date) {
 		this.crt_date = crt_date;
 	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-	public UserBean(int user_id, String name, String email, String password, Date crt_date) {
+
+	public PatientAppointmentBean(int appointment_id, int patient_id, Date appointment_date_time, Date crt_date) {
 		super();
-		this.user_id = user_id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
+		this.appointment_id = appointment_id;
+		this.patient_id = patient_id;
+		this.appointment_date_time = appointment_date_time;
 		this.crt_date = crt_date;
 	}
+
+	
+
+	
 	
 
 	
