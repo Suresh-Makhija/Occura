@@ -12,12 +12,12 @@
 
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- VENDOR CSS -->
-<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/font-awesome/css/font-awesome.min.css">
 
 <!-- MAIN CSS -->
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/color_skins.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
 
 <body class="theme-cyan">
@@ -52,7 +52,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
                                 <div class="bottom">
                                     <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">Forgot password?</a></span>
-                                    <span>Don't have an account? <a href="pageregister.jsp">Register</a></span>
+                                    <span>Don't have an account? <a href="view/pageregister.jsp">Register</a></span>
                                 </div>
                             </form>
                         </div>
