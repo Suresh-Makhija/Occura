@@ -1,7 +1,10 @@
 package com.occura.controller;
 
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,8 @@ import com.occura.utility.CommonUtility;
 @RequestMapping(value = "health")
 public class HealthController {
 
+	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
+	
 	@RequestMapping(value = "/appointment_user", method = RequestMethod.POST) // Mapping for Call the controller
 	public String login(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception 
 	{
@@ -60,7 +65,14 @@ public class HealthController {
 		  	{
 		  		// File Not Exists..
 		  	}
-		
+		  	
+		  	patientbean.setAppointment_date(DATE_TIME_FORMAT.parse(patientbean.getAppointment_date_time()));
+		  	System.out.println(patientbean.getAppointment_date());
+		  	patientbean.setCrt_date(new Date());
+		  	
+		  	
+		  	
+		  	
 		}
 		
 		String page = "";

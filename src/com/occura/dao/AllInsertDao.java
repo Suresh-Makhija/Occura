@@ -4,6 +4,7 @@ package com.occura.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
 import com.occura.util.HibernateUtil;
 
@@ -32,5 +33,6 @@ public class AllInsertDao {
 		}
 		return true;
 	}
+	
 	
 }

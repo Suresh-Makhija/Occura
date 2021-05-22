@@ -32,6 +32,9 @@ public class PatientBean implements Serializable {
 	private MultipartFile uploadfile;
 	@Transient
 	private String appointment_date_time;
+	@Transient
+	private Date appointment_date;
+	
 	
 	public PatientBean() {
 	}
@@ -185,6 +188,18 @@ public class PatientBean implements Serializable {
 
 	public void setAppointment_date_time(String appointment_date_time) {
 		this.appointment_date_time = appointment_date_time;
+	}
+
+
+
+	public Date getAppointment_date() {
+		return appointment_date;
+	}
+
+
+
+	public void setAppointment_date(Date appointment_date) {
+		this.appointment_date = appointment_date;
 	}
 
 
