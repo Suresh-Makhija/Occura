@@ -1,4 +1,5 @@
 <!doctype html>
+<%@page import="com.occura.bean.UserBean"%>
 <html lang="en">
 
 
@@ -13,17 +14,22 @@
 
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- VENDOR CSS -->
-<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="vendor/chartist/css/chartist.min.css">
-<link rel="stylesheet" href="vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
-<link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/chartist/css/chartist.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/toastr/toastr.min.css">
 
 <!-- MAIN CSS -->
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/color_skins.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
+<% 
+UserBean user = (UserBean) session.getAttribute("loginUser");
+if(user != null)
+{
+%>
 <body class="theme-cyan">
 
 <!-- Page Loader -->
@@ -155,7 +161,7 @@
                 <img src="images/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
                 <div class="dropdown">
                     <span>Welcome,</span>
-                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>Dr. Chandler Bing</strong></a>
+                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><%=user.getName() %></strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account">
                         <li><a href="doctor-profile.html"><i class="icon-user"></i>My Profile</a></li>
                         <li><a href="app-inbox.html"><i class="icon-envelope-open"></i>Messages</a></li>
@@ -1102,19 +1108,21 @@
     </div>
     
 </div>
-
+<%}else{
+	response.sendRedirect("page-login.jsp");
+}%>
 <!-- Javascript -->
-<script src="assets/bundles/libscripts.bundle.js"></script>
-<script src="assets/bundles/vendorscripts.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
+<script src="<%=request.getContextPath()%>/assets/bundles/chartist.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
+<script src="<%=request.getContextPath()%>/assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
+<script src="<%=request.getContextPath()%>/vendor/toastr/toastr.js"></script>
+<script src="<%=request.getContextPath()%>/vendor/flot-charts/jquery.flot.selection.js"></script>
 
-<script src="assets/bundles/chartist.bundle.js"></script>
-<script src="assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
-<script src="assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
-<script src="vendor/toastr/toastr.js"></script>
-<script src="vendor/flot-charts/jquery.flot.selection.js"></script>
-
-<script src="assets/bundles/mainscripts.bundle.js"></script>
-<script src="assets/js/index.js"></script>
+<script src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/index.js"></script>
 </body>
 
 <!-- Mirrored from www.wrraptheme.com/templates/lucid/hospital/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 16 May 2021 10:08:23 GMT -->
