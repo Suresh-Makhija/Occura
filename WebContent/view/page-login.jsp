@@ -19,7 +19,11 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
-
+<%
+		boolean details= false;
+		if(request.getRequestURL().indexOf("view") > -1){
+		 details= true;
+		}%>
 <body class="theme-cyan">
 	<!-- WRAPPER -->
 	<div id="wrapper">
@@ -27,7 +31,7 @@
 			<div class="vertical-align-middle auth-main">
 				<div class="auth-box">
                     <div class="top">
-                        <img src="https://www.wrraptheme.com/templates/lucid/hospital/assets/images/logo-white.svg" alt="Saraswati Eye Hospital">
+                        <img src="" alt="Saraswati Eye Hospital">
                     </div>
 					<div class="card">
                         <div class="header">
@@ -36,8 +40,8 @@
                         <div class="body">
                             <form class="form-auth-small" >
                                 <div class="form-group">
-                                    <label for="signin-email" class="control-label sr-only">Email</label>
-                                    <input type="email" class="form-control" id="signin-email"  placeholder="Email">
+                                    <label for="signin-email" class="control-label sr-only">Email / User</label>
+                                    <input type="email" class="form-control" id="signin-email"  placeholder="Email/User">
                                 </div>
                                 <div class="form-group">
                                     <label for="signin-password" class="control-label sr-only">Password</label>
@@ -46,8 +50,19 @@
                               
                                 <input type="button" class="btn btn-primary btn-lg btn-block" onclick="login();" value="LOGIN"/>
                                 <div class="bottom">
-                                    <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">Forgot password?</a></span>
-                                    <span>Don't have an account? <a href="pageregister.jsp">Register</a></span>
+                                 <%
+                                  if(details){%>
+	  <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.jsp">Forgot password?</a></span>
+		<%}else{%>
+	  <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="view/page-forgot-password.jsp">Forgot password?</a></span>
+	<%} %>
+                                  
+                                  <%
+                                  if(details){%>
+		<span>Don't have an account? <a href="pageregister.jsp">Register</a></span>
+		<%}else{%>
+	<span>Don't have an account? <a href="view/pageregister.jsp">Register</a></span>
+	<%} %>
                                 </div>
                             </form>
                         </div>
@@ -58,6 +73,7 @@
 	</div>
 	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<%-- 	 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>   --%>
 	<script type="text/javascript">
 function login()
 {
@@ -65,13 +81,18 @@ function login()
 	var password = $("#signin-password").val();
 $.ajax({
 type :'POST',
-url: "../controller/login.htm",
+url: "${pageContext.request.contextPath}/controller/login.htm",
 data :{email : email,password:password},
 success :function(resdata,status,xhr)
 {
 	if(resdata == "true")
 		{
-		window.open("index.jsp");
+		<%
+		if(details){%>
+		window.location = "index.jsp";
+		<%}else{%>
+	window.location = "view/index.jsp";
+	<%}%>
 		}
 	else
 		{

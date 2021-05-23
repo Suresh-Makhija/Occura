@@ -36,6 +36,31 @@ public class AllListDao {
 		return userBean;
 	}
 	
+	public static String findPassword(String email)
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		 String password = null;
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+		  Query query = session.createQuery("select  u.password from UserBean u where  lower(email) = lower('"+email+"')");
+		  query.setMaxResults(1);
+		 password = (String) query.uniqueResult();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return password ;
+	}
 	
 	public static UserBean findUserByLogin(String user,String email,String pswd)
 	{

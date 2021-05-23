@@ -1,11 +1,9 @@
 <!doctype html>
-<%@page import="com.occura.bean.UserBean"%>
 <html lang="en">
 
 
-<!-- Mirrored from www.wrraptheme.com/templates/lucid/hospital/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 16 May 2021 10:07:56 GMT -->
 <head>
-<title>:: Lucid Hospital :: Home</title>
+<title>:: Saraswati Eye Hospital :</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -25,17 +23,12 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
-<% 
-UserBean user = (UserBean) session.getAttribute("loginUser");
-if(user != null)
-{
-%>
 <body class="theme-cyan">
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img src="https://www.wrraptheme.com/templates/lucid/hospital/images/logo-icon.svg" width="48" height="48" alt="Lucid"></div>
+        <div class="m-t-30"><img src="" width="48" height="48" alt="Occura"></div>
         <p>Please wait...</p>        
     </div>
 </div>
@@ -50,7 +43,7 @@ if(user != null)
             </div>
 
             <div class="navbar-brand">
-                <a href="index.html"><img src="https://www.wrraptheme.com/templates/lucid/hospital/images/logo.svg" alt="Lucid Logo" class="img-responsive logo"></a>                
+                <a href="index.jsp"><img src="" alt="Occura Logo" class="img-responsive logo"></a>                
             </div>
             
             <div class="navbar-right">
@@ -147,7 +140,8 @@ if(user != null)
                             </ul>
                         </li>
                         <li>
-                            <a href="../WEB-INF/view/page-login.html" class="icon-menu"><i class="icon-login"></i></a>
+<!--                         	<button onclick="logout();" class="icon-menu"></button> -->
+                            <a  class="icon-menu" id = "logoutMenu" onclick="logout();"><i class="icon-login"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -158,16 +152,16 @@ if(user != null)
     <div id="left-sidebar" class="sidebar">
         <div class="sidebar-scroll">
             <div class="user-account">
-                <img src="images/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
+                <img src="<%=request.getContextPath()%>/images/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
                 <div class="dropdown">
                     <span>Welcome,</span>
-                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><%=user.getName() %></strong></a>
+                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>Dr. Chandler Bing</strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account">
                         <li><a href="doctor-profile.html"><i class="icon-user"></i>My Profile</a></li>
                         <li><a href="app-inbox.html"><i class="icon-envelope-open"></i>Messages</a></li>
                         <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li>
                         <li class="divider"></li>
-                        <li><a href="page-login.html"><i class="icon-power"></i>Logout</a></li>
+                        <li><a id="logoutSubMenu" onclick="logout();"><i class="icon-power"></i>Logout</a></li>
                     </ul>
                 </div>
                 <hr>
@@ -372,7 +366,7 @@ if(user != null)
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="images/xs/avatar4.jpg" alt="">
+                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Chris Fox</span>
                                         <span class="message">Dentist</span>
@@ -384,7 +378,7 @@ if(user != null)
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="images/xs/avatar5.jpg" alt="">
+                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Joge Lucky</span>
                                         <span class="message">Gynecologist</span>
@@ -396,7 +390,7 @@ if(user != null)
                         <li class="offline">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="images/xs/avatar2.jpg" alt="">
+                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Isabella</span>
                                         <span class="message">CEO, WrapTheme</span>
@@ -408,7 +402,7 @@ if(user != null)
                         <li class="offline">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="images/xs/avatar1.jpg" alt="">
+                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Folisise Chosielie</span>
                                         <span class="message">Physical Therapy</span>
@@ -420,7 +414,7 @@ if(user != null)
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="images/xs/avatar3.jpg" alt="">
+                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar3.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Alexander</span>
                                         <span class="message">Audiology</span>
@@ -796,9 +790,9 @@ if(user != null)
                                     <div class="m-l-35 m-b-30">
                                         <small class="text-muted">SCHEDULED FOR 3:00 P.M. ON JUN 2018</small>
                                         <ul class="list-unstyled team-info">
-                                            <li><img src="images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
-                                            <li><img src="images/xs/avatar2.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
-                                            <li><img src="images/xs/avatar5.jpg" data-toggle="tooltip" data-placement="top" title="Isabella" alt="Avatar"></li>
+                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
+                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
+                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" data-toggle="tooltip" data-placement="top" title="Isabella" alt="Avatar"></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -830,8 +824,8 @@ if(user != null)
                                     <div class="m-l-35">
                                         <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small>
                                         <ul class="list-unstyled team-info">
-                                            <li><img src="images/xs/avatar4.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
-                                            <li><img src="images/xs/avatar6.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
+                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
+                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar6.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -886,25 +880,25 @@ if(user != null)
                                     <div class="cwidget-scroll">
                                         <ul class="chat-widget m-r-5 clearfix">
                                             <li class="left float-left">
-                                                <img src="images/xs/avatar2.jpg" class="rounded-circle" alt="">
+                                                <img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle" alt="">
                                                 <div class="chat-info">       
                                                     <span class="message">Hello, John<br>What is the update on Project X?</span>
                                                 </div>
                                             </li>
                                             <li class="right">
-                                                <img src="images/xs/avatar1.jpg" class="rounded-circle" alt="">
+                                                <img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle" alt="">
                                                 <div class="chat-info">
                                                     <span class="message">Hi, Chandler<br> It is almost completed. I will send you an email later today.</span>
                                                 </div>
                                             </li>
                                             <li class="left float-left">
-                                                <img src="images/xs/avatar2.jpg" class="rounded-circle" alt="">
+                                                <img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle" alt="">
                                                 <div class="chat-info">
                                                     <span class="message">That's great. Will catch you in evening.</span>
                                                 </div>
                                             </li>
                                             <li class="right">
-                                                <img src="images/xs/avatar1.jpg" class="rounded-circle" alt="">
+                                                <img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle" alt="">
                                                 <div class="chat-info">
                                                     <span class="message">Sure we'will have a blast today.</span>
                                                 </div>
@@ -956,8 +950,8 @@ if(user != null)
                                 <div class="msg">
                                     <p>web by far While that's mock-ups and this is politics, are they really so different? I think the only card she has is the Lorem card.</p>
                                     <div class="timeline_img m-b-20">
-                                        <img class="w-25" src="images/blog/blog-page-4.jpg" alt="Awesome Image">
-                                        <img class="w-25" src="images/blog/blog-page-2.jpg" alt="Awesome Image">
+                                        <img class="w-25" src="<%=request.getContextPath()%>/images/blog/blog-page-4.jpg" alt="Awesome Image">
+                                        <img class="w-25" src="<%=request.getContextPath()%>/images/blog/blog-page-2.jpg" alt="Awesome Image">
                                     </div>
                                     <a href="javascript:void(0);" class="m-r-20"><i class="icon-heart"></i> Like</a>
                                     <a role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1"><i class="icon-bubbles"></i> Comment</a>
@@ -1034,7 +1028,7 @@ if(user != null)
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td><img src="images/xs/avatar3.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>John</span></td>
+                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar3.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>John</span></td>
                                             <td><span class="text-info">70 Bowman St. South Windsor, CT 06074</span></td>
                                             <td>Sept 13, 2017</td>
                                             <td>Sept 16, 2017</td>
@@ -1047,7 +1041,7 @@ if(user != null)
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td><img src="images/xs/avatar1.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
+                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
                                             <td><span class="text-info">123 6th St. Melbourne, FL 32904</span></td>
                                             <td>Sept 13, 2017</td>
                                             <td>Sept 22, 2017</td>
@@ -1060,7 +1054,7 @@ if(user != null)
                                         </tr>
                                         <tr>
                                             <td>3</td>
-                                            <td><img src="images/xs/avatar4.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Dean Otto</span></td>
+                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Dean Otto</span></td>
                                             <td><span class="text-info">123 6th St. Melbourne, FL 32904</span></td>
                                             <td>Sept 13, 2017</td>
                                             <td>Sept 23, 2017</td>
@@ -1073,7 +1067,7 @@ if(user != null)
                                         </tr>
                                         <tr>
                                             <td>4</td>
-                                            <td><img src="images/xs/avatar2.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
+                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
                                             <td><span class="text-info">4 Shirley Ave. West Chicago, IL 60185</span></td>
                                             <td>Sept 17, 2017</td>
                                             <td>Sept 16, 2017</td>
@@ -1086,7 +1080,7 @@ if(user != null)
                                         </tr>
                                         <tr>
                                             <td>5</td>
-                                            <td><img src="images/xs/avatar5.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Hughe L.</span></td>
+                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Hughe L.</span></td>
                                             <td><span class="text-info">4 Shirley Ave. West Chicago, IL 60185</span></td>
                                             <td>Sept 18, 2017</td>
                                             <td>Sept 18, 2017</td>
@@ -1108,22 +1102,46 @@ if(user != null)
     </div>
     
 </div>
-<%}else{
-	response.sendRedirect("page-login.jsp");
-}%>
+
 <!-- Javascript -->
 <script src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
+
 <script src="<%=request.getContextPath()%>/assets/bundles/chartist.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
 <script src="<%=request.getContextPath()%>/assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
 <script src="<%=request.getContextPath()%>/vendor/toastr/toastr.js"></script>
 <script src="<%=request.getContextPath()%>/vendor/flot-charts/jquery.flot.selection.js"></script>
-
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
 <script src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/index.js"></script>
+<script type="text/javascript">
+function logout()
+{
+$.ajax({
+type :'POST',
+url: "../controller/logout.htm",
+success :function(resdata,status,xhr)
+{
+	if(resdata == "logout")
+		{
+		window.location = "page-login.jsp";
+		}
+
+},
+error : function(xhr, status, errorThrown) {
+
+},
+complete : function(xhr, status) {
+}
+});
+}
+	  
+
+
+
+</script>
+
 </body>
 
-<!-- Mirrored from www.wrraptheme.com/templates/lucid/hospital/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 16 May 2021 10:08:23 GMT -->
 </html>

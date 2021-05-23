@@ -34,7 +34,7 @@
                             <p class="lead">Create an account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" name="userformName" id="userform">
+                            <form class="form-auth-small" name="userformName" id="userform" autocomplete="off">
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
                                     <input type="email" required="required" class="form-control ValidateInput" name="signup-email" id="signup-email" placeholder="Your email">
@@ -61,6 +61,7 @@
 	<!-- END WRAPPER -->
 <%-- 	<script src="<%=request.getContextPath()%>/vendor/sweetalert/sweetalert.min.js" type="text/javascript"></script> --%>
 	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>  
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function register()
@@ -79,13 +80,12 @@ success :function(resdata,status,xhr)
 	
 if(resdata == "match")
 	{
-	alert(resdata);
 	 swal({
          title: 'Welcome!' +user ,
          text: 'Success register!',
          icon: 'success'
        }).then(function() {
-         window.open("page-login.jsp");
+         window.location = "page-login.jsp";
        });
 	}
 	if(resdata == "exist")
