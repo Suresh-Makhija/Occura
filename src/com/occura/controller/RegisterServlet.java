@@ -77,4 +77,15 @@ public void login(HttpServletRequest request,HttpServletResponse response) throw
 	response.getWriter().print(returnString);
 }
 
+
+@RequestMapping(value="/logout" , method = RequestMethod.POST)
+public void logout(HttpServletRequest request,HttpServletResponse response) throws IOException
+{
+	 HttpSession session  = request.getSession();
+	 session.invalidate();
+	response.getWriter().print("logout");
+}
+
+
+
 }
