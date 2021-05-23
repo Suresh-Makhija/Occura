@@ -1,10 +1,14 @@
 package com.occura.dao;
 
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 
+import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
 import com.occura.util.HibernateUtil;
 
@@ -85,6 +89,35 @@ public class AllListDao {
 			session.close();
 		}
 		return userBean;
+	}
+	
+	
+	public static List<PatientBean> getlistfromPatient()
+	{
+		Session session = HibernateUtil.openSession();
+		List<PatientBean> patient = null;
+		try {
+			
+		  Query query = session.createSQLQuery(" select a.first_name,a.last_name,a.full_name,b.appointment_date_time as appointment_date"
+		  		+ " from patient_tbl a join patient_appointment_tbl b "
+		  		+ " where DATE(b.appointment_date_time)=curdate() and  "
+		  		+ " b.appointment_date_time BETWEEN now() and date_add(now(), interval 15 MINUTE) order by b.appointment_date_time")
+				.addScalar("first_name")
+				.addScalar("last_name")
+				.addScalar("full_name")
+				.addScalar("appointment_date")
+				.setResultTransformer(
+					Transformers.aliasToBean(PatientBean.class));
+		  	patient = query.list();
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patient;
 	}
 	
 }

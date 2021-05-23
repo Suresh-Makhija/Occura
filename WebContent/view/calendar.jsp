@@ -22,6 +22,7 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">     
+
         
 </head>
 <body>
@@ -67,13 +68,39 @@
                
         </div>
  
+ 
+ <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 
 
+  <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>     --%>
+ 
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --> 
+<%--   <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/moment.min.js"></script>  --%>
+<%--   <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/fullcalendar.min.js"></script> --%>
+   
+    
+ <script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>    
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script><!-- bootstrap datepicker Plugin Js --> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
+ 
+ 
 <script type="text/javascript">
 
 
 
-  $(window).on('load', function(){
+$('#calendar').fullCalendar({
+    defaultDate: '2014-09-12',
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+});
+
+
+
+  /* $(window).on('load', function(){
 		
 		var date = new Date();
         var d = date.getDate();
@@ -131,19 +158,10 @@
 							
 						]
 	});
-});	
+});	 */
 
 </script>
- <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script> --%>   
- 
-  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/fullcalendar.min.js"></script>
-  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/moment.min.js"></script>
-    
- <script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script><!-- bootstrap datepicker Plugin Js --> 
-<script type="text/javascript" src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
- 
+
  
         
 </body>

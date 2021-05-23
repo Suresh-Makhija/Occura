@@ -18,6 +18,15 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
+
+<style type="text/css">   /* add header  */
+
+.validateStyle{
+	border: 1px solid red!important;
+}
+
+</style>
+
 </head>
 
 <body class="theme-cyan">
@@ -34,7 +43,9 @@
                             <p class="lead">Create an account</p>
                         </div>
                         <div class="body">
-                            <form class="form-auth-small" name="userformName" id="userform" autocomplete="off">
+
+                            <form class="form-auth-small" name="registerformName" id="registerform" autocomplete="off">
+
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
                                     <input type="email" required="required" class="form-control ValidateInput" name="signup-email" id="signup-email" placeholder="Your email">
@@ -45,7 +56,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="signup-password" class="control-label sr-only">Password</label>
-                                    <input type="password" required="required" class="form-control ValidateInput" name="signup-password" id="signup-password" placeholder="Password">
+                                    <input type="password" required="required" class="form-control ValidateInput" name="signup-password" id="signup-password" 
+                                    		placeholder="Password" autocomplete="new-password">
                                 </div>
                                 <input type="button" onclick="register();" class="btn btn-primary btn-lg btn-block" value="REGISTER"/>
                                 <div class="bottom">
@@ -61,53 +73,51 @@
 	<!-- END WRAPPER -->
 <%-- 	<script src="<%=request.getContextPath()%>/vendor/sweetalert/sweetalert.min.js" type="text/javascript"></script> --%>
 	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>  
+	  <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>  --%> 
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function register()
 {
-	  var flag = formValidate("userform");
-	  if(flag){
-	var email = $("#signup-email").val(); 
-	var user = $("#signup-user").val();
-	var password = $("#signup-password").val();
-$.ajax({
-type :'POST',
-url: "../controller/register.htm",
-data :{email : email, user : user,password:password},
-success :function(resdata,status,xhr)
-{
-	
-if(resdata == "match")
-	{
-	 swal({
-         title: 'Welcome!' +user ,
-         text: 'Success register!',
-         icon: 'success'
-       }).then(function() {
-         window.location = "page-login.jsp";
-       });
+	var flag = formValidate("registerform");
+	if(flag){
+		var email = $("#signup-email").val(); 
+		var user = $("#signup-user").val();
+		var password = $("#signup-password").val();
+		$.ajax({
+			type :'POST',
+			url: "../controller/register.htm",
+			data :{email : email, user : user,password:password},
+			success :function(resdata,status,xhr)
+			{
+				if(resdata == "match")
+				{
+				//alert(resdata);
+				 swal({
+			         title: 'Welcome!' +user ,
+			         text: 'Success register!',
+			         icon: 'success'
+			       }).then(function() {
+			         window.open("page-login.jsp");
+			       });
+				}
+				if(resdata == "exist")
+					{
+					swal("INFO!","User Already exits !! try diffrent one","info");
+					}
+				if(resdata == "notmatch"){
+					swal("ERROR!","Try again after 5 min","error");
+				}
+			},
+			error : function(xhr, status, errorThrown) {
+			
+			},
+			complete : function(xhr, status) {
+			}
+		});
 	}
-	if(resdata == "exist")
-		{
-		swal("INFO!","User Allready exit !! try diffrent one","info");
-		
-		}
-if(resdata == "notmatch"){
-	swal("ERROR!","Try again after 5 min","error");
-}
-},
-error : function(xhr, status, errorThrown) {
-
-},
-complete : function(xhr, status) {
-}
-});
-}
-	  
 }
 
-function formValidate(divName)
+function formValidate(divName)   /* add header  */
 {
 
             var flag=true;

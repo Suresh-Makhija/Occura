@@ -19,13 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.occura.bean.PatientBean;
+import com.occura.dao.AllInsertDao;
 import com.occura.utility.CommonUtility;
 
 @Controller
 @RequestMapping(value = "health")
 public class HealthController {
 
-	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
+	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
 	
 	@RequestMapping(value = "/appointment_user", method = RequestMethod.POST) // Mapping for Call the controller
 	public String login(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception 
@@ -66,19 +67,23 @@ public class HealthController {
 		  		// File Not Exists..
 		  	}
 		  	
-		  	patientbean.setAppointment_date(DATE_TIME_FORMAT.parse(patientbean.getAppointment_date_time()));
+		  	DateFormat outputformat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		  	
+		  	 Date date= DATE_TIME_FORMAT.parse(patientbean.getAppointment_date_time());
+		  	 
+		  	String output = outputformat.format(date);
+		  	
+		  	System.out.println("Convert-->"+outputformat.parse(output));
+		  	patientbean.setAppointment_date(outputformat.parse(output));
 		  	System.out.println(patientbean.getAppointment_date());
 		  	patientbean.setCrt_date(new Date());
-		  	
-		  	
-		  	
-		  	
+		  	patientbean.setFull_name(patientbean.getFirst_name()+" "+patientbean.getLast_name());
+		  	boolean value = false;
+		  	value =  AllInsertDao.savepatient(patientbean);
 		}
 		
 		String page = "";
 		//HttpSession session = request.getSession(false);
-		
-		
 		
 		page = "appointment_user";
 		
