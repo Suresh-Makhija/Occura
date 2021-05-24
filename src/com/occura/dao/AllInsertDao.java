@@ -77,6 +77,7 @@ public class AllInsertDao {
 		Session session = HibernateUtil.openSession();
 		Session session2 = HibernateUtil.openSession();
 		Transaction tx = null;
+		Transaction tx1 = null;
 		Query query=null;
 		PatientBean patientBean = null;
 		//Connection connection = null;
@@ -100,12 +101,15 @@ public class AllInsertDao {
 					tx.commit();
 					
 					query = session2.createQuery("FROM PatientBean where mobile_no = '"+patient.getMobile_no()+"' ");
-					patientBean = (PatientBean) query.list();
+					patientBean = (PatientBean) query.uniqueResult();
 					
 					session2.clear();
 					session2.close();
 				}
 			}
+			
+			tx1 = session.getTransaction();
+			tx1.begin();
 			
 			PatientAppointmentBean appBean = new PatientAppointmentBean();
 			appBean.setAppointment_date_time(patient.getAppointment_date());
@@ -114,7 +118,7 @@ public class AllInsertDao {
 			session.saveOrUpdate(appBean);
 			if(session != null)
 			{
-				tx.commit();
+				tx1.commit();
 			}
 			
 			
@@ -131,6 +135,10 @@ public class AllInsertDao {
 			if(tx != null)
 			{
 				tx.rollback();
+			}
+			if(tx1 != null)
+			{
+				tx1.rollback();
 			}
 			e.printStackTrace();
 		}

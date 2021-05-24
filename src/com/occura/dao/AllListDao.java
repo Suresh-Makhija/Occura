@@ -120,4 +120,30 @@ public class AllListDao {
 		return patient;
 	}
 	
+	
+	public static PatientBean findEmailByPatient(String email)
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		PatientBean patient = null;
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+				Query query = session.createQuery("FROM PatientBean where lower(email_address) = lower('"+email+"') ");
+				patient = (PatientBean) query.uniqueResult();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patient;
+	}
+	
 }

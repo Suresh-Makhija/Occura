@@ -18,13 +18,30 @@
    <bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name = "prefix" value = "/view/" />
       <property name = "suffix" value = ".jsp" />
-   </bean>
+   </bean> 
    
     <mvc:resources mapping = "/**" location = "/" />
     <mvc:annotation-driven/>
    
     <bean id="multipartResolver"   
     class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    
+    <!-- tiles configuration -->
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
+        <property name="viewClass">  
+            <value>  
+                org.springframework.web.servlet.view.tiles3.TilesView  
+            </value>  
+        </property>  
+    </bean>  
+    <bean  id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	    <property name="definitions">  
+	            <list>
+          			  <value>/WEB-INF/tiles/tiles-structure-layouts.xml</value>
+          			  <value>/WEB-INF/tiles/page-tiles-definations.xml</value>
+	            </list>
+	     </property>  
+    </bean> -->
     
    <bean class = "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
       <property name = "exceptionMappings">
