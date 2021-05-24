@@ -194,7 +194,17 @@
                     <nav class="sidebar-nav">
                         <ul class="main-menu metismenu">
                             <li class="active"><a href="index.html"><i class="icon-home"></i><span>Dashboard</span></a></li>
-                            <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li>
+<!--                             <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li> -->
+                            
+                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-calendar"></i><span>Appointment</span> </a>
+                                <ul>
+                                    <li><a href="appointment_user.jsp">Book Appointment</a></li>
+                                    <li><a href="calendar.jsp">Calendar</a></li>
+                                    <li><a href="testsnapshot.jsp">Test SnapShot</a></li>
+                                </ul>
+                            </li>
+                            
+                            
                             <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
                             <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li>
                             <li><a href="app-chat.html"><i class="icon-bubbles"></i>Chat App</a></li>
@@ -1107,14 +1117,13 @@
 <script src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> 
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>  -->
 
 <script src="<%=request.getContextPath()%>/assets/bundles/chartist.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
 <script src="<%=request.getContextPath()%>/assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
 <script src="<%=request.getContextPath()%>/vendor/toastr/toastr.js"></script>
 <script src="<%=request.getContextPath()%>/vendor/flot-charts/jquery.flot.selection.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
 <script src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/index.js"></script>
 <script type="text/javascript">

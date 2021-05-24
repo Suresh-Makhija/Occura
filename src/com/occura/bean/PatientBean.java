@@ -3,6 +3,7 @@ package com.occura.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,11 +29,11 @@ public class PatientBean implements Serializable {
 	private String photo;
 	private Date crt_date;
 	
-	@Transient
+	//@Transient
 	private MultipartFile uploadfile;
-	@Transient
+	//@Transient
 	private String appointment_date_time;
-	@Transient
+	//@Transient
 	private Date appointment_date;
 	
 	
@@ -42,6 +43,7 @@ public class PatientBean implements Serializable {
 	
 	
 	@Id
+	@Column
 	public int getPatient_id() {
 		return patient_id;
 	}
@@ -53,7 +55,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -65,7 +67,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getLast_name() {
 		return last_name;
 	}
@@ -77,7 +79,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getGender() {
 		return gender;
 	}
@@ -89,7 +91,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getAge() {
 		return age;
 	}
@@ -101,7 +103,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getFull_name() {
 		return full_name;
 	}
@@ -113,7 +115,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getMobile_no() {
 		return mobile_no;
 	}
@@ -125,7 +127,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getEmail_address() {
 		return email_address;
 	}
@@ -137,7 +139,7 @@ public class PatientBean implements Serializable {
 	}
 
 
-
+	@Column
 	public String getPhoto() {
 		return photo;
 	}
@@ -148,12 +150,7 @@ public class PatientBean implements Serializable {
 		this.photo = photo;
 	}
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	@Column
 	public Date getCrt_date() {
 		return crt_date;
 	}
@@ -163,45 +160,32 @@ public class PatientBean implements Serializable {
 	}
 
 
-	
+	@Transient
 	public MultipartFile getUploadfile() {
 		return uploadfile;
 	}
-
-
-
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
 	}
 
-
-
-	
-
-
-
+	@Transient
 	public String getAppointment_date_time() {
 		return appointment_date_time;
 	}
-
-
 
 	public void setAppointment_date_time(String appointment_date_time) {
 		this.appointment_date_time = appointment_date_time;
 	}
 
 
-
+	@Transient
 	public Date getAppointment_date() {
 		return appointment_date;
 	}
 
-
-
 	public void setAppointment_date(Date appointment_date) {
 		this.appointment_date = appointment_date;
 	}
-
 
 
 	public PatientBean( String first_name, String last_name, String gender, String age, String full_name,

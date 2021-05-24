@@ -5,7 +5,9 @@
       <welcome-file>view/page-login.jsp</welcome-file> 
    	<!-- <welcome-file>view/appointment_user.jsp</welcome-file> -->
      <!-- <welcome-file>view/calendar.jsp</welcome-file> --> 
-			<!-- <welcome-file>view/testsnapshot.jsp</welcome-file>  -->
+<!-- 			<welcome-file>view/testsnapshot.jsp</welcome-file>  -->
+			
+			
   </welcome-file-list>
   
    <servlet>
