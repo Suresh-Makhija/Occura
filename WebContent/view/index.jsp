@@ -1,4 +1,9 @@
+<%@include file="header.jsp" %>
 <!doctype html>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.occura.bean.UserBean"%>
 <html lang="en">
 
 
@@ -10,493 +15,19 @@
 <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
 <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
 
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<!-- VENDOR CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/chartist/css/chartist.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/toastr/toastr.min.css">
-
-<!-- MAIN CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/color_skins.css">
 </head>
 <body class="theme-cyan">
+<%List<Integer> yearList  = new ArrayList<>();
+Date d = new Date();
+int currentYear = d.getYear() + 1900 ;
+System.out.println(currentYear);
+System.out.println(currentYear);
+for(int i=0;i<5;i++)
+{
+	yearList.add(currentYear - i);
+} %>
 
-<!-- Page Loader -->
-<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="m-t-30"><img src="" width="48" height="48" alt="Occura"></div>
-        <p>Please wait...</p>        
-    </div>
-</div>
-<!-- Overlay For Sidebars -->
-
-<div id="wrapper">
-
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-btn">
-                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
-            </div>
-
-            <div class="navbar-brand">
-                <a href="index.jsp"><img src="" alt="Occura Logo" class="img-responsive logo"></a>                
-            </div>
-            
-            <div class="navbar-right">
-                <form id="navbar-search" class="navbar-form search-form">
-                    <input value="" class="form-control" placeholder="Search here..." type="text">
-                    <button type="button" class="btn btn-default"><i class="icon-magnifier"></i></button>
-                </form>                
-
-                <div id="navbar-menu">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="doctor-events.html" class="icon-menu d-none d-sm-block d-md-none d-lg-block"><i class="icon-calendar"></i></a>
-                        </li>
-                        <li>
-                            <a href="app-chat.html" class="icon-menu d-none d-sm-block"><i class="icon-bubbles"></i></a>
-                        </li>
-                        <li>
-                            <a href="app-inbox.html" class="icon-menu d-none d-sm-block"><i class="icon-envelope"></i><span class="notification-dot"></span></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="icon-bell"></i>
-                                <span class="notification-dot"></span>
-                            </a>
-                            <ul class="dropdown-menu notifications">
-                                <li class="header"><strong>You have 4 new Notifications</strong></li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <i class="icon-info text-warning"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text">Campaign <strong>Holiday Sale</strong> is nearly reach budget limit.</p>
-                                                <span class="timestamp">10:00 AM Today</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>                               
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <i class="icon-like text-success"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text">Your New Campaign <strong>Holiday Sale</strong> is approved.</p>
-                                                <span class="timestamp">11:30 AM Today</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                 <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <i class="icon-pie-chart text-info"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text">Website visits from Twitter is 27% higher than last week.</p>
-                                                <span class="timestamp">04:00 PM Today</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <i class="icon-info text-danger"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="text">Error on website analytics configurations</p>
-                                                <span class="timestamp">Yesterday</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="footer"><a href="javascript:void(0);" class="more">See all notifications</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown"><i class="icon-equalizer"></i></a>
-                            <ul class="dropdown-menu user-menu menu-icon">
-                                <li class="menu-heading">ACCOUNT SETTINGS</li>
-                                <li><a href="javascript:void(0);"><i class="icon-note"></i> <span>Basic</span></a></li>
-                                <li><a href="javascript:void(0);"><i class="icon-equalizer"></i> <span>Preferences</span></a></li>
-                                <li><a href="javascript:void(0);"><i class="icon-lock"></i> <span>Privacy</span></a></li>
-                                <li><a href="javascript:void(0);"><i class="icon-bell"></i> <span>Notifications</span></a></li>
-                                <li class="menu-heading">BILLING</li>
-                                <li><a href="javascript:void(0);"><i class="icon-credit-card"></i> <span>Payments</span></a></li>
-                                <li><a href="javascript:void(0);"><i class="icon-printer"></i> <span>Invoices</span></a></li>                                
-                                <li><a href="javascript:void(0);"><i class="icon-refresh"></i> <span>Renewals</span></a></li>
-                            </ul>
-                        </li>
-                        <li>
-<!--                         	<button onclick="logout();" class="icon-menu"></button> -->
-                            <a  class="icon-menu" id = "logoutMenu" onclick="logout();"><i class="icon-login"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div id="left-sidebar" class="sidebar">
-        <div class="sidebar-scroll">
-            <div class="user-account">
-                <img src="<%=request.getContextPath()%>/images/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
-                <div class="dropdown">
-                    <span>Welcome,</span>
-                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>Dr. Chandler Bing</strong></a>
-                    <ul class="dropdown-menu dropdown-menu-right account">
-                        <li><a href="doctor-profile.html"><i class="icon-user"></i>My Profile</a></li>
-                        <li><a href="app-inbox.html"><i class="icon-envelope-open"></i>Messages</a></li>
-                        <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li>
-                        <li class="divider"></li>
-                        <li><a id="logoutSubMenu" onclick="logout();"><i class="icon-power"></i>Logout</a></li>
-                    </ul>
-                </div>
-                <hr>
-                <ul class="row list-unstyled">
-                    <li class="col-4">
-                        <small>Exp</small>
-                        <h6>14</h6>
-                    </li>
-                    <li class="col-4">
-                        <small>Awards</small>
-                        <h6>13</h6>
-                    </li>
-                    <li class="col-4">
-                        <small>Clients</small>
-                        <h6>213</h6>
-                    </li>
-                </ul>
-            </div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
-                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu">Menu</a></li>                
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#sub_menu"><i class="icon-grid"></i></a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Chat"><i class="icon-book-open"></i></a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#setting"><i class="icon-settings"></i></a></li>                
-            </ul>
-                
-            <!-- Tab panes -->
-            <div class="tab-content p-l-0 p-r-0">
-                <div class="tab-pane active" id="menu">
-                    <nav class="sidebar-nav">
-                        <ul class="main-menu metismenu">
-                            <li class="active"><a href="index.html"><i class="icon-home"></i><span>Dashboard</span></a></li>
-                            <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li>
-                            <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
-                            <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li>
-                            <li><a href="app-chat.html"><i class="icon-bubbles"></i>Chat App</a></li>
-                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-user-follow"></i><span>Doctors</span> </a>
-                                <ul>
-                                    <li><a href="doctors-all.html">All Doctors</a></li>
-                                    <li><a href="doctor-add.html">Add Doctor</a></li>
-                                    <li><a href="doctor-profile.html">Doctor Profile</a></li>
-                                    <li><a href="doctor-events.html">Doctor Schedule</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-user"></i><span>Patients</span> </a>
-                                <ul>
-                                    <li><a href="patients-all.html">All Patients</a></li>
-                                    <li><a href="patient-add.html">Add Patient</a></li>
-                                    <li><a href="patient-profile.html">Patient Profile</a></li>
-                                    <li><a href="patient-invoice.html">Invoice</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-wallet"></i><span>Payments</span> </a>
-                                <ul>
-                                    <li><a href="payments.html">Payments</a></li>
-                                    <li><a href="payments-add.html">Add Payment</a></li>
-                                    <li><a href="payments-invoice.html">Invoice</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Departments</span> </a>
-                                <ul>
-                                    <li><a href="depa-add.html">Add</a></li>
-                                    <li><a href="depa-all.html">All Departments</a></li>
-                                    <li><a href="javascript:void(0);">Cardiology</a></li>
-                                    <li><a href="javascript:void(0);">Pulmonology</a></li>
-                                    <li><a href="javascript:void(0);">Gynecology</a></li>
-                                    <li><a href="javascript:void(0);">Neurology</a></li>
-                                    <li><a href="javascript:void(0);">Urology</a></li>
-                                    <li><a href="javascript:void(0);">Gastrology</a></li>
-                                    <li><a href="javascript:void(0);">Pediatrician</a></li>
-                                    <li><a href="javascript:void(0);">Laboratory</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="our-centres.html"><i class="icon-pointer"></i>WorldWide Centres</a></li>
-                            <li>
-                                <a href="#Authentication" class="has-arrow"><i class="icon-lock"></i><span>Authentication</span></a>
-                                <ul>
-                                    <li><a href="page-login.html">Login</a></li>
-                                    <li><a href="page-register.html">Register</a></li>
-                                    <li><a href="page-lockscreen.html">Lockscreen</a></li>
-                                    <li><a href="page-forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="page-404.html">Page 404</a></li>
-                                    <li><a href="page-403.html">Page 403</a></li>
-                                    <li><a href="page-500.html">Page 500</a></li>
-                                    <li><a href="page-503.html">Page 503</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#Widgets" class="has-arrow"><i class="icon-puzzle"></i><span>Widgets</span></a>
-                                <ul>
-                                    <li><a href="widgets-statistics.html">Statistics Widgets</a></li>
-                                    <li><a href="widgets-data.html">Data Widgets</a></li>
-                                    <li><a href="widgets-chart.html">Chart Widgets</a></li>
-                                    <li><a href="widgets-weather.html">Weather Widgets</a></li>
-                                    <li><a href="widgets-social.html">Social Widgets</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#Pages" class="has-arrow"><i class="icon-docs"></i><span>Extra Pages</span></a>
-                                <ul>
-                                    <li><a href="page-blank.html">Blank Page</a> </li>
-                                    <li><a href="doctor-profile.html">Profile</a></li>
-                                    <li><a href="page-gallery.html">Image Gallery <span class="badge badge-default float-right">v1</span></a> </li>
-                                    <li><a href="page-gallery2.html">Image Gallery <span class="badge badge-warning float-right">v2</span></a> </li>
-                                    <li><a href="page-timeline.html">Timeline</a></li>
-                                    <li><a href="page-timeline-h.html">Horizontal Timeline</a></li>
-                                    <li><a href="page-pricing.html">Pricing</a></li>
-                                    <li><a href="page-search-results.html">Search Results</a></li>
-                                    <li><a href="page-helper-class.html">Helper Classes</a></li>
-                                    <li><a href="page-maintenance.html">Maintenance</a></li>
-                                    <li><a href="page-testimonials.html">Testimonials</a></li>
-                                    <li><a href="page-faq.html">FAQs</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="tab-pane" id="sub_menu">
-                    <nav class="sidebar-nav">
-                        <ul class="main-menu metismenu">
-                            <li>
-                                <a href="#uiElements" class="has-arrow"><i class="icon-diamond"></i> <span>UI Elements</span></a>
-                                <ul>
-                                    <li><a href="ui-typography.html">Typography</a></li>
-                                    <li><a href="ui-tabs.html">Tabs</a></li>
-                                    <li><a href="ui-buttons.html">Buttons</a></li>
-                                    <li><a href="ui-bootstrap.html">Bootstrap UI</a></li>
-                                    <li><a href="ui-icons.html">Icons</a></li>
-                                    <li><a href="ui-notifications.html">Notifications</a></li>
-                                    <li><a href="ui-colors.html">Colors</a></li>
-                                    <li><a href="ui-dialogs.html">Dialogs</a></li>                                    
-                                    <li><a href="ui-list-group.html">List Group</a></li>
-                                    <li><a href="ui-media-object.html">Media Object</a></li>
-                                    <li><a href="ui-modals.html">Modals</a></li>
-                                    <li><a href="ui-nestable.html">Nestable</a></li>
-                                    <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                    <li><a href="ui-range-sliders.html">Range Sliders</a></li>
-                                    <li><a href="ui-treeview.html">Treeview</a></li>
-                                </ul>
-                            </li>                            
-                            <li>
-                                <a href="#forms" class="has-arrow"><i class="icon-pencil"></i> <span>Forms</span></a>
-                                <ul>
-                                    <li><a href="forms-validation.html">Form Validation</a></li>
-                                    <li><a href="forms-advanced.html">Advanced Elements</a></li>
-                                    <li><a href="forms-basic.html">Basic Elements</a></li>
-                                    <li><a href="forms-wizard.html">Form Wizard</a></li>                                    
-                                    <li><a href="forms-dragdropupload.html">Drag &amp; Drop Upload</a></li>                                    
-                                    <li><a href="forms-cropping.html">Image Cropping</a></li>
-                                    <li><a href="forms-summernote.html">Summernote</a></li>
-                                    <li><a href="forms-editors.html">CKEditor</a></li>
-                                    <li><a href="forms-markdown.html">Markdown</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#Tables" class="has-arrow"><i class="icon-tag"></i> <span>Tables</span></a>
-                                <ul>
-                                    <li><a href="table-basic.html">Tables Example<span class="badge badge-info float-right">New</span></a> </li>
-                                    <li><a href="table-normal.html">Normal Tables</a> </li>
-                                    <li><a href="table-jquery-datatable.html">Jquery Datatables</a> </li>
-                                    <li><a href="table-editable.html">Editable Tables</a> </li>
-                                    <li><a href="table-color.html">Tables Color</a> </li>
-                                    <li><a href="table-filter.html">Table Filter <span class="badge badge-info float-right">New</span></a> </li>
-                                    <li><a href="table-dragger.html">Table dragger <span class="badge badge-info float-right">New</span></a> </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#charts" class="has-arrow"><i class="icon-bar-chart"></i> <span>Charts</span></a>
-                                <ul>
-                                    <li><a href="chart-e.html">E Charts</a> </li>
-                                    <li><a href="chart-morris.html">Morris</a> </li>
-                                    <li><a href="chart-flot.html">Flot</a> </li>
-                                    <li><a href="chart-chartjs.html">ChartJS</a> </li>                                    
-                                    <li><a href="chart-jquery-knob.html">Jquery Knob</a> </li>                                        
-                                    <li><a href="chart-sparkline.html">Sparkline Chart</a></li>
-                                    <li><a href="chart-peity.html">Peity</a></li>
-                                    <li><a href="chart-c3.html">C3 Charts</a></li>
-                                    <li><a href="chart-gauges.html">Gauges</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#Maps" class="has-arrow"><i class="icon-map"></i> <span>Maps</span></a>
-                                <ul>
-                                    <li><a href="map-google.html">Google Map</a></li>
-                                    <li><a href="map-yandex.html">Yandex Map</a></li>
-                                    <li><a href="map-jvectormap.html">jVector Map</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="tab-pane p-l-15 p-r-15" id="Chat">
-                    <form>
-                        <div class="input-group m-b-20">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" ><i class="icon-magnifier"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Search...">
-                        </div>
-                    </form>
-                    <ul class="right_chat list-unstyled">
-                        <li class="online">
-                            <a href="javascript:void(0);">
-                                <div class="media">
-                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" alt="">
-                                    <div class="media-body">
-                                        <span class="name">Dr. Chris Fox</span>
-                                        <span class="message">Dentist</span>
-                                        <span class="badge badge-outline status"></span>
-                                    </div>
-                                </div>
-                            </a>                            
-                        </li>
-                        <li class="online">
-                            <a href="javascript:void(0);">
-                                <div class="media">
-                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" alt="">
-                                    <div class="media-body">
-                                        <span class="name">Dr. Joge Lucky</span>
-                                        <span class="message">Gynecologist</span>
-                                        <span class="badge badge-outline status"></span>
-                                    </div>
-                                </div>
-                            </a>                            
-                        </li>
-                        <li class="offline">
-                            <a href="javascript:void(0);">
-                                <div class="media">
-                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" alt="">
-                                    <div class="media-body">
-                                        <span class="name">Dr. Isabella</span>
-                                        <span class="message">CEO, WrapTheme</span>
-                                        <span class="badge badge-outline status"></span>
-                                    </div>
-                                </div>
-                            </a>                            
-                        </li>
-                        <li class="offline">
-                            <a href="javascript:void(0);">
-                                <div class="media">
-                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" alt="">
-                                    <div class="media-body">
-                                        <span class="name">Dr. Folisise Chosielie</span>
-                                        <span class="message">Physical Therapy</span>
-                                        <span class="badge badge-outline status"></span>
-                                    </div>
-                                </div>
-                            </a>                            
-                        </li>
-                        <li class="online">
-                            <a href="javascript:void(0);">
-                                <div class="media">
-                                    <img class="media-object " src="<%=request.getContextPath()%>/images/xs/avatar3.jpg" alt="">
-                                    <div class="media-body">
-                                        <span class="name">Dr. Alexander</span>
-                                        <span class="message">Audiology</span>
-                                        <span class="badge badge-outline status"></span>
-                                    </div>
-                                </div>
-                            </a>                            
-                        </li>                        
-                    </ul>
-                </div>
-                <div class="tab-pane p-l-15 p-r-15" id="setting">
-                    <h6>Choose Skin</h6>
-                    <ul class="choose-skin list-unstyled">
-                        <li data-theme="purple">
-                            <div class="purple"></div>
-                            <span>Purple</span>
-                        </li>                   
-                        <li data-theme="blue">
-                            <div class="blue"></div>
-                            <span>Blue</span>
-                        </li>
-                        <li data-theme="cyan" class="active">
-                            <div class="cyan"></div>
-                            <span>Cyan</span>
-                        </li>
-                        <li data-theme="green">
-                            <div class="green"></div>
-                            <span>Green</span>
-                        </li>
-                        <li data-theme="orange">
-                            <div class="orange"></div>
-                            <span>Orange</span>
-                        </li>
-                        <li data-theme="blush">
-                            <div class="blush"></div>
-                            <span>Blush</span>
-                        </li>
-                    </ul>
-                    <hr>
-                    <h6>General Settings</h6>
-                    <ul class="setting-list list-unstyled">
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Report Panel Usag</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Email Redirect</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Notifications</span>
-                            </label>                      
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Auto Updates</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Offline</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Location Permission</span>
-                            </label>
-                        </li>
-                    </ul>
-                </div>             
-            </div>          
-        </div>
-    </div>
 
     <div id="main-content">
         <div class="container-fluid">
@@ -505,33 +36,11 @@
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>                            
+                            <li class="breadcrumb-item"><a href="index.jsp"><i class="icon-home"></i></a></li>                            
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                     </div>            
-                    <div class="col-lg-6 col-md-4 col-sm-12 text-right">
-                        <div class="bh_chart hidden-xs">
-                            <div class="float-left m-r-15">
-                                <small>Visitors</small>
-                                <h6 class="mb-0 mt-1"><i class="icon-user"></i> 1,784</h6>
-                            </div>
-                            <span class="bh_visitors float-right">2,5,1,8,3,6,7,5</span>
-                        </div>
-                        <div class="bh_chart hidden-sm">
-                            <div class="float-left m-r-15">
-                                <small>Visits</small>
-                                <h6 class="mb-0 mt-1"><i class="icon-globe"></i> 325</h6>
-                            </div>
-                            <span class="bh_visits float-right">10,8,9,3,5,8,5</span>
-                        </div>
-                        <div class="bh_chart hidden-sm">
-                            <div class="float-left m-r-15">
-                                <small>Chats</small>
-                                <h6 class="mb-0 mt-1"><i class="icon-bubbles"></i> 13</h6>
-                            </div>
-                            <span class="bh_chats float-right">1,8,5,6,2,4,3,2</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -547,14 +56,14 @@
                                                 <div class="icon"><i class="fa fa-user"></i> </div>
                                                 <div class="content">
                                                     <div class="text">Total Patient</div>
-                                                    <h5 class="number">215</h5>
+                                                    <h5 id="total_patient" class="number">215</h5>
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
                                                 <div class="icon"><i class="fa fa-user"></i> </div>
                                                 <div class="content">
                                                     <div class="text">New Patient</div>
-                                                    <h5 class="number">21</h5>
+                                                    <h5 id="new_patient" class="number">21</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -566,92 +75,34 @@
                                                 <div class="icon"><i class="fa fa-user-md"></i> </div>
                                                 <div class="content">
                                                     <div class="text">Operations</div>
-                                                    <h5 class="number">06</h5>
+                                                    <h5 id="operation" class="fa fa-inr">06</h5>
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
                                                 <div class="icon"><i class="fa fa-user-md"></i> </div>
                                                 <div class="content">
                                                     <div class="text">Surgery</div>
-                                                    <h5 class="number">04</h5>
+                                                    <h5 id="revenue" class="number fa fa-inr">$18,925</h5>
                                                 </div>
                                             </div>
-                                            <div class="carousel-item">
-                                                <div class="icon"><i class="fa fa-user-md"></i> </div>
-                                                <div class="content">
-                                                    <div class="text">Treatment</div>
-                                                    <h5 class="number">23</h5>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-6">
-                            <div class="card top_counter">
-                                <div class="body">
-                                    <div id="top_counter3" class="carousel vert slide" data-ride="carousel" data-interval="2300">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <div class="icon"><i class="fa fa-eye"></i> </div>
-                                                <div class="content">
-                                                    <div class="text">Total Visitors</div>
-                                                    <h5 class="number">10K</h5>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <div class="icon"><i class="fa fa-eye"></i> </div>
-                                                <div class="content">
-                                                    <div class="text">Today Visitors</div>
-                                                    <h5 class="number">142</h5>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <div class="icon"><i class="fa fa-eye"></i> </div>
-                                                <div class="content">
-                                                    <div class="text">Month Visitors</div>
-                                                    <h5 class="number">2,087</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                    <hr>
-                                    <div class="icon"><i class="fa fa-university"></i> </div>
-                                    <div class="content">
-                                        <div class="text">Revenue</div>
-                                        <h5 class="number">$18,925</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12">
-                            <div class="card top_counter">
-                                <div class="body">
-                                    <div class="icon"><i class="fa fa-thumbs-o-up"></i> </div>
-                                    <div class="content">
-                                        <div class="text">Happy Clients</div>
-                                        <h5 class="number">528</h5>
-                                    </div>
-                                    <hr>
-                                    <div class="icon"><i class="fa fa-smile-o"></i> </div>
-                                    <div class="content">
-                                        <div class="text">Smiley Faces</div>
-                                        <h5 class="number">2,528</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      
+                       
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="card">
                         <div class="header">
                             <h2>Total Revenue</h2>
+                            
                             <ul class="header-dropdown">
-                                <li><a class="tab_btn" href="javascript:void(0);" title="Weekly">W</a></li>
-                                <li><a class="tab_btn" href="javascript:void(0);" title="Monthly">M</a></li>
-                                <li><a class="tab_btn active" href="javascript:void(0);" title="Yearly">Y</a></li>
+                                <li><a class="tab_btn" onclick="revenueGraph(this.id,<%=currentYear%>);" id="monthlyRevenue" href="javascript:void(0);" title="Monthly">M</a></li>
+                                <li><a class="tab_btn active" id="yearlyRevenue" onclick="revenueGraph(this.id,<%=currentYear%>);"  href="javascript:void(0);" title="Yearly">Y</a></li>
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
                                     <ul class="dropdown-menu dropdown-menu-right">
@@ -666,22 +117,17 @@
                             <div class="row clearfix">
                                 <div class="col-md-4">
                                     <div class="body bg-success text-light">
-                                        <h4><i class="icon-wallet"></i> 7,12,326$</h4>
+                                        <h4 id="operation_income"><i class="icon-wallet"></i> 7,12,326$</h4>
                                         <span>Operation Income</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="body bg-warning text-light">
-                                        <h4><i class="icon-wallet"></i> 25,965$</h4>
+                                        <h4 id="pharmacy_income"><i class="icon-wallet"></i> 25,965$</h4>
                                         <span>Pharmacy Income</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="body bg-danger text-light">
-                                        <h4><i class="icon-wallet"></i> 14,965$</h4>
-                                        <span>Hospital Expenses</span>
-                                    </div>
-                                </div>
+                              
                             </div>
                             <div id="total_revenue" class="ct-chart m-t-20"></div>
                         </div>
@@ -693,11 +139,8 @@
                 <div class="col-lg-8 col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2>Visitors Statistics</h2>
+                            <h2>Patient Statistics</h2>
                             <ul class="header-dropdown">
-                                <li><a class="tab_btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Weekly">W</a></li>
-                                <li><a class="tab_btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Monthly">M</a></li>
-                                <li><a class="tab_btn active" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yearly">Y</a></li>
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
                                     <ul class="dropdown-menu dropdown-menu-right">
@@ -778,57 +221,57 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2>ToDo List <small>This Month task list</small></h2>
+                            <h2>ToDo List <small>Today task list</small></h2>
                         </div>
                         <div class="body todo_list">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <label class="fancy-checkbox mb-0">
-                                        <input type="checkbox" name="checkbox" checked>
-                                        <span>A Brief History Of Anesthetics</span>
-                                    </label>
-                                    <div class="m-l-35 m-b-30">
-                                        <small class="text-muted">SCHEDULED FOR 3:00 P.M. ON JUN 2018</small>
-                                        <ul class="list-unstyled team-info">
-                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
-                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
-                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" data-toggle="tooltip" data-placement="top" title="Isabella" alt="Avatar"></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <label class="fancy-checkbox mb-0">
-                                        <input type="checkbox" name="checkbox">
-                                        <span>Using Laser Teatment to Help</span>
-                                    </label>
-                                    <div class="m-l-35 m-b-30">
-                                        <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small>
-                                    </div>
-                                </li>
-                                <li>
-                                    <label class="fancy-checkbox mb-0">
-                                        <input type="checkbox" name="checkbox">
-                                        <span>Selecting the Apnea Treatment</span>
-                                    </label>
-                                    <div class="m-l-35 m-b-30">
-                                        <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small><br>
-                                        <small class="text-warning">ICU PATIENT - LAST 2 DAYS</small><br>
-                                        <small>Patient Name: <a href="#">Hossein</a></small>                                        
-                                    </div>
-                                </li>
-                                <li>
-                                    <label class="fancy-checkbox mb-0">
-                                        <input type="checkbox" name="checkbox">
-                                        <span>Using Laser Teatment to Help</span>
-                                    </label>
-                                    <div class="m-l-35">
-                                        <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small>
-                                        <ul class="list-unstyled team-info">
-                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li>
-                                            <li><img src="<%=request.getContextPath()%>/images/xs/avatar6.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                            <ul class="list-unstyled" id="toDoPatientToday">
+<!--                                 <li> -->
+<!--                                     <label class="fancy-checkbox mb-0"> -->
+<!--                                         <input type="checkbox" name="checkbox" checked> -->
+<!--                                         <span>A Brief History Of Anesthetics</span> -->
+<!--                                     </label> -->
+<!--                                     <div class="m-l-35 m-b-30"> -->
+<!--                                         <small class="text-muted">SCHEDULED FOR 3:00 P.M. ON JUN 2018</small> -->
+<!--                                         <ul class="list-unstyled team-info"> -->
+<%--                                             <li><img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li> --%>
+<%--                                             <li><img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li> --%>
+<%--                                             <li><img src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" data-toggle="tooltip" data-placement="top" title="Isabella" alt="Avatar"></li> --%>
+<!--                                         </ul> -->
+<!--                                     </div> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <label class="fancy-checkbox mb-0"> -->
+<!--                                         <input type="checkbox" name="checkbox"> -->
+<!--                                         <span>Using Laser Teatment to Help</span> -->
+<!--                                     </label> -->
+<!--                                     <div class="m-l-35 m-b-30"> -->
+<!--                                         <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small> -->
+<!--                                     </div> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <label class="fancy-checkbox mb-0"> -->
+<!--                                         <input type="checkbox" name="checkbox"> -->
+<!--                                         <span>Selecting the Apnea Treatment</span> -->
+<!--                                     </label> -->
+<!--                                     <div class="m-l-35 m-b-30"> -->
+<!--                                         <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small><br> -->
+<!--                                         <small class="text-warning">ICU PATIENT - LAST 2 DAYS</small><br> -->
+<!--                                         <small>Patient Name: <a href="#">Hossein</a></small>                                         -->
+<!--                                     </div> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <label class="fancy-checkbox mb-0"> -->
+<!--                                         <input type="checkbox" name="checkbox"> -->
+<!--                                         <span>Using Laser Teatment to Help</span> -->
+<!--                                     </label> -->
+<!--                                     <div class="m-l-35"> -->
+<!--                                         <small class="text-muted">SCHEDULED FOR 4:30 P.M. ON JUN 2018</small> -->
+<!--                                         <ul class="list-unstyled team-info"> -->
+<%--                                             <li><img src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Chris Fox" alt="Avatar"></li> --%>
+<%--                                             <li><img src="<%=request.getContextPath()%>/images/xs/avatar6.jpg" data-toggle="tooltip" data-placement="top" title="Dr. Joge Lucky" alt="Avatar"></li> --%>
+<!--                                         </ul> -->
+<!--                                     </div> -->
+<!--                                 </li> -->
                             </ul>
                         </div>
                     </div>
@@ -836,15 +279,13 @@
             </div>
 
             <div class="row clearfix">
-                <div class="col-lg-6 col-md-12">
+                <div class="col-lg-12 col-md-12">
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h2>Patient history</h2>
+                                    <h2>Operation history</h2>
                                     <ul class="header-dropdown">
-                                        <li><a class="tab_btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Weekly">W</a></li>
-                                        <li><a class="tab_btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Monthly">M</a></li>
                                         <li><a class="tab_btn active" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yearly">Y</a></li>
                                         <li class="dropdown">
                                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
@@ -861,261 +302,21 @@
                                 </div>
                             </div>
                         </div>                        
-                        <div class="col-lg-12 col-md-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h2>Recent Chat</h2>
-                                    <ul class="header-dropdown">
-                                        <li class="dropdown">
-                                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a href="javascript:void(0);">Action</a></li>
-                                                <li><a href="javascript:void(0);">Another Action</a></li>
-                                                <li><a href="javascript:void(0);">Something else</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="body text-center">
-                                    <div class="cwidget-scroll">
-                                        <ul class="chat-widget m-r-5 clearfix">
-                                            <li class="left float-left">
-                                                <img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle" alt="">
-                                                <div class="chat-info">       
-                                                    <span class="message">Hello, John<br>What is the update on Project X?</span>
-                                                </div>
-                                            </li>
-                                            <li class="right">
-                                                <img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle" alt="">
-                                                <div class="chat-info">
-                                                    <span class="message">Hi, Chandler<br> It is almost completed. I will send you an email later today.</span>
-                                                </div>
-                                            </li>
-                                            <li class="left float-left">
-                                                <img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle" alt="">
-                                                <div class="chat-info">
-                                                    <span class="message">That's great. Will catch you in evening.</span>
-                                                </div>
-                                            </li>
-                                            <li class="right">
-                                                <img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle" alt="">
-                                                <div class="chat-info">
-                                                    <span class="message">Sure we'will have a blast today.</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="input-group p-t-15">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" ><i class="icon-paper-plane"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Enter text here...">                                    
-                                    </div>                            
-                                </div>
-                            </div>
-                        </div>                        
+                                           
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Hospital Activities</h2>
-                        </div>
-                        <div class="body">
-                            <div class="timeline-item green">
-                                <span class="date">20-04-2018 - Today</span>
-                                <h5>A Brief History Of Anesthetics</h5>
-                                <span><a href="javascript:void(0);">Elisse Joson</a> San Francisco, CA</span>
-                                <div class="msg">
-                                    <p>I'm speaking with myself, number one, because I have a very good brain and I've said a lot of things.</p>
-                                    <a href="javascript:void(0);" class="m-r-20"><i class="icon-heart"></i> Like</a>
-                                    <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="icon-bubbles"></i> Comment</a>
-                                    <div class="collapse m-t-10" id="collapseExample">
-                                        <div class="well">
-                                            <form>
-                                                <div class="form-group">
-                                                    <textarea rows="2" class="form-control no-resize" placeholder="Enter here for tweet..."></textarea>
-                                                </div>
-                                                <button class="btn btn-primary">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
 
-                            <div class="timeline-item blue">
-                                <span class="date">19-04-2018 - Yesterday</span>
-                                <h5>Using Laser Teatment to Help</h5>
-                                <span><a href="javascript:void(0);" title="">Katherine Lumaad</a> Oakland, CA</span>
-                                <div class="msg">
-                                    <p>web by far While that's mock-ups and this is politics, are they really so different? I think the only card she has is the Lorem card.</p>
-                                    <div class="timeline_img m-b-20">
-                                        <img class="w-25" src="<%=request.getContextPath()%>/images/blog/blog-page-4.jpg" alt="Awesome Image">
-                                        <img class="w-25" src="<%=request.getContextPath()%>/images/blog/blog-page-2.jpg" alt="Awesome Image">
-                                    </div>
-                                    <a href="javascript:void(0);" class="m-r-20"><i class="icon-heart"></i> Like</a>
-                                    <a role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1"><i class="icon-bubbles"></i> Comment</a>
-                                    <div class="collapse m-t-10" id="collapseExample1">
-                                        <div class="well">
-                                            <form>
-                                                <div class="form-group">
-                                                    <textarea rows="2" class="form-control no-resize" placeholder="Enter here for tweet..."></textarea>
-                                                </div>
-                                                <button class="btn btn-primary">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="timeline-item warning pb-0">
-                                <span class="date">21-02-2018</span>
-                                <h5>Selecting the right Apnea Treatment</h5>
-                                <span><a href="javascript:void(0);" title="">Gary Camara</a> San Francisco, CA</span>
-                                <div class="msg">
-                                    <p>I write the best placeholder text, and I'm the biggest developer on the web by far... While that's mock-ups and this is politics, is the Lorem card.</p>
-                                    <a href="javascript:void(0);" class="m-r-20"><i class="icon-heart"></i> Like</a>
-                                    <a role="button" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><i class="icon-bubbles"></i> Comment</a>
-                                    <div class="collapse m-t-10" id="collapseExample2">
-                                        <div class="well">
-                                            <form>
-                                                <div class="form-group">
-                                                    <textarea rows="2" class="form-control no-resize" placeholder="Enter here for tweet..."></textarea>
-                                                </div>
-                                                <button class="btn btn-primary">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Patients Status</h2>
-                            <ul class="header-dropdown">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another Action</a></li>
-                                        <li><a href="javascript:void(0);">Something else</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <p class="float-md-right">
-                                <span class="badge badge-success">3 Admit</span>
-                                <span class="badge badge-default">2 Discharge</span>
-                            </p>
-                            <div class="table-responsive table_middel">
-                                <table class="table m-b-0">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Patients</th>
-                                            <th>Adress</th>
-                                            <th>START Date</th>
-                                            <th>END Date</th>
-                                            <th>Priority</th>
-                                            <th>Progress</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar3.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>John</span></td>
-                                            <td><span class="text-info">70 Bowman St. South Windsor, CT 06074</span></td>
-                                            <td>Sept 13, 2017</td>
-                                            <td>Sept 16, 2017</td>
-                                            <td><span class="badge badge-warning">MEDIUM</span></td>
-                                            <td><div class="progress progress-xs">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"> <span class="sr-only">40% Complete</span> </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge badge-success">Admit</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar1.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
-                                            <td><span class="text-info">123 6th St. Melbourne, FL 32904</span></td>
-                                            <td>Sept 13, 2017</td>
-                                            <td>Sept 22, 2017</td>
-                                            <td><span class="badge badge-warning">MEDIUM</span></td>
-                                            <td><div class="progress progress-xs">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"> <span class="sr-only">100% Complete</span> </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge badge-default">Discharge</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar4.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Dean Otto</span></td>
-                                            <td><span class="text-info">123 6th St. Melbourne, FL 32904</span></td>
-                                            <td>Sept 13, 2017</td>
-                                            <td>Sept 23, 2017</td>
-                                            <td><span class="badge badge-warning">MEDIUM</span></td>
-                                            <td><div class="progress progress-xs">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;"> <span class="sr-only">15% Complete</span> </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge badge-success">Admit</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar2.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Jack Bird</span></td>
-                                            <td><span class="text-info">4 Shirley Ave. West Chicago, IL 60185</span></td>
-                                            <td>Sept 17, 2017</td>
-                                            <td>Sept 16, 2017</td>
-                                            <td><span class="badge badge-success">LOW</span></td>
-                                            <td><div class="progress progress-xs">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"> <span class="sr-only">100% Complete</span> </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge badge-default">Discharge</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td><img src="<%=request.getContextPath()%>/images/xs/avatar5.jpg" class="rounded-circle width30 m-r-15" alt="profile-image"><span>Hughe L.</span></td>
-                                            <td><span class="text-info">4 Shirley Ave. West Chicago, IL 60185</span></td>
-                                            <td>Sept 18, 2017</td>
-                                            <td>Sept 18, 2017</td>
-                                            <td><span class="badge badge-danger">HIGH</span></td>
-                                            <td><div class="progress progress-xs">
-                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"> <span class="sr-only">85% Complete</span> </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge badge-success">Admit</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-        </div>
-    </div>
-    
-</div>
 
-<!-- Javascript -->
-<script src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>
-<script src="<%=request.getContextPath()%>/assets/bundles/vendorscripts.bundle.js"></script>
-
-<script src="<%=request.getContextPath()%>/assets/bundles/chartist.bundle.js"></script>
-<script src="<%=request.getContextPath()%>/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
-<script src="<%=request.getContextPath()%>/assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
-<script src="<%=request.getContextPath()%>/vendor/toastr/toastr.js"></script>
-<script src="<%=request.getContextPath()%>/vendor/flot-charts/jquery.flot.selection.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
-<script src="<%=request.getContextPath()%>/assets/bundles/mainscripts.bundle.js"></script>
-<script src="<%=request.getContextPath()%>/assets/js/index.js"></script>
 <script type="text/javascript">
+window.onload = (event) => {
+	basicDetails();
+	var d = new Date();
+	revenueGraph("yearlyRevenue",d.getFullYear());
+	patientChart();
+	toDoListDashboard();
+	OpCharts(d.getFullYear());
+	};
 function logout()
 {
 $.ajax({
@@ -1139,7 +340,537 @@ complete : function(xhr, status) {
 	  
 
 
+function basicDetails()
+{
+$.ajax({
+type :'POST',
+url: "../health/basicDetails.htm",
+success :function(data)
+{
+var json = JSON.parse(data);
+$.each(json,function(i,f){
+	
+	document.getElementById("total_patient").innerHTML = f.total_patient;
+	document.getElementById("new_patient").innerHTML = f.today_patient;
+	document.getElementById("revenue").innerHTML = "  " + f.revenue ;
+	document.getElementById("menu_visit").innerHTML = f.today_patient ;
+	document.getElementById("operation").innerHTML = f.total_operation ;
+	document.getElementById("pharmacy_income").innerHTML = f.pharmacy_income ;
+	document.getElementById("operation_income").innerHTML = f.operation_income ;
+});
 
+}
+});
+}
+function revenueGraph(id,year)
+{
+	var durationArray = [];
+	var medicineCount = [];
+	var operationCount = [];
+	var type = id;
+	if(type == "yearlyRevenue")
+    {
+		document.getElementById("yearlyRevenue").className = "tab_btn active";
+		document.getElementById("monthlyRevenue").className = "tab_btn";
+		 durationArray =  ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	     medicineCount = ["0","0","0","0","0","0","0","0","0","0","0","0"];
+	     operationCount = ["0","0","0","0","0","0","0","0","0","0","0","0"];
+    }
+	if(type == "monthlyRevenue")
+		{
+		document.getElementById("monthlyRevenue").className = "tab_btn active";
+		document.getElementById("yearlyRevenue").className = "tab_btn";
+		var daysInMonth = new Date("2021", "05", 0).getDate();
+	       var temp = 1;
+	       for(var i=0;i<daysInMonth;i++)
+	       {
+	         durationArray.push(temp);
+	         temp = temp + 1;
+	       }
+	        medicineCount = new Array(daysInMonth).fill(0);
+	        operationCount = new Array(daysInMonth).fill(0);
+		}
+	$.ajax({
+type :'POST',
+url: "../health/revenueGraph.htm",
+ data:{type:type,year:year,graph:"operation"},
+success :function(data)
+{
+var json = JSON.parse(data);
+$.each(json,function(i,f){
+	if(type == "yearlyRevenue"){
+    var month = "-";
+    var monthNumber = f.month;
+        if(monthNumber == "1")
+        	operationCount[0] = f.amount;
+         if(monthNumber == "2")
+        	 operationCount[1] = f.amount;
+         if(monthNumber == "3")
+        	 operationCount[2] = f.amount;
+         if(monthNumber == "4")
+        	 operationCount[3] = f.amount;
+         if(monthNumber == "5")
+        	 operationCount[4] = f.amount;
+         if(monthNumber == "6")
+        	 operationCount[5] = f.amount;
+         if(monthNumber == "7")
+        	 operationCount[6] = f.amount;
+         if(monthNumber == "8")
+        	 operationCount[7] = f.amount;
+         if(monthNumber == "9")
+        	 operationCount[8] = f.amount;
+         if(monthNumber == "10")
+        	 operationCount[9] = f.amount;
+         if(monthNumber == "11")
+        	 operationCount[10] = f.amount;
+         if(monthNumber == "12")
+        	 operationCount[11] = f.amount;
+	}
+	
+	if(type == "monthlyRevenue"){
+         {
+           var month = "-";
+           var monthNumber = f.month;
+               if(monthNumber == "01")
+            	   operationCount[0] = f.amount;
+                if(monthNumber == "02")
+                	operationCount[1] = f.amount;
+                if(monthNumber == "03")
+                	operationCount[2] = f.amount;
+                if(monthNumber == "04")
+                	operationCount[3] = f.amount;
+                if(monthNumber == "05")
+                	operationCount[4] = f.amount;
+                if(monthNumber == "06")
+                	operationCount[5] = f.amount;
+                if(monthNumber == "07")
+                	operationCount[6] = f.amount;
+                if(monthNumber == "08")
+                	operationCount[7] = f.amount;
+                if(monthNumber == "09")
+                	operationCount[8] = f.amount;
+                if(monthNumber == "10")
+                	operationCount[9] = f.amount;
+                if(monthNumber == "11")
+                	operationCount[10] = f.amount;
+                if(monthNumber == "12")
+                	operationCount[11] = f.amount;
+
+                    if(monthNumber == "13")
+                    	operationCount[12] = f.amount;
+                     if(monthNumber == "14")
+                    	 operationCount[13] = f.amount;
+                     if(monthNumber == "15")
+                    	 operationCount[14] = f.amount;
+                     if(monthNumber == "16")
+                    	 operationCount[15] = f.amount;
+                     if(monthNumber == "17")
+                    	 operationCount[16] = f.amount;
+                     if(monthNumber == "18")
+                    	 operationCount[17] = f.amount;
+                     if(monthNumber == "19")
+                    	 operationCount[18] = f.amount;
+                     if(monthNumber == "20")
+                    	 operationCount[19] = f.amount;
+                     if(monthNumber == "21")
+                    	 operationCount[20] = f.amount;
+                     if(monthNumber == "22")
+                    	 operationCount[21] = f.amount;
+                     if(monthNumber == "23")
+                    	 operationCount[22] = f.amount;
+                     if(monthNumber == "24")
+                    	 operationCount[23] = f.amount;
+                     if(monthNumber == "25")
+                    	 operationCount[24] = f.amount;
+                     if(monthNumber == "26")
+                    	 operationCount[25] = f.amount;
+                     if(monthNumber == "27")
+                    	 operationCount[26] = f.amount;
+                     if(monthNumber == "28")
+                    	 operationCount[27] = f.amount;
+                     if(monthNumber == "29")
+                    	 operationCount[28] = f.amount;
+                     if(monthNumber == "30")
+                    	 operationCount[29] = f.amount;
+                     if(monthNumber == "31")
+                    	 operationCount[30] = f.amount;
+	}}
+});
+$.ajax({
+	type :'POST',
+	url: "../health/revenueGraph.htm",
+	 data:{type:type,year:year,graph:"medicine"},
+	success :function(data)
+	{
+	var json = JSON.parse(data);
+	$.each(json,function(i,f){
+		if(type == "yearlyRevenue"){
+	    var month = "-";
+	    var monthNumber = f.month;
+	        if(monthNumber == "1")
+	        	medicineCount[0] = f.amount;
+	         if(monthNumber == "2")
+	        	 medicineCount[1] = f.amount;
+	         if(monthNumber == "3")
+	        	 medicineCount[2] = f.amount;
+	         if(monthNumber == "4")
+	        	 medicineCount[3] = f.amount;
+	         if(monthNumber == "5")
+	        	 medicineCount[4] = f.amount;
+	         if(monthNumber == "6")
+	        	 medicineCount[5] = f.amount;
+	         if(monthNumber == "7")
+	        	 medicineCount[6] = f.amount;
+	         if(monthNumber == "8")
+	        	 medicineCount[7] = f.amount;
+	         if(monthNumber == "9")
+	        	 medicineCount[8] = f.amount;
+	         if(monthNumber == "10")
+	        	 medicineCount[9] = f.amount;
+	         if(monthNumber == "11")
+	        	 medicineCount[10] = f.amount;
+	         if(monthNumber == "12")
+	        	 medicineCount[11] = f.amount;
+		}
+		
+		if(type == "monthlyRevenue"){
+	         {
+	           var month = "-";
+	           var monthNumber = f.month;
+	               if(monthNumber == "01")
+	            	   medicineCount[0] = f.amount;
+	                if(monthNumber == "02")
+	                	medicineCount[1] = f.amount;
+	                if(monthNumber == "03")
+	                	medicineCount[2] = f.amount;
+	                if(monthNumber == "04")
+	                	medicineCount[3] = f.amount;
+	                if(monthNumber == "05")
+	                	medicineCount[4] = f.amount;
+	                if(monthNumber == "06")
+	                	medicineCount[5] = f.amount;
+	                if(monthNumber == "07")
+	                	medicineCount[6] = f.amount;
+	                if(monthNumber == "08")
+	                	medicineCount[7] = f.amount;
+	                if(monthNumber == "09")
+	                	medicineCount[8] = f.amount;
+	                if(monthNumber == "10")
+	                	medicineCount[9] = f.amount;
+	                if(monthNumber == "11")
+	                	medicineCount[10] = f.amount;
+	                if(monthNumber == "12")
+	                	medicineCount[11] = f.amount;
+
+	                    if(monthNumber == "13")
+	                    	medicineCount[12] = f.amount;
+	                     if(monthNumber == "14")
+	                    	 medicineCount[13] = f.amount;
+	                     if(monthNumber == "15")
+	                    	 medicineCount[14] = f.amount;
+	                     if(monthNumber == "16")
+	                    	 medicineCount[15] = f.amount;
+	                     if(monthNumber == "17")
+	                    	 medicineCount[16] = f.amount;
+	                     if(monthNumber == "18")
+	                    	 medicineCount[17] = f.amount;
+	                     if(monthNumber == "19")
+	                    	 medicineCount[18] = f.amount;
+	                     if(monthNumber == "20")
+	                    	 medicineCount[19] = f.amount;
+	                     if(monthNumber == "21")
+	                    	 medicineCount[20] = f.amount;
+	                     if(monthNumber == "22")
+	                    	 medicineCount[21] = f.amount;
+	                     if(monthNumber == "23")
+	                    	 medicineCount[22] = f.amount;
+	                     if(monthNumber == "24")
+	                    	 medicineCount[23] = f.amount;
+	                     if(monthNumber == "25")
+	                    	 medicineCount[24] = f.amount;
+	                     if(monthNumber == "26")
+	                    	 medicineCount[25] = f.amount;
+	                     if(monthNumber == "27")
+	                    	 medicineCount[26] = f.amount;
+	                     if(monthNumber == "28")
+	                    	 medicineCount[27] = f.amount;
+	                     if(monthNumber == "29")
+	                    	 medicineCount[28] = f.amount;
+	                     if(monthNumber == "30")
+	                    	 medicineCount[29] = f.amount;
+	                     if(monthNumber == "31")
+	                    	 medicineCount[30] = f.amount;
+		}}
+	});
+
+	var options;
+	var data = {
+	    labels: durationArray,
+	    series: [
+	    	operationCount,
+	    	medicineCount,
+	    ],
+	    borderColor:"#000",        
+	};    
+	options = {
+	    height: "354px",
+	    showPoint: true,
+	    axisX: {
+	        showGrid: false
+	    },
+	    axisY: {
+	        labelInterpolationFnc: function(value) {
+	            return (value / 100) + 'K';
+	        }
+	    },
+	    lineSmooth: true,
+	    plugins: [
+	        Chartist.plugins.tooltip({
+	            appendToBody: true
+	        }),
+	    ]
+	};
+	new Chartist.Line('#total_revenue', data, options); }
+});
+
+
+}
+	});
+	
+   function loadOperationalGraph(id)
+   {
+	   revenueGraph("yearlyRevenue",id);
+   }
+}
+
+function weekendAreas(axes) {
+
+    var markings = [],
+        d = new Date(axes.xaxis.min);
+
+
+    d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7))
+    d.setUTCSeconds(0);
+    d.setUTCMinutes(0);
+    d.setUTCHours(0);
+
+    var i = d.getTime();
+
+
+    do {
+        markings.push({ xaxis: { from: i, to: i + 2 * 24 * 60 * 60 * 1000 } });
+        i += 7 * 24 * 60 * 60 * 1000;
+    } while (i < axes.xaxis.max);
+    return markings;
+}
+
+
+function patientChart()
+{
+	var d = [];
+	$.ajax({
+		type :'POST',
+		url: "../health/patientCount.htm",
+		success :function(data)
+		{
+		var json = JSON.parse(data);
+		$.each(json,function(i,f){
+			var temp = new Array();
+		temp.push(f.timeZone,f.count);
+			d.push(temp);
+		});
+
+	    for (var i = 0; i < d.length; ++i) {
+	        d[i][0] += 60 * 60 * 1000;
+	    }
+
+	
+
+	    var options = {
+	        xaxis: {
+	            mode: "time",
+	            tickLength: 5
+	        },
+	        selection: {
+	            mode: "x"
+	        },
+	        grid: {
+	            markings: weekendAreas,
+	            borderColor: '#eaeaea',
+	            tickColor: '#eaeaea',
+	            hoverable: true,                           
+	            borderWidth: 1,
+	        }
+	    };
+	
+	    var plot = $.plot("#Visitors_chart", [d], options);
+
+	    $("#Visitors_chart").bind("plotselected", function (event, ranges) {
+
+	        $.each(plot.getXAxes(), function(_, axis) {
+	            var opts = axis.options;
+	            opts.min = ranges.xaxis.from;
+	            opts.max = ranges.xaxis.to;
+	        });
+	        plot.setupGrid();
+	        plot.draw();
+	        plot.clearSelection();
+
+
+	        overview.setSelection(ranges, true);
+		});
+}
+	
+	});
+	    
+	}	 
+	 
+	 function toDoListDashboard()
+	 {
+		 
+	 $.ajax({
+			type :'POST',
+			url: "../health/toDoGraph.htm",
+			success :function(data)
+			{
+			var json = JSON.parse(data);
+			$.each(json,function(i,f){
+				var d = "<li>\n\r"+
+                    "<B><label class=\"fancy-checkbox mb-0\">\n\r"+
+                "<input type=\"checkbox\" name=\"checkbox\">\n\r"+
+                "<span>"+f.name+"</span>\n\r"+
+            "</label></B>\n\r"+
+            "<div class=\"m-l-35 m-b-30\">\n\r"+
+            	"<small class=\"text-muted\">"+f.description+"</small><br>\n\r"+
+                "<small class=\"text-muted\">SCHEDULED FOR  "+f.time+"</small>\n\r"+
+                "<ul class=\"list-unstyled team-info\">"+
+<%--           C      "<li><img src=\""+<%=request.getContextPath()%>/images/xs/avatar1.jpg+"\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Dr. Chris Fox\" alt=\"Avatar\"></li>\n\r+ --%>
+                "</ul>\n\r"+
+            "</div>\n\r"+
+        "</li>\n\r";
+	$("#toDoPatientToday").append(d);
+});
+			}
+	 });
+	 
+	 }
+	 
+	 function OpCharts(id)
+	 {
+		 var opHistory = [0,0,0,0,0,0,0,0,0,0,0,0];
+		    var opPatientistory = [0,0,0,0,0,0,0,0,0,0,0,0];
+		    
+		 $.ajax({
+				type :'POST',
+				data :{type:"operation",year:id},
+				url: "../health/operationHistoryCharts.htm",
+				success :function(data)
+				{
+				var json = JSON.parse(data);
+				$.each(json,function(i,f){
+					 var month = "-";
+					    var monthNumber = f.month;
+					        if(monthNumber == "1")
+					        	opHistory[0] = f.amount;
+					         if(monthNumber == "2")
+					        	 opHistory[1] = f.amount;
+					         if(monthNumber == "3")
+					        	 opHistory[2] = f.amount;
+					         if(monthNumber == "4")
+					        	 opHistory[3] = f.amount;
+					         if(monthNumber == "5")
+					        	 opHistory[4] = f.amount;
+					         if(monthNumber == "6")
+					        	 opHistory[5] = f.amount;
+					         if(monthNumber == "7")
+					        	 opHistory[6] = f.amount;
+					         if(monthNumber == "8")
+					        	 opHistory[7] = f.amount;
+					         if(monthNumber == "9")
+					        	 opHistory[8] = f.amount;
+					         if(monthNumber == "10")
+					        	 opHistory[9] = f.amount;
+					         if(monthNumber == "11")
+					        	 opHistory[10] = f.amount;
+					         if(monthNumber == "12")
+					        	 opHistory[11] = f.amount;
+				});
+				 $.ajax({
+						type :'POST',
+						data :{type:"patient",year:id},
+						url: "../health/operationHistoryCharts.htm",
+						success :function(data)
+						{
+						var json = JSON.parse(data);
+						$.each(json,function(i,f){
+							var monthNumber = f.month;
+							 if(monthNumber == "1")
+								 opPatientistory[0] = f.amount;
+						         if(monthNumber == "2")
+						        	 opPatientistory[1] = f.amount;
+						         if(monthNumber == "3")
+						        	 opPatientistory[2] = f.amount;
+						         if(monthNumber == "4")
+						        	 opPatientistory[3] = f.amount;
+						         if(monthNumber == "5")
+						        	 opPatientistory[4] = f.amount;
+						         if(monthNumber == "6")
+						        	 opPatientistory[5] = f.amount;
+						         if(monthNumber == "7")
+						        	 opPatientistory[6] = f.amount;
+						         if(monthNumber == "8")
+						        	 opPatientistory[7] = f.amount;
+						         if(monthNumber == "9")
+						        	 opPatientistory[8] = f.amount;
+						         if(monthNumber == "10")
+						        	 opPatientistory[9] = f.amount;
+						         if(monthNumber == "11")
+						        	 opPatientistory[10] = f.amount;
+						         if(monthNumber == "12")
+						        	 opPatientistory[11] = f.amount;
+						});
+					    var dataStackedBar = {
+						        labels: ['Jan','Feb','march','April','May','June','July','Aug','Sep','Oct','Nov','Dec'],
+						        series: [
+						        	opHistory,
+						        	opPatientistory,
+						            
+						        ]
+						    };
+
+
+						    new Chartist.Bar('#patient_history', dataStackedBar, {
+						        height: "268px",
+						        stackBars: true,
+						        axisX: {
+						            showGrid: false
+						        },
+						        axisY: {
+						            labelInterpolationFnc: function(value) {
+						                return (value / 1000) + 'k';
+						            }
+						        },
+						        plugins: [
+						            Chartist.plugins.tooltip({
+						                appendToBody: true
+						            }),
+						            Chartist.plugins.legend({
+						                legendNames: ['Operation', 'Patient']
+						            })
+						        ]
+						    }).on('draw', function(data) {
+						            if (data.type === 'bar') {
+						                data.element.attr({
+						                    style: 'stroke-width: 30px'
+						                });
+						            }
+						    });}
+				 });}
+		 });
+		
+		   
+		
+	 }
 </script>
 
 </body>
