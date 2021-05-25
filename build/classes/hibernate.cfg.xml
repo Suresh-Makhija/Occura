@@ -41,6 +41,7 @@
 		<!-- performance bean -->
 		
       	<mapping class="com.occura.bean.UserBean"/>
+      	<mapping class="com.occura.bean.UserProfileBean"/>
 <!--       	<mapping class="com.occura.bean.MasterDiagnoBean"/> -->
 <!--       	<mapping class="com.occura.bean.MasterMedicineBean"/> -->
 <!--       	<mapping class="com.occura.bean.MasterOperationBean"/> -->
