@@ -15,6 +15,19 @@
 <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
 <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
 
+<style type="text/css">
+
+#toDoPatientToday{
+ 
+  padding-top:10px;
+  width: 400px; 
+  height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+
+</style>
 
 </head>
 <body class="theme-cyan">
@@ -36,7 +49,7 @@ for(int i=0;i<5;i++)
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.jsp"><i class="icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/view/index.jsp"><i class="icon-home"></i></a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                     </div>
@@ -63,7 +76,7 @@ for(int i=0;i<5;i++)
                                                 <div class="icon"><i class="fa fa-user"></i> </div>
                                                 <div class="content">
                                                     <div class="text">New Patient</div>
-                                                    <h5 id="new_patient" class="number">21</h5>
+                                                    <h5 id="new_patient" class="number"></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +88,7 @@ for(int i=0;i<5;i++)
                                                 <div class="icon"><i class="fa fa-user-md"></i> </div>
                                                 <div class="content">
                                                     <div class="text">Operations</div>
-                                                    <h5 id="operation" class="fa fa-inr">06</h5>
+                                                    <h5 id="operation" class="fa fa-inr"></h5>
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
@@ -309,59 +322,61 @@ for(int i=0;i<5;i++)
 
 
 <script type="text/javascript">
-window.onload = (event) => {
-	basicDetails();
-	var d = new Date();
-	revenueGraph("yearlyRevenue",d.getFullYear());
-	patientChart();
-	toDoListDashboard();
-	OpCharts(d.getFullYear());
-	};
+
+window.onload = function() {
+		basicDetails();
+		var d = new Date();
+		revenueGraph("yearlyRevenue",d.getFullYear());
+		patientChart();
+		toDoListDashboard();
+		OpCharts(d.getFullYear());
+};
+	
+	
 function logout()
 {
-$.ajax({
-type :'POST',
-url: "../controller/logout.htm",
-success :function(resdata,status,xhr)
-{
-	if(resdata == "logout")
-		{
-		window.location = "page-login.jsp";
-		}
-
-},
-error : function(xhr, status, errorThrown) {
-
-},
-complete : function(xhr, status) {
-}
-});
+	$.ajax({
+	type :'POST',
+	url: "../controller/logout.htm",
+	success :function(resdata,status,xhr)
+	{
+		if(resdata == "logout")
+			{
+			window.location = "page-login.jsp";
+			}
+	},
+	error : function(xhr, status, errorThrown) {
+	
+	},
+	complete : function(xhr, status) {
+	}
+	});
 }
 
 
 
 function basicDetails()
 {
-$.ajax({
-type :'POST',
-url: "../health/basicDetails.htm",
-success :function(data)
-{
-var json = JSON.parse(data);
-$.each(json,function(i,f){
-
-	document.getElementById("total_patient").innerHTML = f.total_patient;
-	document.getElementById("new_patient").innerHTML = f.today_patient;
-	document.getElementById("revenue").innerHTML = "  " + f.revenue ;
-	document.getElementById("menu_visit").innerHTML = f.today_patient ;
-	document.getElementById("operation").innerHTML = f.total_operation ;
-	document.getElementById("pharmacy_income").innerHTML = f.pharmacy_income ;
-	document.getElementById("operation_income").innerHTML = f.operation_income ;
-});
-
+	$.ajax({
+	type :'POST',
+	url: "../health/basicDetails.htm",
+	success :function(data)
+	{
+		var json = JSON.parse(data);
+		$.each(json,function(i,f){
+			document.getElementById("total_patient").innerHTML = f.total_patient;
+			document.getElementById("new_patient").innerHTML = f.today_patient;
+			document.getElementById("revenue").innerHTML = "  "+ f.revenue ;
+			//document.getElementById("menu_visit").innerHTML = f.today_patient ;     /* Cannot set property 'innerHTML' of null */
+			document.getElementById("operation").innerHTML = " "+f.total_operation ;
+			document.getElementById("pharmacy_income").innerHTML = f.pharmacy_income ;
+			document.getElementById("operation_income").innerHTML = f.operation_income ;
+		});
+	
+	}
+	});
 }
-});
-}
+
 function revenueGraph(id,year)
 {
 	var durationArray = [];
@@ -376,265 +391,270 @@ function revenueGraph(id,year)
 	     medicineCount = ["0","0","0","0","0","0","0","0","0","0","0","0"];
 	     operationCount = ["0","0","0","0","0","0","0","0","0","0","0","0"];
     }
+	
 	if(type == "monthlyRevenue")
-		{
-		document.getElementById("monthlyRevenue").className = "tab_btn active";
-		document.getElementById("yearlyRevenue").className = "tab_btn";
-		var daysInMonth = new Date("2021", "05", 0).getDate();
-	       var temp = 1;
-	       for(var i=0;i<daysInMonth;i++)
-	       {
-	         durationArray.push(temp);
-	         temp = temp + 1;
-	       }
-	        medicineCount = new Array(daysInMonth).fill(0);
-	        operationCount = new Array(daysInMonth).fill(0);
-		}
-	$.ajax({
-type :'POST',
-url: "../health/revenueGraph.htm",
- data:{type:type,year:year,graph:"operation"},
-success :function(data)
-{
-var json = JSON.parse(data);
-$.each(json,function(i,f){
-	if(type == "yearlyRevenue"){
-    var month = "-";
-    var monthNumber = f.month;
-        if(monthNumber == "1")
-        	operationCount[0] = f.amount;
-         if(monthNumber == "2")
-        	 operationCount[1] = f.amount;
-         if(monthNumber == "3")
-        	 operationCount[2] = f.amount;
-         if(monthNumber == "4")
-        	 operationCount[3] = f.amount;
-         if(monthNumber == "5")
-        	 operationCount[4] = f.amount;
-         if(monthNumber == "6")
-        	 operationCount[5] = f.amount;
-         if(monthNumber == "7")
-        	 operationCount[6] = f.amount;
-         if(monthNumber == "8")
-        	 operationCount[7] = f.amount;
-         if(monthNumber == "9")
-        	 operationCount[8] = f.amount;
-         if(monthNumber == "10")
-        	 operationCount[9] = f.amount;
-         if(monthNumber == "11")
-        	 operationCount[10] = f.amount;
-         if(monthNumber == "12")
-        	 operationCount[11] = f.amount;
-	}
-
-	if(type == "monthlyRevenue"){
-         {
-           var month = "-";
-           var monthNumber = f.month;
-               if(monthNumber == "01")
-            	   operationCount[0] = f.amount;
-                if(monthNumber == "02")
-                	operationCount[1] = f.amount;
-                if(monthNumber == "03")
-                	operationCount[2] = f.amount;
-                if(monthNumber == "04")
-                	operationCount[3] = f.amount;
-                if(monthNumber == "05")
-                	operationCount[4] = f.amount;
-                if(monthNumber == "06")
-                	operationCount[5] = f.amount;
-                if(monthNumber == "07")
-                	operationCount[6] = f.amount;
-                if(monthNumber == "08")
-                	operationCount[7] = f.amount;
-                if(monthNumber == "09")
-                	operationCount[8] = f.amount;
-                if(monthNumber == "10")
-                	operationCount[9] = f.amount;
-                if(monthNumber == "11")
-                	operationCount[10] = f.amount;
-                if(monthNumber == "12")
-                	operationCount[11] = f.amount;
-
-                    if(monthNumber == "13")
-                    	operationCount[12] = f.amount;
-                     if(monthNumber == "14")
-                    	 operationCount[13] = f.amount;
-                     if(monthNumber == "15")
-                    	 operationCount[14] = f.amount;
-                     if(monthNumber == "16")
-                    	 operationCount[15] = f.amount;
-                     if(monthNumber == "17")
-                    	 operationCount[16] = f.amount;
-                     if(monthNumber == "18")
-                    	 operationCount[17] = f.amount;
-                     if(monthNumber == "19")
-                    	 operationCount[18] = f.amount;
-                     if(monthNumber == "20")
-                    	 operationCount[19] = f.amount;
-                     if(monthNumber == "21")
-                    	 operationCount[20] = f.amount;
-                     if(monthNumber == "22")
-                    	 operationCount[21] = f.amount;
-                     if(monthNumber == "23")
-                    	 operationCount[22] = f.amount;
-                     if(monthNumber == "24")
-                    	 operationCount[23] = f.amount;
-                     if(monthNumber == "25")
-                    	 operationCount[24] = f.amount;
-                     if(monthNumber == "26")
-                    	 operationCount[25] = f.amount;
-                     if(monthNumber == "27")
-                    	 operationCount[26] = f.amount;
-                     if(monthNumber == "28")
-                    	 operationCount[27] = f.amount;
-                     if(monthNumber == "29")
-                    	 operationCount[28] = f.amount;
-                     if(monthNumber == "30")
-                    	 operationCount[29] = f.amount;
-                     if(monthNumber == "31")
-                    	 operationCount[30] = f.amount;
-	}}
-});
-$.ajax({
-	type :'POST',
-	url: "../health/revenueGraph.htm",
-	 data:{type:type,year:year,graph:"medicine"},
-	success :function(data)
 	{
-	var json = JSON.parse(data);
-	$.each(json,function(i,f){
-		if(type == "yearlyRevenue"){
-	    var month = "-";
-	    var monthNumber = f.month;
-	        if(monthNumber == "1")
-	        	medicineCount[0] = f.amount;
-	         if(monthNumber == "2")
-	        	 medicineCount[1] = f.amount;
-	         if(monthNumber == "3")
-	        	 medicineCount[2] = f.amount;
-	         if(monthNumber == "4")
-	        	 medicineCount[3] = f.amount;
-	         if(monthNumber == "5")
-	        	 medicineCount[4] = f.amount;
-	         if(monthNumber == "6")
-	        	 medicineCount[5] = f.amount;
-	         if(monthNumber == "7")
-	        	 medicineCount[6] = f.amount;
-	         if(monthNumber == "8")
-	        	 medicineCount[7] = f.amount;
-	         if(monthNumber == "9")
-	        	 medicineCount[8] = f.amount;
-	         if(monthNumber == "10")
-	        	 medicineCount[9] = f.amount;
-	         if(monthNumber == "11")
-	        	 medicineCount[10] = f.amount;
-	         if(monthNumber == "12")
-	        	 medicineCount[11] = f.amount;
-		}
-
-		if(type == "monthlyRevenue"){
-	         {
-	           var month = "-";
-	           var monthNumber = f.month;
-	               if(monthNumber == "01")
-	            	   medicineCount[0] = f.amount;
-	                if(monthNumber == "02")
-	                	medicineCount[1] = f.amount;
-	                if(monthNumber == "03")
-	                	medicineCount[2] = f.amount;
-	                if(monthNumber == "04")
-	                	medicineCount[3] = f.amount;
-	                if(monthNumber == "05")
-	                	medicineCount[4] = f.amount;
-	                if(monthNumber == "06")
-	                	medicineCount[5] = f.amount;
-	                if(monthNumber == "07")
-	                	medicineCount[6] = f.amount;
-	                if(monthNumber == "08")
-	                	medicineCount[7] = f.amount;
-	                if(monthNumber == "09")
-	                	medicineCount[8] = f.amount;
-	                if(monthNumber == "10")
-	                	medicineCount[9] = f.amount;
-	                if(monthNumber == "11")
-	                	medicineCount[10] = f.amount;
-	                if(monthNumber == "12")
-	                	medicineCount[11] = f.amount;
-
-	                    if(monthNumber == "13")
-	                    	medicineCount[12] = f.amount;
-	                     if(monthNumber == "14")
-	                    	 medicineCount[13] = f.amount;
-	                     if(monthNumber == "15")
-	                    	 medicineCount[14] = f.amount;
-	                     if(monthNumber == "16")
-	                    	 medicineCount[15] = f.amount;
-	                     if(monthNumber == "17")
-	                    	 medicineCount[16] = f.amount;
-	                     if(monthNumber == "18")
-	                    	 medicineCount[17] = f.amount;
-	                     if(monthNumber == "19")
-	                    	 medicineCount[18] = f.amount;
-	                     if(monthNumber == "20")
-	                    	 medicineCount[19] = f.amount;
-	                     if(monthNumber == "21")
-	                    	 medicineCount[20] = f.amount;
-	                     if(monthNumber == "22")
-	                    	 medicineCount[21] = f.amount;
-	                     if(monthNumber == "23")
-	                    	 medicineCount[22] = f.amount;
-	                     if(monthNumber == "24")
-	                    	 medicineCount[23] = f.amount;
-	                     if(monthNumber == "25")
-	                    	 medicineCount[24] = f.amount;
-	                     if(monthNumber == "26")
-	                    	 medicineCount[25] = f.amount;
-	                     if(monthNumber == "27")
-	                    	 medicineCount[26] = f.amount;
-	                     if(monthNumber == "28")
-	                    	 medicineCount[27] = f.amount;
-	                     if(monthNumber == "29")
-	                    	 medicineCount[28] = f.amount;
-	                     if(monthNumber == "30")
-	                    	 medicineCount[29] = f.amount;
-	                     if(monthNumber == "31")
-	                    	 medicineCount[30] = f.amount;
-		}}
-	});
-
-	var options;
-	var data = {
-	    labels: durationArray,
-	    series: [
-	    	operationCount,
-	    	medicineCount,
-	    ],
-	    borderColor:"#000",
-	};
-	options = {
-	    height: "354px",
-	    showPoint: true,
-	    axisX: {
-	        showGrid: false
-	    },
-	    axisY: {
-	        labelInterpolationFnc: function(value) {
-	            return (value / 100) + 'K';
-	        }
-	    },
-	    lineSmooth: true,
-	    plugins: [
-	        Chartist.plugins.tooltip({
-	            appendToBody: true
-	        }),
-	    ]
-	};
-	new Chartist.Line('#total_revenue', data, options); }
-});
-
-
-}
+	document.getElementById("monthlyRevenue").className = "tab_btn active";
+	document.getElementById("yearlyRevenue").className = "tab_btn";
+	var daysInMonth = new Date("2021", "05", 0).getDate();
+       var temp = 1;
+       for(var i=0;i<daysInMonth;i++)
+       {
+         durationArray.push(temp);
+         temp = temp + 1;
+       }
+        medicineCount = new Array(daysInMonth).fill(0);
+        operationCount = new Array(daysInMonth).fill(0);
+	}
+	
+	$.ajax({
+		type :'POST',
+		url: "../health/revenueGraph.htm",
+		 data:{type:type,year:year,graph:"operation"},
+		success :function(data)
+		{
+			var json = JSON.parse(data);
+		
+			$.each(json,function(i,f)
+			{
+				
+				if(type == "yearlyRevenue"){
+			    var month = "-";
+			    var monthNumber = f.month;
+			        if(monthNumber == "1")
+			        	operationCount[0] = f.amount;
+			         if(monthNumber == "2")
+			        	 operationCount[1] = f.amount;
+			         if(monthNumber == "3")
+			        	 operationCount[2] = f.amount;
+			         if(monthNumber == "4")
+			        	 operationCount[3] = f.amount;
+			         if(monthNumber == "5")
+			        	 operationCount[4] = f.amount;
+			         if(monthNumber == "6")
+			        	 operationCount[5] = f.amount;
+			         if(monthNumber == "7")
+			        	 operationCount[6] = f.amount;
+			         if(monthNumber == "8")
+			        	 operationCount[7] = f.amount;
+			         if(monthNumber == "9")
+			        	 operationCount[8] = f.amount;
+			         if(monthNumber == "10")
+			        	 operationCount[9] = f.amount;
+			         if(monthNumber == "11")
+			        	 operationCount[10] = f.amount;
+			         if(monthNumber == "12")
+			        	 operationCount[11] = f.amount;
+				}
+			
+				if(type == "monthlyRevenue"){
+			         {
+			           var month = "-";
+			           var monthNumber = f.month;
+			               if(monthNumber == "01")
+			            	   operationCount[0] = f.amount;
+			                if(monthNumber == "02")
+			                	operationCount[1] = f.amount;
+			                if(monthNumber == "03")
+			                	operationCount[2] = f.amount;
+			                if(monthNumber == "04")
+			                	operationCount[3] = f.amount;
+			                if(monthNumber == "05")
+			                	operationCount[4] = f.amount;
+			                if(monthNumber == "06")
+			                	operationCount[5] = f.amount;
+			                if(monthNumber == "07")
+			                	operationCount[6] = f.amount;
+			                if(monthNumber == "08")
+			                	operationCount[7] = f.amount;
+			                if(monthNumber == "09")
+			                	operationCount[8] = f.amount;
+			                if(monthNumber == "10")
+			                	operationCount[9] = f.amount;
+			                if(monthNumber == "11")
+			                	operationCount[10] = f.amount;
+			                if(monthNumber == "12")
+			                	operationCount[11] = f.amount;
+			
+			                    if(monthNumber == "13")
+			                    	operationCount[12] = f.amount;
+			                     if(monthNumber == "14")
+			                    	 operationCount[13] = f.amount;
+			                     if(monthNumber == "15")
+			                    	 operationCount[14] = f.amount;
+			                     if(monthNumber == "16")
+			                    	 operationCount[15] = f.amount;
+			                     if(monthNumber == "17")
+			                    	 operationCount[16] = f.amount;
+			                     if(monthNumber == "18")
+			                    	 operationCount[17] = f.amount;
+			                     if(monthNumber == "19")
+			                    	 operationCount[18] = f.amount;
+			                     if(monthNumber == "20")
+			                    	 operationCount[19] = f.amount;
+			                     if(monthNumber == "21")
+			                    	 operationCount[20] = f.amount;
+			                     if(monthNumber == "22")
+			                    	 operationCount[21] = f.amount;
+			                     if(monthNumber == "23")
+			                    	 operationCount[22] = f.amount;
+			                     if(monthNumber == "24")
+			                    	 operationCount[23] = f.amount;
+			                     if(monthNumber == "25")
+			                    	 operationCount[24] = f.amount;
+			                     if(monthNumber == "26")
+			                    	 operationCount[25] = f.amount;
+			                     if(monthNumber == "27")
+			                    	 operationCount[26] = f.amount;
+			                     if(monthNumber == "28")
+			                    	 operationCount[27] = f.amount;
+			                     if(monthNumber == "29")
+			                    	 operationCount[28] = f.amount;
+			                     if(monthNumber == "30")
+			                    	 operationCount[29] = f.amount;
+			                     if(monthNumber == "31")
+			                    	 operationCount[30] = f.amount;
+						}}
+			});
+			
+			$.ajax({
+				type :'POST',
+				url: "../health/revenueGraph.htm",
+				 data:{type:type,year:year,graph:"medicine"},
+				success :function(data)
+				{
+					var json = JSON.parse(data);
+					$.each(json,function(i,f){
+						if(type == "yearlyRevenue"){
+					    var month = "-";
+					    var monthNumber = f.month;
+					        if(monthNumber == "1")
+					        	medicineCount[0] = f.amount;
+					         if(monthNumber == "2")
+					        	 medicineCount[1] = f.amount;
+					         if(monthNumber == "3")
+					        	 medicineCount[2] = f.amount;
+					         if(monthNumber == "4")
+					        	 medicineCount[3] = f.amount;
+					         if(monthNumber == "5")
+					        	 medicineCount[4] = f.amount;
+					         if(monthNumber == "6")
+					        	 medicineCount[5] = f.amount;
+					         if(monthNumber == "7")
+					        	 medicineCount[6] = f.amount;
+					         if(monthNumber == "8")
+					        	 medicineCount[7] = f.amount;
+					         if(monthNumber == "9")
+					        	 medicineCount[8] = f.amount;
+					         if(monthNumber == "10")
+					        	 medicineCount[9] = f.amount;
+					         if(monthNumber == "11")
+					        	 medicineCount[10] = f.amount;
+					         if(monthNumber == "12")
+					        	 medicineCount[11] = f.amount;
+						}
+				
+						if(type == "monthlyRevenue"){
+					         {
+					           var month = "-";
+					           var monthNumber = f.month;
+					               if(monthNumber == "01")
+					            	   medicineCount[0] = f.amount;
+					                if(monthNumber == "02")
+					                	medicineCount[1] = f.amount;
+					                if(monthNumber == "03")
+					                	medicineCount[2] = f.amount;
+					                if(monthNumber == "04")
+					                	medicineCount[3] = f.amount;
+					                if(monthNumber == "05")
+					                	medicineCount[4] = f.amount;
+					                if(monthNumber == "06")
+					                	medicineCount[5] = f.amount;
+					                if(monthNumber == "07")
+					                	medicineCount[6] = f.amount;
+					                if(monthNumber == "08")
+					                	medicineCount[7] = f.amount;
+					                if(monthNumber == "09")
+					                	medicineCount[8] = f.amount;
+					                if(monthNumber == "10")
+					                	medicineCount[9] = f.amount;
+					                if(monthNumber == "11")
+					                	medicineCount[10] = f.amount;
+					                if(monthNumber == "12")
+					                	medicineCount[11] = f.amount;
+				
+					                    if(monthNumber == "13")
+					                    	medicineCount[12] = f.amount;
+					                     if(monthNumber == "14")
+					                    	 medicineCount[13] = f.amount;
+					                     if(monthNumber == "15")
+					                    	 medicineCount[14] = f.amount;
+					                     if(monthNumber == "16")
+					                    	 medicineCount[15] = f.amount;
+					                     if(monthNumber == "17")
+					                    	 medicineCount[16] = f.amount;
+					                     if(monthNumber == "18")
+					                    	 medicineCount[17] = f.amount;
+					                     if(monthNumber == "19")
+					                    	 medicineCount[18] = f.amount;
+					                     if(monthNumber == "20")
+					                    	 medicineCount[19] = f.amount;
+					                     if(monthNumber == "21")
+					                    	 medicineCount[20] = f.amount;
+					                     if(monthNumber == "22")
+					                    	 medicineCount[21] = f.amount;
+					                     if(monthNumber == "23")
+					                    	 medicineCount[22] = f.amount;
+					                     if(monthNumber == "24")
+					                    	 medicineCount[23] = f.amount;
+					                     if(monthNumber == "25")
+					                    	 medicineCount[24] = f.amount;
+					                     if(monthNumber == "26")
+					                    	 medicineCount[25] = f.amount;
+					                     if(monthNumber == "27")
+					                    	 medicineCount[26] = f.amount;
+					                     if(monthNumber == "28")
+					                    	 medicineCount[27] = f.amount;
+					                     if(monthNumber == "29")
+					                    	 medicineCount[28] = f.amount;
+					                     if(monthNumber == "30")
+					                    	 medicineCount[29] = f.amount;
+					                     if(monthNumber == "31")
+					                    	 medicineCount[30] = f.amount;
+						}}
+					});
+				
+					var options;
+					var data = {
+					    labels: durationArray,
+					    series: [
+					    	operationCount,
+					    	medicineCount,
+					    ],
+					    borderColor:"#000",
+					};
+					options = {
+					    height: "354px",
+					    showPoint: true,
+					    axisX: {
+					        showGrid: false
+					    },
+					    axisY: {
+					        labelInterpolationFnc: function(value) {
+					            return (value / 100) + 'K';
+					        }
+					    },
+					    lineSmooth: true,
+					    plugins: [
+					        Chartist.plugins.tooltip({
+					            appendToBody: true
+					        }),
+					    ]
+					};
+					new Chartist.Line('#total_revenue', data, options); 
+					}
+				});
+			}
 	});
 
    function loadOperationalGraph(id)
@@ -740,7 +760,7 @@ function patientChart()
                 "<input type=\"checkbox\" name=\"checkbox\">\n\r"+
                 "<span>"+f.name+"</span>\n\r"+
             "</label></B>\n\r"+
-            "<div class=\"m-l-35 m-b-30\">\n\r"+
+            "<div class=\"m-l-35 m-b-30 \">\n\r"+
             	"<small class=\"text-muted\">"+f.description+"</small><br>\n\r"+
                 "<small class=\"text-muted\">SCHEDULED FOR  "+f.time+"</small>\n\r"+
                 "<ul class=\"list-unstyled team-info\">"+

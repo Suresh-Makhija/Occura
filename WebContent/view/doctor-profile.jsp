@@ -572,18 +572,12 @@ function updateBasicDetailsUser()
 	var b_day = $("#birth_date").val();
 	var city = $("#city").val();
 	var country = $("#country").val();
-	
-	
-	
-	
-	
-	
-	
-	
-	}
+}
+
 function clearBasicDetailsUser()
 {
-	}
+	
+}
 </script>
 </body>
 

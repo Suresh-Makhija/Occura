@@ -175,10 +175,19 @@
                 <div class="tab-pane active" id="menu">
                     <nav class="sidebar-nav">
                         <ul class="main-menu metismenu">
-                            <li class="active"><a href="index.html"><i class="icon-home"></i><span>Dashboard</span></a></li>
-                            <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li>
-                            <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
-                            <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li>
+                            <li class="active"><a href="index.jsp"><i class="icon-home"></i><span>Dashboard</span></a></li>
+<!--                             <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li> -->
+                            
+                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-calendar"></i>
+                            	<span>Appointment</span> </a>
+                                 <ul> 
+                                     <li><a href="appointment_user.jsp">Book Appointment</a></li> 
+                                     <li><a href="fullcalendar.jsp">Test Calendar</a></li> 
+                                 </ul> 
+                             </li> 
+
+                            <!-- <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
+                            <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li> -->
 <!--                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-user-follow"></i><span>Doctors</span> </a> -->
 <!--                                 <ul> -->
 <!--                                     <li><a href="doctors-all.html">All Doctors</a></li> -->
@@ -416,7 +425,7 @@
 
 <%} else{
 	
-	response.sendRedirect("page-login.jsp");
+	response.sendRedirect(request.getContextPath()+"/view/page-login.jsp");
 }%>
 <!-- Javascript -->
 <script src="<%=request.getContextPath()%>/assets/bundles/libscripts.bundle.js"></script>

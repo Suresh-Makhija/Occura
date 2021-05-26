@@ -102,7 +102,7 @@ function register()
 				}
 				if(resdata == "exist")
 					{
-					swal("INFO!","User Already exits !! try diffrent one","info");
+					swal("INFO!","User Already exits !! try different one","info");
 					}
 				if(resdata == "notmatch"){
 					swal("ERROR!","Try again after 5 min","error");
