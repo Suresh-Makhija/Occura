@@ -45,7 +45,7 @@ public class HealthController {
 	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
 
 	@RequestMapping(value = "/appointment_user") // Mapping for Call the controller
-	public ModelAndView login(HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView appointment_user(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception
 	{
 		//,@RequestParam MultipartFile uploadfile
@@ -190,6 +190,20 @@ public class HealthController {
 		response.getWriter().print(returnString);
 	}
 
+	
+	@RequestMapping(value = "/listNotification", method = RequestMethod.POST)
+	public void listNotification(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		String json = "[";
+		List<Object[]> patient = allListDao.getlistfromPatient();
+		for(Object[] object : patient)
+		{
+		json = json + "{\"full_name\":\" "+object[2]+" \",\"appointment_time\":\" "+object[3]+" \"}";
+		}
+		json = json.replace("}{", "},{");
+		json = json + "]";
+	    response.getWriter().print(json);
+	}
 
 	@RequestMapping(value = "/patientCount", method = RequestMethod.POST)
 	public void patientCount(HttpServletRequest request, HttpServletResponse response) throws Exception

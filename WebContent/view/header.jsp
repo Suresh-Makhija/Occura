@@ -67,26 +67,29 @@
                         <li>
                             <a href="app-inbox.html" class="icon-menu d-none d-sm-block"><i class="icon-envelope"></i><span class="notification-dot"></span></a>
                         </li>
+                        
                         <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="icon-bell"></i>
-                                <span class="notification-dot"></span>
+                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown" 
+                            onclick="loadNotification();">
+                                <i class="icon-bell"></i><span class="notification-dot"></span>
                             </a>
-                            <ul class="dropdown-menu notifications">
-                                <li class="header"><strong>You have 4 new Notifications</strong></li>
-                                <li>
+                            <ul class="dropdown-menu notifications" id="notificationtoday">
+                                  
+                                  
+                                 <li>
                                     <a href="javascript:void(0);">
                                         <div class="media">
                                             <div class="media-left">
                                                 <i class="icon-info text-warning"></i>
                                             </div>
                                             <div class="media-body">
-                                                <p class="text">Campaign <strong>Holiday Sale</strong> is nearly reach budget limit.</p>
-                                                <span class="timestamp">10:00 AM Today</span>
+                                                <p class="text">Your New Campaign <strong>Holiday Sale</strong> is approved.</p>
+                                                <span class="timestamp">11:30 AM Today</span>
                                             </div>
                                         </div>
                                     </a>
-                                </li>                               
+                                </li>
+                                                         
                                 <li>
                                     <a href="javascript:void(0);">
                                         <div class="media">
@@ -441,6 +444,61 @@
 <script src="<%=request.getContextPath()%>/assets/js/index.js"></script>
 
 
+<script type="text/javascript">
+
+
+/* window.setInterval(function()
+{
+	loadNotification();
+}, 300000);  */
+
+function loadNotification()
+{
+	$.ajax({
+		type :'POST',
+		url: "../health/listNotification.htm",
+		success :function(data)
+		{
+			var json = JSON.parse(data);
+			$("#notificationtoday").empty();
+			var d;
+			if(json.length > 0)
+			{
+				d = "<li class=\"header\"><strong>You have "+json.length+" new Notifications</strong></li>";
+				$("#notificationtoday").append(d);
+				$.each(json,function(i,f){
+				 d = "<li>"+
+				 		"<a>"+
+               				"<div class=\"media\">"+
+           						"<div class=\"media-left\">"+
+           							"<i class=\"icon-info text-warning\"></i>"+
+           						"</div>"+
+           					/* 	"<div class=\"media-body\">"+
+           					 		"<p class=\"text\">"+f.full_name+"</p>"
+           					 	"</div>"+
+	           					 "<div class=\"media-body\">"+
+	    					 		"<p class=\"text\">Scheduled For  Today </p>"
+	    					 	"</div>"+ */
+	    					 	  "<div class=\"m-l-35 m-b-30 \">"+
+	    			            	"<small class=\"text-muted\">"+f.full_name+"</small><br>"+
+	    			                "<small class=\"text-muted\">Scheduled For  "+f.appointment_time+"</small>"+
+	    			            "</div>"+
+           					"</div>"+
+           					"</a>"
+   						"</li>";
+				$("#notificationtoday").append(d);
+			});
+			}else
+				{
+					d = "<li class=\"header\"><strong>You have 0 new Notification</strong></li>";
+					$("#notificationtoday").append(d);
+				}
+		}
+	});
+
+}
+
+</script>
 </body>
 
 </html>

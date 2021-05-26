@@ -334,24 +334,19 @@ public class AllListDao {
 		return dataList ;
 	}
 
-	public static List<PatientBean> getlistfromPatient()
+	public static List<Object[]> getlistfromPatient()
 	{
 		Session session = HibernateUtil.openSession();
-		List<PatientBean> patient = null;
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		String query = "";
 		try {
-
-		  Query query = session.createSQLQuery(" select a.first_name,a.last_name,a.full_name,b.appointment_date_time as appointment_date"
-		  		+ " from patient_tbl a join patient_appointment_tbl b "
-		  		+ " where DATE(b.appointment_date_time)=curdate() and  "
-		  		+ " b.appointment_date_time BETWEEN now() and date_add(now(), interval 15 MINUTE) order by b.appointment_date_time")
-				.addScalar("first_name")
-				.addScalar("last_name")
-				.addScalar("full_name")
-				.addScalar("appointment_date")
-				.setResultTransformer(
-					Transformers.aliasToBean(PatientBean.class));
-		  	patient = query.list();
-
+			query = "select a.first_name,a.last_name,a.full_name," + 
+					" DATE_FORMAT(b.appointment_date_time,'%d-%m-%Y %h:%i:%s %p') as appointment_date " + 
+					" from occura.patient_tbl a join occura.patient_appointment_tbl b on a.patient_id=b.patient_id " + 
+					" where DATE(b.appointment_date_time)=curdate() and " + 
+					" b.appointment_date_time BETWEEN now() and date_add(now(), interval 15 MINUTE) order by b.appointment_date_time";
+				 SQLQuery sqlQuery = session.createSQLQuery(query);
+				 dataList = sqlQuery.list();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -359,7 +354,7 @@ public class AllListDao {
 		finally {
 			session.close();
 		}
-		return patient;
+		return dataList;
 	}
 
 

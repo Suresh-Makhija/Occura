@@ -10,8 +10,8 @@ import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
 import com.occura.dao.AllListDao;
 
-@Configuration
-@EnableScheduling
+//@Configuration
+//@EnableScheduling
 public class Schedular {
 
 	
