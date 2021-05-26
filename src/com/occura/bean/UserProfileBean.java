@@ -17,7 +17,6 @@ import net.sf.libusb.usb_bus;
 @Entity
 @Table(name = "user_profile_tbl")
 public class UserProfileBean implements Serializable {
-
 	
 	private static final long serialVersionUID = 1L;
 	private int user_profile_id;
@@ -27,46 +26,14 @@ public class UserProfileBean implements Serializable {
 	private Date birth_date;
 	private String address_line_1;
 	private String address_line_2;
-	public String getAddress_line_1() {
-		return address_line_1;
-	}
-
-	public void setAddress_line_1(String address_line_1) {
-		this.address_line_1 = address_line_1;
-	}
-
-	public String getAddress_line_2() {
-		return address_line_2;
-	}
-
-	public void setAddress_line_2(String address_line_2) {
-		this.address_line_2 = address_line_2;
-	}
-
 	private String city;
 	private String state;
 	private String country;
 	private long phone_no;
 	private int exp;
-	public int getExp() {
-		return exp;
-	}
-
-	public void setExp(int exp) {
-		this.exp = exp;
-	}
-
-	private UserBean userBean;
 	
-	@OneToOne
-	@JoinColumn(name="user_id")
-	public UserBean getUserBean() {
-		return userBean;
-	}
+	private UserBean userBean;
 
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
-	}
 
 	@Id
 	public int getUser_profile_id() {
@@ -142,6 +109,32 @@ public class UserProfileBean implements Serializable {
 	public void setPhone_no(long phone_no) {
 		this.phone_no = phone_no;
 	}
+	
+
+	public String getAddress_line_1() {
+		return address_line_1;
+	}
+
+	public void setAddress_line_1(String address_line_1) {
+		this.address_line_1 = address_line_1;
+	}
+
+	public String getAddress_line_2() {
+		return address_line_2;
+	}
+
+	public void setAddress_line_2(String address_line_2) {
+		this.address_line_2 = address_line_2;
+	}
+
+	
+	public int getExp() {
+		return exp;
+	}
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -151,7 +144,15 @@ public class UserProfileBean implements Serializable {
 	}
 
 	
-	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
+	}
 	
 
 

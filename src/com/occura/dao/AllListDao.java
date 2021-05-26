@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
+import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
@@ -53,20 +55,13 @@ public class AllListDao {
 	public  UserProfileBean findUserProfile(int user_id)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		UserProfileBean userProfileBean = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
-		  Query query = session.createQuery("FROM UserProfileBean where user_id = "+user_id+"");
-		  userProfileBean = (UserProfileBean) query.uniqueResult();
-			tx.commit();
+				Query query = session.createQuery("FROM UserProfileBean where user_id = "+user_id+"");
+				//Query query = session.createQuery("FROM UserProfileBean where user_profile_id = "+user_id+"");
+				userProfileBean = (UserProfileBean) query.uniqueResult();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -169,21 +164,11 @@ public class AllListDao {
 		try {
 			tx = session.getTransaction();
 			tx.begin();
-			 query = "\r\n" +
-					"\r\n" +
-					"select\r\n" +
-					" "+format+"(crt_date) AS month\r\n" +
-					" , sum(total_price_per_operation) amount\r\n" +
-					"FROM\r\n" +
-					"occura.patient_operation_history_tbl\r\n" +
-					"WHERE\r\n" +
-					" \r\n" +
-					"  crt_date >= '"+from+"'\r\n" +
-					" AND crt_date < '"+to+"' \r\n" +
-					"GROUP BY FORMAT(crt_date, 'yyyy_MM')\r\n" +
-					"ORDER BY crt_date";
-		  SQLQuery sqlQuery = session.createSQLQuery(query);
-		  dataList = sqlQuery.list();
+			 query = "select "+format+"(crt_date) AS month,sum(total_price_per_operation) amount FROM " +
+					"occura.patient_operation_history_tbl WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' " +
+					"GROUP BY FORMAT(crt_date, 'yyyy_MM') ORDER BY crt_date";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 dataList = sqlQuery.list();
 			tx.commit();
 		}
 		catch (Exception e) {
@@ -208,15 +193,9 @@ public class AllListDao {
 		try {
 			tx = session.getTransaction();
 			tx.begin();
-			 query = "\r\n" +
-					"\r\n" +
-					"select\r\n" +
-					"unix_timestamp(crt_date)\r\n" +
-					" , count(1) \r\n" +
-					"FROM\r\n" +
-					"occura.patient_tbl group by month(crt_date)";
-		  SQLQuery sqlQuery = session.createSQLQuery(query);
-		  dataList = sqlQuery.list();
+			 query = "select unix_timestamp(crt_date) , count(1) FROM occura.patient_tbl group by month(crt_date)";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 dataList = sqlQuery.list();
 			tx.commit();
 		}
 		catch (Exception e) {
@@ -242,10 +221,15 @@ public class AllListDao {
 		try {
 			tx = session.getTransaction();
 			tx.begin();
-			 query = "SELECT appoint.crt_date,description,concat(first_name,\"  \",last_name) FROM occura.patient_appointment_tbl as appoint\r\n" +
-			 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id";
-		  SQLQuery sqlQuery = session.createSQLQuery(query);
-		  dataList = sqlQuery.list();
+			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,description,concat(first_name,\"  \",last_name) FROM occura.patient_appointment_tbl as appoint " +
+			 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
+					" where DATE(appoint.appointment_date_time)=curdate() ";
+			 
+//			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,full_name FROM occura.patient_appointment_tbl as appoint " +
+//				 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
+//				 		" where DATE(appoint.appointment_date_time)=curdate() ";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 dataList = sqlQuery.list();
 			tx.commit();
 		}
 		catch (Exception e) {
@@ -271,19 +255,39 @@ public class AllListDao {
 		try {
 			tx = session.getTransaction();
 			tx.begin();
-			 query = "\r\n" +
-					"\r\n" +
-					"select\r\n" +
-					" "+format+"(crt_date) AS month\r\n" +
-					" , sum(medicine_Qty * total_price_per_medicine) amount\r\n" +
-					"FROM\r\n" +
-					"occura.patient_medicine_history_tbl\r\n" +
-					"WHERE\r\n" +
-					" \r\n" +
-					"  crt_date >= '"+from+"'\r\n" +
-					" AND crt_date < '"+to+"' \r\n" +
-					"GROUP BY FORMAT(crt_date, 'yyyy_MM')\r\n" +
-					"ORDER BY crt_date";
+			 query = "select "+format+"(crt_date) AS month,sum(medicine_Qty * total_price_per_medicine) amount FROM " +
+					" occura.patient_medicine_history_tbl WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' " +
+					" GROUP BY FORMAT(crt_date, 'yyyy_MM') ORDER BY crt_date";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 dataList = sqlQuery.list();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return dataList ;
+	}
+
+	
+	public  List<Object[]> OperationHistoryOperationCount(String from , String to,String format)
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		String query = "";
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+			 query = "select "+format+"(crt_date) AS month ,count(1) amount FROM occura.patient_operation_history_tbl " + 
+					" WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' GROUP BY FORMAT(crt_date, 'yyyy_MM') " + 
+					" ORDER BY crt_date";
 		  SQLQuery sqlQuery = session.createSQLQuery(query);
 		  dataList = sqlQuery.list();
 			tx.commit();
@@ -300,7 +304,35 @@ public class AllListDao {
 		}
 		return dataList ;
 	}
-
+	
+	public  List<Object[]> OperationHistoryPatientCount(String from , String to,String format)
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		String query = "";
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+			 query = "select "+format+"(crt_date) AS month , count(1) amount FROM occura.patient_tbl WHERE " + 
+					" crt_date >= '"+from+"' AND crt_date < '"+to+"' GROUP BY FORMAT(crt_date, 'yyyy_MM') " + 
+					" ORDER BY crt_date";
+		  SQLQuery sqlQuery = session.createSQLQuery(query);
+		  dataList = sqlQuery.list();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return dataList ;
+	}
 
 	public static List<PatientBean> getlistfromPatient()
 	{
@@ -348,6 +380,24 @@ public class AllListDao {
 			{
 				tx.rollback();
 			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patient;
+	}
+	
+	public static PatientAppointmentBean findDateTimeByPatient(String appointmentdate)
+	{
+		Session session = HibernateUtil.openSession();
+		PatientAppointmentBean patient = null;
+		try {
+				Query query = session.createQuery("FROM PatientAppointmentBean where DATE_FORMAT(appointment_date_time,'%d/%m/%Y %h:%i:%s %p') "
+						+ " = DATE_FORMAT('"+appointmentdate+"','%d/%m/%Y %h:%i:%s %p') ");
+				patient = (PatientAppointmentBean) query.uniqueResult();
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {

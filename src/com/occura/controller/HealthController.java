@@ -1,8 +1,10 @@
 package com.occura.controller;
 
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
 import com.occura.dao.AllInsertDao;
@@ -150,6 +153,42 @@ public class HealthController {
 		}
 		response.getWriter().print(returnString);
 	}
+	
+	@RequestMapping(value="/checkdatetime")
+	public void checkdatetime(HttpServletRequest request,HttpServletResponse response) throws IOException, ParseException
+	{
+		 String returnString="";
+		 String appointmentdate = request.getParameter("appointmentdate");
+		
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		//DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//Date date= null;
+		boolean value = false;
+		
+		try {
+			
+			appointmentdate = appointmentdate.replace("T"," ").concat(":00");
+	  		//date= formatter.parse(appointmentdate.replace("T"," "));
+	  		PatientAppointmentBean patient = AllListDao.findDateTimeByPatient(appointmentdate);
+	  		
+	  		if(patient != null)
+			{
+				returnString = "exist";
+			}
+			else
+			{
+				returnString = "not exist";
+			}
+	  		
+	  	}catch(Exception e)
+	  	{
+	  		returnString = "error";
+	  		System.out.println("Catch Exception-->"+e.getMessage());
+	  	}
+		
+		
+		response.getWriter().print(returnString);
+	}
 
 
 	@RequestMapping(value = "/patientCount", method = RequestMethod.POST)
@@ -173,7 +212,8 @@ public class HealthController {
 		List<Object[]> patientCount = allListDao.toDograph();
 		for(Object[] object : patientCount)
 		{
-		json = json + "{\"time\":\"" +object[0]+"\",\"description\":\"" +object[1]+"\",\"name\":\"" +object[2]+"\"}";
+		json = json + "{\"time\":\" "+object[0]+" \",\"description\":\" "+object[1]+" \",\"name\":\" "+object[2]+" \"}";
+		//json = json + "{\"time\":\" "+object[0]+" \",\"description\":\" ADD DESCRIPTION \",\"name\":\" "+object[1]+" \"}";
 		}
 		json = json.replace("}{", "},{");
 		json = json + "]";
@@ -222,36 +262,37 @@ public class HealthController {
 		List<Object[]> basicDetails = new ArrayList<Object[]>();
 		String from = "";
 		String to = "";
-String type = 	request.getParameter("type");
-String year = 	request.getParameter("year");
-String grpah = request.getParameter("graph");
-if(type.equalsIgnoreCase("yearlyRevenue"))
-{
-	from = year+"-01-01";
-	to = year+"-12-31";
-	if(grpah.equalsIgnoreCase("operation"))
-	basicDetails = allListDao.findRevenueChart(from,to,"month");
-	if(grpah.equalsIgnoreCase("medicine"))
-		basicDetails = allListDao.findRevenueChartMedicine(from,to,"month");
-}
+		String type = 	request.getParameter("type");
+		String year = 	request.getParameter("year");
+		String grpah = request.getParameter("graph");
+		if(type.equalsIgnoreCase("yearlyRevenue"))
+		{
+			from = year+"-01-01";
+			to = year+"-12-31";
+			if(grpah.equalsIgnoreCase("operation"))
+			basicDetails = allListDao.findRevenueChart(from,to,"month");
+			if(grpah.equalsIgnoreCase("medicine"))
+				basicDetails = allListDao.findRevenueChartMedicine(from,to,"month");
+		}
 
-if(type.equalsIgnoreCase("monthlyRevenue"))
-{
-	from = "2021-05-01";
-	to = "2021-05-31";
-	if(grpah.equalsIgnoreCase("operation"))
-	basicDetails = allListDao.findRevenueChart(from,to,"day");
-	if(grpah.equalsIgnoreCase("medicine"))
-		basicDetails = allListDao.findRevenueChartMedicine(from,to,"day");
-}
-	String json = "[";
-
-	for(Object[] object : basicDetails)
-	{
-	json = json + "{\"month\":\"" +object[0]+"\",\"amount\":\"" +object[1]+"\"}";
-	}
-	json = json.replace("}{", "},{");
-	json = json + "]";
+		if(type.equalsIgnoreCase("monthlyRevenue"))
+		{
+			from = "2021-05-01";
+			to = "2021-05-31";
+			if(grpah.equalsIgnoreCase("operation"))
+			basicDetails = allListDao.findRevenueChart(from,to,"day");
+			if(grpah.equalsIgnoreCase("medicine"))
+				basicDetails = allListDao.findRevenueChartMedicine(from,to,"day");
+		}
+		
+		String json = "[";
+	
+		for(Object[] object : basicDetails)
+		{
+		json = json + "{\"month\":\"" +object[0]+"\",\"amount\":\"" +object[1]+"\"}";
+		}
+		json = json.replace("}{", "},{");
+		json = json + "]";
 		response.getWriter().print(json);
 	}
 }

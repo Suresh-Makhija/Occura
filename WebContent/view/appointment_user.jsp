@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,8 +52,17 @@
                       
                         <div class="col-lg-6 col-md-8 col-sm-12">
                             <!-- <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Book Appointment</h2> -->
-                            <h2><a href="<%=request.getContextPath()%>/view/index.jsp" class="btn btn-xs btn-link btn-toggle-fullwidth">
-                            <i class="fa fa-arrow-left"></i></a>Book Appointment</h2>
+                           
+                           <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth">
+                           <i class="fa fa-arrow-left"></i></a> Book Appointment</h2>
+	                        <ul class="breadcrumb">
+	                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/view/index.jsp">
+	                            <i class="icon-home"></i></a></li><li class="breadcrumb-item active">Dashboard</li>
+	                        </ul>
+                           
+                           
+                           <%--  <h2><a href="<%=request.getContextPath()%>/view/index.jsp" class="btn btn-xs btn-link btn-toggle-fullwidth">
+                            <i class="fa fa-arrow-left"></i></a>Book Appointment</h2> --%>
                             <!-- <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                                 <li class="breadcrumb-item active">Appointment</li>
@@ -191,7 +201,8 @@
                                     </div>
                                     <div class="col-lg-3 col-sm-3">
                                         <!-- <input data-provide="datepicker" name="appointment_date_time" data-date-autoclose="true" class="form-control" placeholder="Appointment Date"> -->
-                                        <input type="datetime-local" class="form-control ValidateInput"  name="appointment_date_time" id="appointment_date_time" placeholder="Appointment Date"/>
+                                        <input type="datetime-local" class="form-control ValidateInput"  name="appointment_date_time" 
+                                        id="appointment_date_time" onchange="checkdatetime(this);" placeholder="Appointment Date"/>
 
                                     </div>
 
@@ -379,6 +390,34 @@ function checkemail(txtinput)
 }
 
 
+
+function checkdatetime(txtinput)
+{
+	alert(txtinput.value);
+ 	$.ajax({
+		type :'POST',
+		url: "../health/checkdatetime.htm",
+		data :{appointmentdate : txtinput.value},
+		success :function(resdata,status,xhr)
+		{
+			if(resdata == "exist")
+				{
+				txtinput.value = "";
+                txtinput.focus();
+				swal("INFO!","Appointment Date Already exits !! try select different timing","info");
+				}else if(resdata == "error")
+					{
+					txtinput.value = "";
+	                txtinput.focus();
+					swal("ERROR!","Something went wrong!!","error");
+					}
+		},
+		error : function(xhr, status, errorThrown) {
+		},
+		complete : function(xhr, status) {
+		}
+	});	 
+}
 
 
 function mobilenoValidation(mobileno) {
