@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -18,7 +20,7 @@ public class PatientAppointmentBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int appointment_id;
-	private int patient_id;
+	private PatientBean patient_id;
 	private Date appointment_date_time;
 	private Date crt_date;
 	private String description;
@@ -51,14 +53,15 @@ public class PatientAppointmentBean implements Serializable {
 	}
 
 
-
-	public int getPatient_id() {
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	public PatientBean getPatient_id() {
 		return patient_id;
 	}
 
 
 
-	public void setPatient_id(int patient_id) {
+	public void setPatient_id(PatientBean patient_id) {
 		this.patient_id = patient_id;
 	}
 
@@ -91,7 +94,7 @@ public class PatientAppointmentBean implements Serializable {
 	}
 
 
-	public PatientAppointmentBean( int patient_id, Date appointment_date_time, Date crt_date) {
+	public PatientAppointmentBean( PatientBean patient_id, Date appointment_date_time, Date crt_date) {
 		super();
 		this.patient_id = patient_id;
 		this.appointment_date_time = appointment_date_time;

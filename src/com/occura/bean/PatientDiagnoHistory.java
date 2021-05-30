@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -15,10 +18,31 @@ public class PatientDiagnoHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int Patient_diagno_History_id;
-	private int master_diagno_id;
-	private int appointment_id;
-	private int patient_id;
+	private MasterDiagnoBean master_diagno_id;
+	private PatientAppointmentBean appointment_id;
+	private PatientBean patient_id;
 	private Date crt_date;
+	public PatientDiagnoHistory(int patient_diagno_History_id, MasterDiagnoBean master_diagno_id, PatientAppointmentBean appointment_id, PatientBean patient_id,
+			Date crt_date, String eye) {
+		super();
+		Patient_diagno_History_id = patient_diagno_History_id;
+		this.master_diagno_id = master_diagno_id;
+		this.appointment_id = appointment_id;
+		this.patient_id = patient_id;
+		this.crt_date = crt_date;
+		this.eye = eye;
+	}
+
+	public String getEye() {
+		return eye;
+	}
+
+	public void setEye(String eye) {
+		this.eye = eye;
+	}
+
+
+	private String eye;
 	
 	public PatientDiagnoHistory() {
 	}
@@ -32,27 +56,32 @@ public class PatientDiagnoHistory implements Serializable {
 		Patient_diagno_History_id = patient_diagno_History_id;
 	}
 
-	public int getMaster_diagno_id() {
+	@ManyToMany
+	@JoinColumn(name="master_diagno_id")
+	public MasterDiagnoBean getMaster_diagno_id() {
 		return master_diagno_id;
 	}
 
-	public void setMaster_diagno_id(int master_diagno_id) {
+	public void setMaster_diagno_id(MasterDiagnoBean master_diagno_id) {
 		this.master_diagno_id = master_diagno_id;
 	}
 
-	public int getAppointment_id() {
+	@ManyToOne
+	@JoinColumn(name="appointment_id")
+	public PatientAppointmentBean getAppointment_id() {
 		return appointment_id;
 	}
-
-	public void setAppointment_id(int appointment_id) {
+	
+	public void setAppointment_id(PatientAppointmentBean appointment_id) {
 		this.appointment_id = appointment_id;
 	}
 
-	public int getPatient_id() {
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	public PatientBean getPatient_id() {
 		return patient_id;
 	}
-
-	public void setPatient_id(int patient_id) {
+	public void setPatient_id(PatientBean patient_id) {
 		this.patient_id = patient_id;
 	}
 
@@ -65,7 +94,7 @@ public class PatientDiagnoHistory implements Serializable {
 	}
 
 
-	public PatientDiagnoHistory( int master_diagno_id, int appointment_id, int patient_id,
+	public PatientDiagnoHistory( MasterDiagnoBean master_diagno_id, PatientAppointmentBean appointment_id, PatientBean patient_id,
 			Date crt_date) {
 		super();
 		this.master_diagno_id = master_diagno_id;
