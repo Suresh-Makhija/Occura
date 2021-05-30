@@ -221,13 +221,9 @@ public class AllListDao {
 		try {
 			tx = session.getTransaction();
 			tx.begin();
-			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,description,concat(first_name,\"  \",last_name) FROM occura.patient_appointment_tbl as appoint " +
-			 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
-					" where DATE(appoint.appointment_date_time)=curdate() ";
-			 
-//			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,full_name FROM occura.patient_appointment_tbl as appoint " +
-//				 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
-//				 		" where DATE(appoint.appointment_date_time)=curdate() ";
+			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,full_name FROM occura.patient_appointment_tbl as appoint " +
+				 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
+				 		" where DATE(appoint.appointment_date_time)=curdate() ";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
 			tx.commit();
