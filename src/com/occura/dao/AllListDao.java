@@ -143,20 +143,13 @@ public class AllListDao {
 	public static UserBean findUserByLogin(String user,String email,String pswd)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		 UserBean userBean = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
-		  Query query = session.createQuery("FROM UserBean where lower(name) = lower('"+user+"') or lower(email) = lower('"+email+"') and password = '"+pswd+"'");
-		 userBean = (UserBean) query.uniqueResult();
-			tx.commit();
+		  Query query = session.createQuery("FROM UserBean where (lower(name) = lower('"+user+"') or lower(email) = lower('"+email+"')) and password = '"+pswd+"'");
+		  //query.setMaxResults(1);
+		  userBean = (UserBean) query.uniqueResult();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -167,11 +160,9 @@ public class AllListDao {
 	public  HashMap<String, Integer> dashboardBasicDetails() throws HibernateException, SQLException
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		 HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
 		 Connection con = session.connection().getMetaData().getConnection();
 		try {
-			tx = session.getTransaction();
 			CallableStatement cbStatas = con.prepareCall("call occura.new_procedure(?,?,?,?,?)");
 			cbStatas.registerOutParameter(1,Types.INTEGER);
 			cbStatas.registerOutParameter(2,Types.INTEGER);
@@ -188,38 +179,26 @@ public class AllListDao {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			if(tx != null)
-			{
-				tx.rollback();
-			}
-
 		}
 		finally {
 			session.close();
 		}
 		return hashMap;
 }
+	
 	public  List<Object[]> findRevenueChart(String from , String to,String format)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "select "+format+"(crt_date) AS month,sum(total_price_per_operation) amount FROM " +
 					"occura.patient_operation_history_tbl WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' " +
 					"GROUP BY FORMAT(crt_date, 'yyyy_MM') ORDER BY crt_date";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -231,22 +210,14 @@ public class AllListDao {
 	public  List<Object[]> findPatientChart()
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "select unix_timestamp(crt_date) , count(1) FROM occura.patient_tbl group by month(crt_date)";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -259,24 +230,16 @@ public class AllListDao {
 	public  List<Object[]> toDograph()
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "SELECT DATE_FORMAT(appoint.appointment_date_time,'%d/%m/%Y %h:%i:%s %p') as crt_date,full_name FROM occura.patient_appointment_tbl as appoint " +
 				 		"left outer join occura.patient_tbl as patient on patient.patient_id = appoint.patient_id "+
 				 		" where DATE(appoint.appointment_date_time)=curdate() ";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -289,24 +252,16 @@ public class AllListDao {
 	public  List<Object[]> findRevenueChartMedicine(String from , String to,String format)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "select "+format+"(crt_date) AS month,sum(medicine_Qty * total_price_per_medicine) amount FROM " +
 					" occura.patient_medicine_history_tbl WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' " +
 					" GROUP BY FORMAT(crt_date, 'yyyy_MM') ORDER BY crt_date";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -319,24 +274,16 @@ public class AllListDao {
 	public  List<Object[]> OperationHistoryOperationCount(String from , String to,String format)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "select "+format+"(crt_date) AS month ,count(1) amount FROM occura.patient_operation_history_tbl " + 
 					" WHERE crt_date >= '"+from+"' AND crt_date < '"+to+"' GROUP BY FORMAT(crt_date, 'yyyy_MM') " + 
 					" ORDER BY crt_date";
 		  SQLQuery sqlQuery = session.createSQLQuery(query);
 		  dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -348,24 +295,16 @@ public class AllListDao {
 	public  List<Object[]> OperationHistoryPatientCount(String from , String to,String format)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String query = "";
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 			 query = "select "+format+"(crt_date) AS month , count(1) amount FROM occura.patient_tbl WHERE " + 
 					" crt_date >= '"+from+"' AND crt_date < '"+to+"' GROUP BY FORMAT(crt_date, 'yyyy_MM') " + 
 					" ORDER BY crt_date";
 		  SQLQuery sqlQuery = session.createSQLQuery(query);
 		  dataList = sqlQuery.list();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -401,20 +340,12 @@ public class AllListDao {
 	public static PatientBean findEmailByPatient(String email)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		PatientBean patient = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 				Query query = session.createQuery("FROM PatientBean where lower(email_address) = lower('"+email+"') ");
 				patient = (PatientBean) query.uniqueResult();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
