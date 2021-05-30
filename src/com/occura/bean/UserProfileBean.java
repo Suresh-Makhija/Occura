@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.occura.bean.UserBean;
+
 import net.sf.libusb.usb_bus;
 
 
@@ -25,6 +27,23 @@ public class UserProfileBean implements Serializable {
 	private String gender;
 	private Date birth_date;
 	private String address_line_1;
+	
+	public UserProfileBean(String first_name, String last_name, String gender, Date birth_date, String address_line_1,
+			String address_line_2, String city, String state, String country,  UserBean userBean, long phone_no) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.gender = gender;
+		this.birth_date = birth_date;
+		this.address_line_1 = address_line_1;
+		this.address_line_2 = address_line_2;
+		this.city = city;
+		this.state = state;
+		this.country = country;
+		this.userBean = userBean;
+		this.phone_no = phone_no;
+	}
+
 	private String address_line_2;
 	private String city;
 	private String state;

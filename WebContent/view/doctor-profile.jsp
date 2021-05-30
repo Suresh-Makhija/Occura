@@ -12,15 +12,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
 <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
-
-
+<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<!-- <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/ css/ol.css" > -->
+<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 </head>
 <body class="theme-cyan">
 
 <%
 AllListDao allListDao = new AllListDao();
-System.out.println(user);
-UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id());
+if(user != null){
+	UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id());
+
 %>
 
     <div id="main-content" class="profilepage_2 blog-page">
@@ -46,8 +48,8 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         <div class="body">
                             <div class="profile-image"> <img src="../assets/images/user.png" class="rounded-circle" alt=""> </div>
                             <div>
-                                <h4 class="m-b-0"><strong><%if(userProfileBean != null)userProfileBean.getFirst_name();%></strong><%if(userProfileBean != null)userProfileBean.getLast_name();%> </h4>
-                                <span><%if(userProfileBean != null)userProfileBean.getCity();%>,<%if(userProfileBean != null)userProfileBean.getCountry();%></span>
+                                <h4 class="m-b-0"><strong><%if(userProfileBean != null){%><%=userProfileBean.getFirst_name()%><%} %></strong><%if(userProfileBean != null){%><%=userProfileBean.getLast_name()%><%} %> </h4>
+                                <span><%if(userProfileBean != null){%><%=userProfileBean.getCity()%><%} %>,<%if(userProfileBean != null){%><%=userProfileBean.getState()%><%} %>,<%if(userProfileBean != null){%><%=userProfileBean.getCountry()%><%} %></span>
                             </div>
                             <div class="m-t-15">
                             </div>                            
@@ -70,22 +72,18 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         </div>
                         <div class="body">
                             <small class="text-muted">Address: </small>
-                            <p>795 Folsom Ave, Suite 600 San Francisco, 94107</p>
+                            <p><%if(userProfileBean != null){ %><%=userProfileBean.getAddress_line_1()%><%=userProfileBean.getAddress_line_2()%><%} %></p>
                             <div>
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923731.7533500232!2d-120.39098936853455!3d37.63767091877441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1522391841133" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            <div id="map" class="map"></div>
+<!--                               
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923731.7533500232!2d-120.39098936853455!3d37.63767091877441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1522391841133" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe> -->
                             </div>
                             <small class="text-muted">Email address: </small>
-                            <p>michael@gmail.com</p>
+                            <p><%if(user != null)%><%=user.getEmail() %></p>
                             <small class="text-muted">Mobile: </small>
-                            <p>+ 202-555-2828</p>
+                            <p><%if(userProfileBean != null)%><%=userProfileBean.getPhone_no()%></p>
                             <small class="text-muted">Birth Date: </small>
-                            <p class="m-b-0">October 22th, 1990</p>
-                            <hr>
-                            <small class="text-muted">Social: </small>
-                            <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
-                            <p><i class="fa fa-facebook  m-r-5"></i> facebook.com/example</p>
-                            <p><i class="fa fa-github m-r-5"></i> github.com/example</p>
-                            <p><i class="fa fa-instagram m-r-5"></i> instagram.com/example</p>
+                            <p class="m-b-0"><%if(userProfileBean != null)%><%=String.valueOf(userProfileBean.getBirth_date()).split(" ")[0] %></p>
                         </div>
                     </div>
 
@@ -97,25 +95,25 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
 
                     <div class="card">
                         <div class="row profile_state">
-                            <div class="col-lg-3 col-6">
-                                <div class="body">
-                                    <i class="fa fa-thumbs-up"></i>
-                                    <h5 class="m-b-0 number count-to" data-from="0" data-to="2365" data-speed="1000" data-fresh-interval="700"><%if(userProfileBean != null)userProfileBean.getExp(); %></h5>
-                                    <small>Experience</small>
-                                </div>
-                            </div>
+<!--                             <div class="col-lg-3 col-6"> -->
+<!--                                 <div class="body"> -->
+<!--                                     <i class="fa fa-thumbs-up"></i> -->
+<%--                                     <h5 class="m-b-0 number count-to" data-from="0" data-to="2365" data-speed="1000" data-fresh-interval="700"><%if(userProfileBean != null){%><%=userProfileBean.getExp()%><%} %></h5> --%>
+<!--                                     <small>Experience</small> -->
+<!--                                 </div> -->
+<!--                             </div> -->
                            
                             <div class="col-lg-3 col-6">
                                 <div class="body">
                                     <i class="fa fa-user"></i>
-                                    <h5 class="m-b-0 number count-to" data-from="0" data-to="324" data-speed="1000" data-fresh-interval="700">324</h5>
+                                    <h5 class="m-b-0 number count-to" data-from="0" data-to="324" data-speed="1000" data-fresh-interval="700" id="total_patient"></h5>
                                     <small>Clients</small>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-6">
                                 <div class="body">
                                     <i class="fa fa-bug"></i>
-                                    <h5 class="m-b-0 number count-to" data-from="0" data-to="1980" data-speed="1000" data-fresh-interval="700">1980</h5>
+                                    <h5 class="m-b-0 number count-to" id="operation" data-from="0" data-to="1980" data-speed="1000" data-fresh-interval="700">1980</h5>
                                     <small>Surgery</small>
                                 </div>
                             </div>
@@ -126,7 +124,7 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="body">
-                                    <input type="text" class="knob" value="22" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#01b2c6">
+                                    <input type="text" class="knob" value="0" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#01b2c6">
                                     <h6>Events</h6>
 <!--                                     <span>12 of this month</span> -->
                                 </div>
@@ -135,7 +133,7 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="body">
-                                    <input type="text" class="knob" value="78" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#2196f3">
+                                    <input type="text" class="knob" value="0" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#2196f3">
                                     <h6>Birthday</h6>
 <!--                                   C  <span>4 of this month</span> -->
                                 </div>
@@ -144,7 +142,7 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="body">
-                                    <input type="text" class="knob" value="66" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#f44336">
+                                    <input type="text" class="knob" value="" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#f44336">
                                     <h6>Conferences</h6>
 <!--                                     <span>8 of this month</span> -->
                                 </div>
@@ -153,7 +151,7 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="body">
-                                    <input type="text" class="knob" value="50" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#4caf50">
+                                    <input type="text" class="knob" value="" data-width="70" data-height="70" data-thickness="0.1" data-fgColor="#4caf50">
                                     <h6>Seminars</h6>
 <!--                                     <span>2 of this month</span> -->
                                 </div>
@@ -180,10 +178,10 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">                                                
-                                                <input value="<%if(userProfileBean != null)userProfileBean.getFirst_name();%>" id="first_name" type="text" class="form-control" placeholder="First Name">
+                                                <input value="<%if(userProfileBean != null){%><%=userProfileBean.getFirst_name()%><%} %>" id="first_name" type="text" class="form-control" placeholder="First Name">
                                             </div>
                                             <div class="form-group">                                                
-                                                <input value="<%if(userProfileBean != null)userProfileBean.getLast_name();%>" type="text" id="last_name" class="form-control" placeholder="Last Name">
+                                                <input value="<%if(userProfileBean != null){%><%=userProfileBean.getLast_name()%><%} %>" type="text" id="last_name" class="form-control" placeholder="Last Name">
                                             </div>
                                             <div class="form-group">
                                                 <%if(userProfileBean != null){
@@ -231,23 +229,27 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="icon-calendar"></i></span>
                                                     </div>
-                                                    <input id="birth_date" value="<%if(userProfileBean != null)userProfileBean.getBirth_date();%>" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Birthdate">
+                                                    <input type="date" id="birth_date" value="<%if(userProfileBean != null){%><%=userProfileBean.getBirth_date()%><%} %>" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Birthdate">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
+                                         <div class="form-group">
+                                                <input type="text" id="m_no" class="form-control" value="<%if(userProfileBean != null)userProfileBean.getPhone_no();%>"  placeholder="Phone Number">
+                                            </div>
                                             <div class="form-group">                                                
-                                                <input type="text" id="address_line_1" value="<%if(userProfileBean != null)userProfileBean.getAddress_line_1();%>" class="form-control" placeholder="Address Line 1">
+                                                <input type="text" id="address_line_1" value="<%if(userProfileBean != null){%><%=userProfileBean.getAddress_line_1()%><%} %>" class="form-control" placeholder="Address Line 1">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" id="address_line_2" value="<%if(userProfileBean != null)userProfileBean.getAddress_line_2();%>" class="form-control" placeholder="Address Line 2" >
+                                                <input type="text" id="address_line_2" value="<%if(userProfileBean != null){%><%=userProfileBean.getAddress_line_2()%><%} %>" class="form-control" placeholder="Address Line 2" >
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="city" placeholder="City" value="<%if(userProfileBean != null)userProfileBean.getCity();%>">
+                                                <input type="text" class="form-control" id="city" placeholder="City" value="<%if(userProfileBean != null){%><%=userProfileBean.getCity()%><%} %>">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="state" placeholder="State/Province" value="<%if(userProfileBean != null)userProfileBean.getState();%>">
+                                                <input type="text" class="form-control" id="state" placeholder="State/Province" value="<%if(userProfileBean != null){%><%=userProfileBean.getState()%><%} %>">
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <select class="form-control" id="country">
                                                     <option value="">-- Select Country --</option>
@@ -521,25 +523,22 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
                                             <div class="form-group">
                                                 <input type="email" class="form-control" value="<%=user.getEmail()%>" readonly="readonly"  placeholder="Email">
                                             </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" value="<%if(userProfileBean != null)userProfileBean.getPhone_no();%>"  placeholder="Phone Number">
-                                            </div>
                                         </div>
 
                                         <div class="col-lg-12 col-md-12">
                                             <h6>Change Password</h6>
                                             <div class="form-group">
-                                                <input type="password" class="form-control" placeholder="Current Password">
+                                                <input id="cr_password" type="password" class="form-control" placeholder="Current Password">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control" placeholder="New Password">
+                                                <input id="new_password" type="password" class="form-control" placeholder="New Password">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control" placeholder="Confirm New Password">
+                                                <input id="cnrf_password" type="password" class="form-control" placeholder="Confirm New Password">
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary">Update</button> &nbsp;&nbsp;
+                                    <button type="button" onclick="changePassword();" class="btn btn-primary">Update</button> &nbsp;&nbsp;
                                     <button class="btn btn-default">Cancel</button>
                                 </div>
                             </div>
@@ -552,8 +551,8 @@ UserProfileBean userProfileBean =  allListDao.findUserProfile(user.getUser_id())
         </div>
     </div>
 
-
-
+<%}%>
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(function () {
     $('.knob').knob({
@@ -561,25 +560,149 @@ $(function () {
         }
     });
 });
+function getBDay(date){
+	
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
+	var year = date.getFullYear();
+	return [year,month,day].join('-');
 
+}
 function updateBasicDetailsUser()
 {
 	var f_name = $("#first_name").val();
 	var lst_name = $("#last_name").val();
-	var gender = $("#gender").val();
+	var gender =$('input[name=gender2]:checked').val();
 	var add_1 = $("#address_line_1").val();
 	var add_2 = $("#address_line_2").val();
-	var b_day = $("#birth_date").val();
+	var date = new Date($('#birth_date').val());
+	var b_day = getBDay(date);
 	var city = $("#city").val();
-	var country = $("#country").val();
-}
 
+	var country =$('#country').find(":selected").text();
+	var state = $("#state").val();
+	var mobile = $("#m_no").val();
+	var user_id = '<%=user.getUser_id()%>';
+	 $.ajax({
+			type :'POST',
+			data :{mobile:mobile,user_id : user_id ,f_name:f_name,lst_name: lst_name , gender : gender,add_1 : add_1,add_2 : add_2 ,date : date,b_day : b_day,city : city,country : country,state : state },
+			url: "../health/userProfileUpdate.htm",
+			success :function(data)
+			{
+				if(data == "true")
+					{
+					swal("SUCCESS!","user profile updated","success");
+					}
+					else
+						swal("ERROR!","Try after sometime","error");
+			}
+	 });
+	 }
 function clearBasicDetailsUser()
 {
+	$("m_no").val();
+	 $("#first_name").val("");
+	$("#last_name").val("");
+	 $("#address_line_1").val("");
+	 $("#address_line_2").val("");
+	$('#birth_date').val("");
+	 $("#city").val("");
+	$("#state").val("");
+	}
+
+function changePassword()
+{
+	var current = $("#cr_password").val();
+	var newPass = $("#new_password").val();
+	var confirm_pass  = $("#cnrf_password").val();
+	var actual_pass = '<%=user.getPassword()%>';
+	var user_id = '<%=user.getUser_id()%>';
+	if(actual_pass != current)
+		{
+		swal("INFO!","Current Password wrong","info");
+		}
+	if(actual_pass == current && newPass != "" && newPass == confirm_pass)
+		{
+		 $.ajax({
+				type :'POST',
+				data :{newPass:newPass,user_id:user_id},
+				url: "../health/changePassword.htm",
+				success :function(data)
+				{
+					if(data == "true")
+					swal("SUCCESS!","Pssword updated","success")
+					else
+						swal("ERROR!","Try after some time","error")
+				}});
+		}
+	else
+	swal("INFO!","Password doesnot match","info");
+  }
+
+
+
+function savePosition(position) {
+	var longt = position.coords.longitude,
+	  lat = position.coords.latitude;
+	var map = new ol.Map({
+		  target: 'map',
+		  layers: [
+		    new ol.layer.Tile({
+		      source: new ol.source.OSM()
+		    })
+		  ],
+		  view: new ol.View({
+		    center: ol.proj.fromLonLat([longt, lat]),
+		    zoom: 17
+		  })
+		});
+		///ADD MARKER
+		var markers = new ol.layer.Vector({
+		  source: new ol.source.Vector(),
+		  style: new ol.style.Style({
+		    image: new ol.style.Icon({
+		      anchor: [0.5, 46],
+		      anchorXUnits: 'fraction',
+		      anchorYUnits: 'pixels',
+		      src: 'https://openlayers.org/en/v5.3.0/examples/data/icon.png'
+		    })
+		  })
+		});
+		map.addLayer(markers);
+		var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([longt, lat])));
+		markers.getSource().addFeature(marker);
+	}
+	function positionError() {
+	$('div.main').prepend('<p class="error"><strong>Sorry!</strong> There was an error getting your location.</p>');
+	}
+	test();
+	function test() {
+	if (navigator.geolocation) {
+	// Can use geolocation, proceed with getting the location
+	navigator.geolocation.getCurrentPosition(savePosition, positionError);
+	} else {
+	}
+	};
 	
-}
+	basicDetails();
+	function basicDetails()
+	{
+	$.ajax({
+	type :'POST',
+	url: "../health/basicDetails.htm",
+	success :function(data)
+	{
+	var json = JSON.parse(data);
+	$.each(json,function(i,f){
+
+		document.getElementById("total_patient").innerHTML = f.total_patient;
+		document.getElementById("operation").innerHTML = f.total_operation ;
+	});
+
+	}
+	});
+	}
 </script>
 </body>
 
-<!-- Mirrored from www.wrraptheme.com/templates/lucid/hospital/light/doctor-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 16 May 2021 10:08:31 GMT -->
 </html>

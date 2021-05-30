@@ -65,7 +65,7 @@
                             <a href="doctor-events.html" class="icon-menu d-none d-sm-block d-md-none d-lg-block"><i class="icon-calendar"></i></a>
                         </li>
                         <li>
-                            <a href="app-inbox.html" class="icon-menu d-none d-sm-block"><i class="icon-envelope"></i><span class="notification-dot"></span></a>
+                            <a href="https://mail.google.com/" class="icon-menu d-none d-sm-block"><i class="icon-envelope"></i><span class="notification-dot"></span></a>
                         </li>
                         
                         <li class="dropdown">
@@ -152,8 +152,8 @@
                     <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><%=user.getName() %></strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account">
                         <li><a href="doctor-profile.jsp"><i class="icon-user"></i>My Profile</a></li>
-                        <li><a href="app-inbox.html"><i class="icon-envelope-open"></i>Messages</a></li>
-                        <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li>
+                        <li><a href="https://mail.google.com/"><i class="icon-envelope-open"></i>Messages</a></li>
+<!--                         <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li> -->
                         <li class="divider"></li>
                         <li><a id="logoutSubMenu" onclick="logout();"><i class="icon-power"></i>Logout</a></li>
                     </ul>
@@ -161,8 +161,8 @@
                 <hr>
                 <ul class="row list-unstyled">
                     <li class="col-4">
-                        <small>Exp</small>
-                        <h6>14</h6>
+<!--                         <small>Exp</small> -->
+<!--                         <h6>14</h6> -->
                     </li>
                     
                 </ul>
@@ -191,6 +191,7 @@
 
                             <!-- <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
                             <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li> -->
+
 <!--                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-user-follow"></i><span>Doctors</span> </a> -->
 <!--                                 <ul> -->
 <!--                                     <li><a href="doctors-all.html">All Doctors</a></li> -->
@@ -216,21 +217,12 @@
                             </li>
                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Departments</span> </a>
                                 <ul>
-                                    <li><a href="depa-add.html">Add</a></li>
-                                    <li><a href="depa-all.html">All Departments</a></li>
-                                    <li><a href="javascript:void(0);">Cardiology</a></li>
-                                    <li><a href="javascript:void(0);">Pulmonology</a></li>
-                                    <li><a href="javascript:void(0);">Gynecology</a></li>
-                                    <li><a href="javascript:void(0);">Neurology</a></li>
-                                    <li><a href="javascript:void(0);">Urology</a></li>
-                                    <li><a href="javascript:void(0);">Gastrology</a></li>
-                                    <li><a href="javascript:void(0);">Pediatrician</a></li>
-                                    <li><a href="javascript:void(0);">Laboratory</a></li>
+                                    <li><a href="depa-add.jsp">Add</a></li>
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="#Pages" class="has-arrow"><i class="icon-docs"></i><span>Extra Pages</span></a>
+<!--                                 <a href="#Pages" class="has-arrow"><i class="icon-docs"></i><span>Extra Pages</span></a> -->
                                 <ul>
                                     <li><a href="page-blank.html">Blank Page</a> </li>
                                     <li><a href="doctor-profile.html">Profile</a></li>

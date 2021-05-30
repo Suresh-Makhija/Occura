@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
+import com.occura.bean.UserProfileBean;
 import com.occura.dao.AllInsertDao;
 import com.occura.dao.AllListDao;
 import com.occura.utility.CommonUtility;
@@ -43,7 +44,8 @@ import com.occura.utility.CommonUtility;
 public class HealthController {
 	AllListDao allListDao = new AllListDao();
 	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
-
+	SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	AllInsertDao allInserDao = new AllInsertDao();
 	@RequestMapping(value = "/appointment_user") // Mapping for Call the controller
 	public ModelAndView appointment_user(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception
@@ -270,6 +272,60 @@ public class HealthController {
 		response.getWriter().print(json);
 	}
 
+	
+	@RequestMapping(value = "/userProfileUpdate", method = RequestMethod.POST) // Mapping for Call the controller
+	public void userProfileUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{Date b_day = new Date();
+	long mobile = 0;
+		String user = request.getParameter("user_id");
+		String f_name = request.getParameter("f_name");
+		String lst_name = request.getParameter("lst_name");
+		String gender = request.getParameter("gender");
+		String add_1 = request.getParameter("add_1");
+		String add_2 = request.getParameter("add_2");
+		
+		if(request.getParameter("b_day") != null && !request.getParameter("b_day").equalsIgnoreCase("NaN-NaN-NaN"))
+		 b_day = SimpleDateFormat.parse(request.getParameter("b_day")) ;
+		String city = request.getParameter("city");
+		String country = request.getParameter("country");
+		String state = request.getParameter("state");
+		System.err.print(request.getParameter("mobile"));
+		if(request.getParameter("mobile") != null)
+		mobile = Long.valueOf(request.getParameter("mobile"));
+		UserProfileBean userProfileBean =  allListDao.findUserProfile(Integer.valueOf(user));
+		UserBean userBean =  allListDao.findUser(Integer.valueOf(user));
+		if(userProfileBean != null)
+		{
+			userProfileBean.setFirst_name(f_name);
+			userProfileBean.setLast_name(lst_name);
+			userProfileBean.setGender(gender);
+			userProfileBean.setBirth_date(b_day);
+			userProfileBean.setAddress_line_1(add_1);
+			userProfileBean.setAddress_line_2(add_2);
+			userProfileBean.setCity(city);
+			userProfileBean.setState(state);
+			userProfileBean.setCountry(country);
+			userProfileBean.setUserBean(userBean);
+			userProfileBean.setPhone_no((mobile));
+		}
+		else {
+		 userProfileBean = new UserProfileBean(f_name, lst_name, gender, b_day, add_1, add_2, city, state, country, userBean,mobile);
+		}
+		boolean value =  allInserDao.save(userProfileBean);
+		response.getWriter().print(value);
+	}
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST) // Mapping for Call the controller
+	public void changePassword(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception
+	{
+		String user = request.getParameter("user_id");
+		UserBean userBean =  allListDao.findUser(Integer.valueOf(user));
+		String pass = request.getParameter("newPass");
+		userBean.setPassword(pass);
+		boolean value = allInserDao.save(userBean);
+		response.getWriter().print(value);
+		
+	}
 	@RequestMapping(value = "/revenueGraph", method = RequestMethod.POST) // Mapping for Call the controller
 	public void revenueGraph(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception
 	{

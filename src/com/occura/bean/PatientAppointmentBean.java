@@ -21,7 +21,19 @@ public class PatientAppointmentBean implements Serializable {
 	private int patient_id;
 	private Date appointment_date_time;
 	private Date crt_date;
-	
+	private String description;
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
 	public PatientAppointmentBean() {
 	}
 

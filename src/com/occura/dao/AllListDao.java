@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.transform.Transformers;
 
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
@@ -51,15 +49,38 @@ public class AllListDao {
 		return userBean;
 	}
 
-
+	public  List<UserBean> getUserList()
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		List<UserBean> usList = new ArrayList<UserBean>();
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+		  Query query = session.createQuery("FROM UserBean");
+		  usList =  query.list();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return usList;
+	}
 	public  UserProfileBean findUserProfile(int user_id)
 	{
 		Session session = HibernateUtil.openSession();
 		UserProfileBean userProfileBean = null;
 		try {
-				Query query = session.createQuery("FROM UserProfileBean where user_id = "+user_id+"");
-				//Query query = session.createQuery("FROM UserProfileBean where user_profile_id = "+user_id+"");
-				userProfileBean = (UserProfileBean) query.uniqueResult();
+		  Query query = session.createQuery("FROM UserProfileBean where user_id = "+user_id+"");
+		  query.setMaxResults(1);
+		  userProfileBean = (UserProfileBean) query.uniqueResult();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +90,30 @@ public class AllListDao {
 		}
 		return userProfileBean;
 	}
-
+	public  UserBean findUser(int user_id)
+	{
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		UserBean userBean = null;
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+		  Query query = session.createQuery("FROM UserBean where user_id = "+user_id+"");
+		  userBean = (UserBean) query.uniqueResult();
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return userBean;
+	}
 	public static String findPassword(String email)
 	{
 		Session session = HibernateUtil.openSession();
@@ -393,6 +437,7 @@ public class AllListDao {
 				patient = (PatientAppointmentBean) query.uniqueResult();
 		}
 		catch (Exception e) {
+	
 			e.printStackTrace();
 		}
 		finally {
@@ -401,6 +446,7 @@ public class AllListDao {
 		return patient;
 	}
 
+	
 }
 
 //}

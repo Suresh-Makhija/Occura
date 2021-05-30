@@ -357,24 +357,26 @@ function logout()
 
 function basicDetails()
 {
-	$.ajax({
-	type :'POST',
-	url: "../health/basicDetails.htm",
-	success :function(data)
-	{
-		var json = JSON.parse(data);
-		$.each(json,function(i,f){
-			document.getElementById("total_patient").innerHTML = f.total_patient;
-			document.getElementById("new_patient").innerHTML = f.today_patient;
-			document.getElementById("revenue").innerHTML = "  "+ f.revenue ;
-			//document.getElementById("menu_visit").innerHTML = f.today_patient ;     /* Cannot set property 'innerHTML' of null */
-			document.getElementById("operation").innerHTML = " "+f.total_operation ;
-			document.getElementById("pharmacy_income").innerHTML = f.pharmacy_income ;
-			document.getElementById("operation_income").innerHTML = f.operation_income ;
-		});
-	
-	}
-	});
+
+$.ajax({
+type :'POST',
+url: "../health/basicDetails.htm",
+success :function(data)
+{
+var json = JSON.parse(data);
+$.each(json,function(i,f){
+
+	document.getElementById("total_patient").innerHTML = f.total_patient;
+	document.getElementById("new_patient").innerHTML = f.today_patient;
+	document.getElementById("revenue").innerHTML = "  " + f.revenue ;
+	document.getElementById("operation").innerHTML = f.total_operation ;
+	document.getElementById("pharmacy_income").innerHTML = f.pharmacy_income ;
+	document.getElementById("operation_income").innerHTML = f.operation_income ;
+});
+
+}
+});
+
 }
 
 function revenueGraph(id,year)
