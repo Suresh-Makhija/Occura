@@ -48,20 +48,20 @@
 
                                 <div class="form-group">
                                     <label for="signup-email" class="control-label sr-only">Email</label>
-                                    <input type="email" required="required" class="form-control ValidateInput" name="signup-email" id="signup-email" placeholder="Your email">
+                                    <input type="email" required="required" class="form-control ValidateInput"  id="signup-email" placeholder="Your email">
                                 </div>
                                 <div class="form-group">
                                  <label for="signup-user" class="control-label sr-only">UserName</label>
-                                    <input type="text" required="required" class="form-control ValidateInput" name="signup-user" id="signup-user" placeholder="Your Username">
+                                    <input type="text" required="required" class="form-control ValidateInput"  id="signup-user" placeholder="Your Username">
                                 </div>
                                 <div class="form-group">
                                     <label for="signup-password" class="control-label sr-only">Password</label>
-                                    <input type="password" required="required" class="form-control ValidateInput" name="signup-password" id="signup-password" 
+                                    <input type="password" required="required" class="form-control ValidateInput"  id="signup-password" 
                                     		placeholder="Password" autocomplete="new-password">
                                 </div>
                                 <input type="button" onclick="register();" class="btn btn-primary btn-lg btn-block" value="REGISTER"/>
                                 <div class="bottom">
-                                    <span class="helper-text">Already have an account? <a href="page-login.jsp">Login</a></span>
+                                    <span>Already have an account? <a onclick="loginpage();" style="cursor: pointer;" >Login</a></span>   <!-- href="page-login.jsp" -->
                                 </div>
                             </form>
                         </div>
@@ -76,6 +76,7 @@
 	  <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>  --%> 
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
 function register()
 {
 	var flag = formValidate("registerform");
@@ -97,7 +98,8 @@ function register()
 			         text: 'Success register!',
 			         icon: 'success'
 			       }).then(function() {
-			         window.open("page-login.jsp");
+			         //window.open("page-login.jsp");
+			    	   loginpage();
 			       });
 				}
 				if(resdata == "exist")
@@ -115,6 +117,13 @@ function register()
 			}
 		});
 	}
+}
+
+
+function loginpage()
+{
+	document.registerformName.action = "../controller/loadLoginPage.htm";  
+	document.registerformName.submit();
 }
 
 function formValidate(divName)   /* add header  */

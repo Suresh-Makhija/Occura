@@ -49,7 +49,7 @@ for(int i=0;i<5;i++)
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/view/index.jsp"><i class="icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;" ><i class="icon-home"></i></a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                     </div>
@@ -333,25 +333,7 @@ window.onload = function() {
 };
 	
 	
-function logout()
-{
-	$.ajax({
-	type :'POST',
-	url: "../controller/logout.htm",
-	success :function(resdata,status,xhr)
-	{
-		if(resdata == "logout")
-			{
-			window.location = "page-login.jsp";
-			}
-	},
-	error : function(xhr, status, errorThrown) {
-	
-	},
-	complete : function(xhr, status) {
-	}
-	});
-}
+
 
 
 

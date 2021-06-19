@@ -5,7 +5,7 @@
          id="WebApp_ID" version="2.5">
   <display-name>Occura</display-name>
   <welcome-file-list>
-      <welcome-file>view/page-login.jsp</welcome-file> 
+      <welcome-file>view/index_welcome.jsp</welcome-file> 
    	<!-- <welcome-file>view/appointment_user.jsp</welcome-file> -->
      <!-- <welcome-file>view/calendar.jsp</welcome-file> --> 
 <!-- 			<welcome-file>view/testsnapshot.jsp</welcome-file>  -->

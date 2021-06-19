@@ -29,7 +29,7 @@ List<UserBean> usList =  allListDao.getUserList();
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Add Departments</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.jsp"><i class="icon-home"></i></a></li>                            
+                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;"><i class="icon-home"></i></a></li>     <!-- href="index.jsp"  -->                        
                             <li class="breadcrumb-item">Department</li>
                             <li class="breadcrumb-item active">Add Departments</li>
                         </ul>

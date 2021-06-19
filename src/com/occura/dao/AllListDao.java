@@ -343,6 +343,7 @@ public class AllListDao {
 		PatientBean patient = null;
 		try {
 				Query query = session.createQuery("FROM PatientBean where lower(email_address) = lower('"+email+"') ");
+				query.setMaxResults(1);
 				patient = (PatientBean) query.uniqueResult();
 		}
 		catch (Exception e) {
@@ -361,6 +362,7 @@ public class AllListDao {
 		try {
 				Query query = session.createQuery("FROM PatientAppointmentBean where DATE_FORMAT(appointment_date_time,'%d/%m/%Y %h:%i:%s %p') "
 						+ " = DATE_FORMAT('"+appointmentdate+"','%d/%m/%Y %h:%i:%s %p') ");
+				query.setMaxResults(1);
 				patient = (PatientAppointmentBean) query.uniqueResult();
 		}
 		catch (Exception e) {
@@ -372,7 +374,24 @@ public class AllListDao {
 		}
 		return patient;
 	}
-
+	
+	public  List<PatientBean> findQueryOldCase(String oldcasequery)
+	{
+		Session session = HibernateUtil.openSession();
+		List<PatientBean> patientList = new ArrayList<PatientBean>();
+		try {
+		  Query query = session.createQuery("FROM PatientBean where lower(full_name) like lower('%"+oldcasequery+"%') or "
+		  		+ " mobile_no like '%"+oldcasequery+"%'   ");
+		  patientList =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patientList;
+	}
 	
 }
 

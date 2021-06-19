@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.occura.bean.UserBean"%>
+-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html lang="en">
 
 
@@ -50,14 +51,16 @@
             </div>
 
             <div class="navbar-brand">
-                <a href="index.jsp"><img src="" alt="Occura Logo" class="img-responsive logo"></a>                
+                <a onclick="loadindex();" style="cursor: pointer;"><img src="" alt="Occura Logo" class="img-responsive logo"></a>       <!--  href="index.jsp"  -->         
             </div>
             
             <div class="navbar-right">
-                <form id="navbar-search" class="navbar-form search-form">
+            	<form id="navbar-search" class="navbar-form search-form">
                     <input value="" class="form-control" placeholder="Search here..." type="text">
                     <button type="button" class="btn btn-default"><i class="icon-magnifier"></i></button>
-                </form>                
+                </form> 
+                
+                <form:form name="loadmenu"> </form:form>
 
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav">
@@ -135,7 +138,7 @@
                      
                         <li>
 <!--                         	<button onclick="logout();" class="icon-menu"></button> -->
-                            <a  class="icon-menu" id = "logoutMenu" onclick="logout();"><i class="icon-login"></i></a>
+                            <a  class="icon-menu" id = "logoutMenu" onclick="logout();" style="cursor: pointer;"><i class="icon-login"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -151,11 +154,11 @@
                     <span>Welcome,</span>
                     <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><%=user.getName() %></strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account">
-                        <li><a href="doctor-profile.jsp"><i class="icon-user"></i>My Profile</a></li>
+                        <li><a onclick="doctorprofile();" style="cursor: pointer;"><i class="icon-user"></i>My Profile</a></li>    <!--  href="doctor-profile.jsp" -->
                         <li><a href="https://mail.google.com/"><i class="icon-envelope-open"></i>Messages</a></li>
 <!--                         <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li> -->
                         <li class="divider"></li>
-                        <li><a id="logoutSubMenu" onclick="logout();"><i class="icon-power"></i>Logout</a></li>
+                        <li><a id="logoutSubMenu" onclick="logout();" style="cursor: pointer;"><i class="icon-power"></i>Logout</a></li>
                     </ul>
                 </div>
                 <hr>
@@ -178,14 +181,15 @@
                 <div class="tab-pane active" id="menu">
                     <nav class="sidebar-nav">
                         <ul class="main-menu metismenu">
-                            <li class="active"><a href="index.jsp"><i class="icon-home"></i><span>Dashboard</span></a></li>
+                            <li class="active"><a onclick="loadindex();" style="cursor: pointer;"><i class="icon-home"></i><span>Dashboard</span></a></li>  <!-- href="index.jsp" -->
 <!--                             <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li> -->
                             
                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-calendar"></i>
                             	<span>Appointment</span> </a>
                                  <ul> 
-                                     <li><a href="appointment_user.jsp">Book Appointment</a></li> 
-                                     <li><a href="fullcalendar.jsp">Test Calendar</a></li> 
+                                     <li><a onclick="loadappointment();" style="cursor: pointer;">Book Appointment</a></li>   <!-- href="appointment_user.jsp" -->
+                                     <li><a onclick="loadcalendar();" style="cursor: pointer;">Test Calendar</a></li>   <!-- href="fullcalendar.jsp" -->
+                                 	<li><a onclick="loadtestsnapshot();" style="cursor: pointer;">Test Snapshot</a></li>
                                  </ul> 
                              </li> 
 
@@ -217,7 +221,7 @@
                             </li>
                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Departments</span> </a>
                                 <ul>
-                                    <li><a href="depa-add.jsp">Add</a></li>
+                                    <li><a onclick="loaddepartment();" style="cursor: pointer;">Add</a></li>    <!-- href="depa-add.jsp" -->
                                 </ul>
                             </li>
 
@@ -419,7 +423,6 @@
                     
 
 <%} else{
-	
 	response.sendRedirect(request.getContextPath()+"/view/page-login.jsp");
 }%>
 <!-- Javascript -->
@@ -438,6 +441,66 @@
 
 <script type="text/javascript">
 
+function loadindex()
+{
+	document.loadmenu.action = "../health/loadindex.htm";  
+	document.loadmenu.submit();
+}
+
+function doctorprofile()
+{
+	document.loadmenu.action = "../health/doctorprofile.htm";  
+	document.loadmenu.submit();
+}
+
+function loadappointment()
+{
+	document.loadmenu.action = "../health/loadappointment.htm";  
+	document.loadmenu.submit();
+}
+
+function loadcalendar()
+{
+	document.loadmenu.action = "../health/loadcalendar.htm";  
+	document.loadmenu.submit();
+}
+
+function loaddepartment()
+{
+	document.loadmenu.action = "../health/loaddepartment.htm";  
+	document.loadmenu.submit();
+}
+
+function loadtestsnapshot()
+{
+	document.loadmenu.action = "../health/loadtestsnapshot.htm";  
+	document.loadmenu.submit();
+}
+
+
+
+/* window.location = "page-login.jsp"; */
+
+function logout()
+{
+	$.ajax({
+	type :'POST',
+	url: "../controller/logout.htm",
+	success :function(resdata,status,xhr)
+	{
+		if(resdata == "logout")
+			{
+			document.loadmenu.action = "../controller/loadLoginPage.htm";  
+			document.loadmenu.submit();
+			}
+	},
+	error : function(xhr, status, errorThrown) {
+	
+	},
+	complete : function(xhr, status) {
+	}
+	});
+}
 
 /* window.setInterval(function()
 {
@@ -489,6 +552,337 @@ function loadNotification()
 	});
 
 }
+
+
+
+
+function checkFileUpload(fieldObj){
+		var id = fieldObj.id;
+		var FileName = fieldObj.value;
+		
+		var Extension = FileName.split(".");
+		
+		if(Extension.length > 2)
+		{
+			alert('Please select correct file format');
+			fieldObj.value = "";
+		}else
+			{
+				var FileExt = FileName.substr(FileName.lastIndexOf('.') + 1);
+				var FileSize = fieldObj.files[0].size;
+				var FileSizeMB = (FileSize / 10485760).toFixed(2);
+				
+					 if(FileExt == "jpeg" || FileExt == "JPEG" || FileExt == "png" || FileExt == "PNG" || FileExt == "jpg" || FileExt == "JPG")
+					{
+						if ((FileExt == "jpeg" || FileExt == "JPEG" || FileExt == "png" || FileExt == "PNG" || FileExt == "jpg" || FileExt == "JPG") && FileSize < 307200) { 
+							return true;
+						} else {
+							var error = "Please make sure your file is in jpeg or png  format and size is less than 300KB.";
+							alert(error);
+							fieldObj.value = "";
+							return false;
+						}
+					}	
+					 else {
+						var error = "Please make sure your file is in png or jpeg format.";
+						alert(error);
+						fieldObj.value = "";
+						return false;
+					}
+			}
+	}
+
+function validateEmail(txtinput) {
+    var check_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([A-Za-z]{2,6}(?:\.[a-z]{2})?)$/;
+    {
+        if (!txtinput.value == "") {
+            if (txtinput.value.match(check_email)) {
+        
+                return true;
+            } else {
+                txtinput.value = "";
+                txtinput.focus();
+                alert('Please enter valid Email Id.');
+                return false;
+            }
+        }
+    }
+}  
+
+
+function mobilenoValidation(mobileno) {
+    var val = mobileno.value;
+    if(val != null && val != ""){
+        
+        if (val[0] == 6 || val[0] == 7 || val[0] == 8 || val[0] == 9) {
+            if (/^\d{10}$/.test(val)) {
+            } else {
+                alert("Please enter valid mobile number");
+                mobileno.value = "";
+                return false;
+            }
+        }else{
+            alert("Please enter valid mobile number");
+            mobileno.value = "";
+            return false;
+        }
+        
+    }
+ }
+
+
+ function onlyalphabetwithspace(inputtxt) 
+ {
+    var letters = /^[A-Za-z ]+$/;
+    if (!inputtxt.value == "") {
+        if (inputtxt.value.match(letters)) {
+
+            return true;
+        } else {
+            alert('Please input alphabet characters only');
+            inputtxt.value = "";
+            inputtxt.focus();
+            return false;
+        }
+    }
+}
+
+function onlyNumber(form)
+{
+    var numbers = /^[-+]?[0-9]+$/;
+    if(!form.value.match(numbers))
+    {
+        alert("Only numbers are allowed");
+        form.value="";
+        form.focus();
+    }
+}
+
+function formValidate(divName)
+{
+
+            var flag=true;
+            /*for textbox , radio button , password*/
+            var dataInput=$('#'+divName+' input[type="text"].ValidateInput ,input[type="number"].ValidateInput,#'+divName+' input[type="email"].ValidateInput, #'+divName+' input[type="file"].ValidateInput ,#'+divName+' input[type="password"].ValidateInput,#'+divName+' input[type="datetime-local"].ValidateInput');
+            for(var i=0;i<dataInput.length;i++)
+            {
+                if($.trim(dataInput[i].value)=='' && dataInput[i].offsetParent !=null)
+                {
+                    $("."+dataInput[i].id).empty();
+                    $("#"+divName+" #"+dataInput[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataInput[i].id).after('<span class="error errorTag  text-danger '+dataInput[i].id+'" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+                if(dataInput[i].offsetParent == null)
+                {
+                    $("."+dataInput[i].id).empty();
+                    $("#"+divName+" #"+dataInput[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for radio button*/
+            var dataRadio=$('#'+divName+' input[type="radio"].ValidateInput');
+            for(var i=0;i<dataRadio.length;i++)
+            {
+                var radioGroupName=$("input[type='radio']#"+dataRadio[i].id)[0].attributes['name'].textContent;
+                
+                if(!$("input[name='"+radioGroupName+"']").is(":checked"))
+                { 
+                    $("input[name='"+radioGroupName+"']").addClass("validateStyle");
+                    flag=false;
+                }
+                
+            }
+            
+            /*for textarea*/
+            var dataTextArea=$('#'+divName+' textarea.ValidateInput');
+            for(var i=0;i<dataTextArea.length;i++)
+            {
+                if($.trim(dataTextArea[i].value)=='' && dataTextArea[i].offsetParent !=null)
+                {
+                    $("."+dataTextArea[i].id).empty();
+                    //console.log(dataInput[i].id);
+                    $("#"+divName+" #"+dataTextArea[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataTextArea[i].id).after('<span class="error errorTag  text-danger '+dataTextArea[i].id+'" >You Can \'t Leave this Empty</span>');
+                    
+                    flag=false;
+                }
+                if(dataTextArea[i].offsetParent == null)
+                {
+                    $("."+dataTextArea[i].id).empty();
+                    $("#"+divName+" #"+dataTextArea[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for select tag*/
+            var dataSelect=$('#'+divName+' select.ValidateInput');
+            
+            for(var i=0;i<dataSelect.length;i++)
+            {
+                if((dataSelect[i].value==''  && dataSelect[i].offsetParent !=null) || (dataSelect[i].value=='-1' && dataSelect[i].offsetParent !=null))
+                {
+                    $("."+dataSelect[i].id).empty();
+                    $("#"+divName+" #"+dataSelect[i].id).addClass("validateStyle");
+                    //$("#"+divName+" #"+dataSelect[i].id).after('<span class="error errorTag  text-danger '+dataSelect[i].id+'" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+                if(dataSelect[i].offsetParent == null)
+                {
+                    $("."+dataSelect[i].id).empty();
+                    $("#"+divName+" #"+dataSelect[i].id).removeClass("validateStyle");
+                }
+            }
+            
+            /*for hidden for file only*/
+            var dataFileInput=$('#'+divName+' input[type="hidden"].ValidateInput');
+            for(var i=0;i<dataFileInput.length;i++)
+            {
+                if($.trim(dataFileInput[i].value)=='')
+                {
+                    $("."+dataFileInput[i].id+"File").empty();
+                    //console.log(dataInput[i].id);
+                    $("#"+divName+" #"+dataFileInput[i].id+"File").addClass("validateStyle");
+                    //$("#"+divName+" #"+dataFileInput[i].id+"File").after('<span class="error errorTag  text-danger '+dataFileInput[i].id+'File" >You Can \'t Leave this Empty</span>');
+                    flag=false;
+                }
+            }
+            
+            $('#'+divName+' .validateStyle').click(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            $('#'+divName+'.validateStyle').change(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            $('#'+divName+'.validateStyle').focus(function(){
+                
+                $('#'+this.id).removeClass("validateStyle");
+                $("."+this.id).empty();
+            });
+            
+            if($('#'+divName).find(".is-invalid").length > 0 || flag==false)
+            {
+                flag = false;
+            }
+            else
+            {
+                flag=true;
+            }
+            return flag;
+}
+
+
+function validateRegex(element)
+{
+alert(element.className);
+
+let a=element.className;
+
+if(a.includes("OnlyNumberRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[0-9]*$:Please Enter Only Number');	
+}
+else if(a.includes("MobileNumberRegexClass"))
+{
+    alert(element.id);
+    bootstrapValidate('#'+element.id, 'regex:^([1-9]{1}[0-9]{9})?$:Please Enter Valid Mobile Number');	
+}
+else if(a.includes("SimpleTextRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z\t]*$:Please Enter Only Text');
+}
+else if(a.includes("SimpleTextWithSpaceRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z ]*$:Please Enter Only Text');
+}
+else if(a.includes("SimpleTextWithCoomaRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z,]*$:Please Enter Valid Text(Only Cooma Allowed)');
+}
+else if(a.includes("SimpleTextWithUnderScoreAndNumberRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z0-9_ ]*$:Please Enter Valid Text(Only UnderScore Allowed)');
+}
+else if(a.includes("AlphaNumericRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z0-9 ]*$:Please Enter Alpha Numeric Value');
+}
+else if(a.includes("AlphaNumericWithoutSpaceRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-zA-Z0-9]*$:Please Enter Valid Value');
+}
+else if(a.includes("YearRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^([2][0-9]{3}[-][0-9]{4})*$:Please Enter Valid Year');
+}
+else if(a.includes("PincodeRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^([0-9]{6})?$:Please Enter Valid Pincode');
+}
+else if(a.includes("NumberSizeOneRegexClass"))
+{ 
+    bootstrapValidate('#'+element.id, 'regex:^([1-9]{1})?$:Please Enter Only One Digit');
+}
+else if(a.includes("NumberSizeThreeRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^([1-9]{1,3})?$:Please Enter Only Three Digit');
+}
+else if(a.includes("NumberSizeFiveRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^([1-9]{1,5})?$:Please Enter Only Five Digit');
+}
+else if(a.includes("TextareaRegexWithoutSpecialCharacterClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-z(?,-.) A-Z(?,-.) 0-9(?,-.)]*$:Please Enter Valid Text');
+}
+else if(a.includes("TextareaRegexWithSpecialCharacterClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:^[a-z(?,-.) A-Z(?,-.) 0-9(?,-.) ?*!@#$%^&*()_;:]*$:Please Enter Valid Text');
+}
+else if(a.includes("AgeRegexClass"))
+{
+    bootstrapValidate('#'+element.id,'regex:^([4-9]([0-9]))?$:Please Enter Valid Age');
+}
+else if(a.includes("PdfFileExtentionRegexClass"))
+{
+    var FileName = element.value;
+    var FileExt = FileName.substr(FileName.lastIndexOf('.') + 1).toLowerCase();
+    if(element.files.length>0)
+    {
+        var FileSize = element.files[0].size;
+        if (FileExt == "pdf" && FileSize < 5242880) 
+        {$('.invalid-feedback').empty();return true;} 
+        else
+        {
+            var error = "Please make sure your file is in pdf format and less than 5 MB.";
+            bootstrapValidate('#'+element.id,'regex:^(([a-zA-Z0-9])*([.])([pdf])*)?$:Please Enter Valid File');
+            alert(error);
+            $("#"+element.id).val("");
+            return false;
+        }
+}
+}
+else if(a.includes("FloatValueRegexClass"))
+{
+    bootstrapValidate('#'+element.id,'regex:^([0-9]{2}(\.))?([0-9]{2})?$:Please Enter Valid Value After Point Enter Two Digit');
+}
+else if(a.includes("DateFormatRegexClass"))
+{
+    bootstrapValidate('#'+element.id, 'regex:b(?:Jan?|?:Feb?|?:Mar?|?:Apr?|?:May?|?:Jun?|?:Jul?|?:Aug?|?:Sep?|?:Oct?|?:Nov?|?:Dec?) [0-9]{1,2}[,] (?:19[7-9]\d|2\d{3})(?=\D|$):Please Enter Valid Date');
+}
+else if(a.includes("TestingClass"))
+{
+    bootstrapValidate('#'+element.id,'regex:^(0?[1-9]\/\[12][0-9]|3[01])[\/\-]([Jan][\/]Aug])*[\/\-]\d{4}$:Please Enter Valid Age')
+}
+else if(a.includes("AadharNoregexClass"))
+{
+    bootstrapValidate('#'+element.id,'regex:^[1-9]{12}$:Please Enter Valid Aadhar No')
+}
+}
+
 
 </script>
 </body>

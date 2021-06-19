@@ -202,13 +202,15 @@ box-shadow:2px 2px Brown;
 <!--    <i class="fa fa-arrow-left"></i> -->
    </a> Calendar</h2>
  <ul class="breadcrumb">
-     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/view/index.jsp">
+     <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;">   <%-- href="<%=request.getContextPath()%>/view/index.jsp" --%>
      <i class="icon-home"></i></a></li><li class="breadcrumb-item active">Dashboard</li>
  </ul>
   </div> 
 
 <div id='calendar' align="center" style="margin-top: 100px;margin-left: 100px; events.color:black; ">
 
+  <form:form name="indexform"> </form:form>
+  
   <form:form id="Event_form" name="Event_form" enctype="multipart/form-data">
 <!--    <input type = "hidden" name ="" id="rem_id"/>   -->
   <input type="hidden" name="title" id="rem_title">
@@ -221,7 +223,13 @@ box-shadow:2px 2px Brown;
 
 </body>
 
-  	
+<script type="text/javascript">
 	
+function loadindex()
+{
+	document.indexform.action = "../health/loadindex.htm";  
+	document.indexform.submit();
+}
+</script>
 	
 	

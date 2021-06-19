@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.occura.bean.UserBean;
 import com.occura.dao.AllInsertDao;
@@ -78,6 +79,7 @@ public void login(HttpServletRequest request,HttpServletResponse response) throw
 }
 
 
+
 @RequestMapping(value="/logout" , method = RequestMethod.POST)
 public void logout(HttpServletRequest request,HttpServletResponse response) throws IOException
 {
@@ -86,6 +88,25 @@ public void logout(HttpServletRequest request,HttpServletResponse response) thro
 	response.getWriter().print("logout");
 }
 
+
+
+@RequestMapping(value="/loadforgetpage")
+public ModelAndView loadforgetpage(HttpServletRequest request,HttpServletResponse response) throws IOException
+{
+	return new ModelAndView("page-forgot-password");
+}
+
+@RequestMapping(value="/loadLoginPage")
+public ModelAndView loadLoginPage(HttpServletRequest request,HttpServletResponse response) throws IOException
+{
+	return new ModelAndView("page-login");
+}
+
+@RequestMapping(value="/loadregister")
+public ModelAndView loadregister(HttpServletRequest request,HttpServletResponse response) throws IOException
+{
+	return new ModelAndView("pageregister");
+}
 
 
 }
