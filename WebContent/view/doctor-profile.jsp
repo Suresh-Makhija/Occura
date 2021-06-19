@@ -32,7 +32,7 @@ if(user != null){
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Docter Profile</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.jsp"><i class="icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;"><i class="icon-home"></i></a></li> <!--  href="index.jsp" -->
                             <li class="breadcrumb-item">Doctor</li>
                             <li class="breadcrumb-item active">Docter Profile</li>
                         </ul>
@@ -235,7 +235,7 @@ if(user != null){
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                          <div class="form-group">
-                                                <input type="text" id="m_no" class="form-control" value="<%if(userProfileBean != null)userProfileBean.getPhone_no();%>"  placeholder="Phone Number">
+                                                <input type="text" id="m_no" onchange="mobilenoValidation(this);" maxlength="10" class="form-control" value="<%if(userProfileBean != null)userProfileBean.getPhone_no();%>"  placeholder="Phone Number">
                                             </div>
                                             <div class="form-group">                                                
                                                 <input type="text" id="address_line_1" value="<%if(userProfileBean != null){%><%=userProfileBean.getAddress_line_1()%><%} %>" class="form-control" placeholder="Address Line 1">
@@ -672,6 +672,9 @@ function savePosition(position) {
 		var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([longt, lat])));
 		markers.getSource().addFeature(marker);
 	}
+	
+	
+	
 	function positionError() {
 	$('div.main').prepend('<p class="error"><strong>Sorry!</strong> There was an error getting your location.</p>');
 	}

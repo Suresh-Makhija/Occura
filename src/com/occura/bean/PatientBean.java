@@ -35,7 +35,9 @@ public class PatientBean implements Serializable {
 	private String appointment_date_time;
 	//@Transient
 	private Date appointment_date;
-	
+	private String description;
+	private String patientpicturebase64;
+	private String photobase64;
 	
 	public PatientBean() {
 	}
@@ -187,9 +189,45 @@ public class PatientBean implements Serializable {
 		this.appointment_date = appointment_date;
 	}
 
+	
+	@Transient
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	
+	@Transient
+	public String getPatientpicturebase64() {
+		return patientpicturebase64;
+	}
+
+	public void setPatientpicturebase64(String patientpicturebase64) {
+		this.patientpicturebase64 = patientpicturebase64;
+	}
+
+	
+
+
+	public String getPhotobase64() {
+		return photobase64;
+	}
+
+
+
+	public void setPhotobase64(String photobase64) {
+		this.photobase64 = photobase64;
+	}
+
+
 
 	public PatientBean( String first_name, String last_name, String gender, String age, String full_name,
-			String mobile_no, String email_address, String photo, Date crt_date) {
+			String mobile_no, String email_address, String photo, Date crt_date,String photobase64) {
 		super();
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -200,6 +238,7 @@ public class PatientBean implements Serializable {
 		this.email_address = email_address;
 		this.photo = photo;
 		this.crt_date = crt_date;
+		this.photobase64 = photobase64;
 	}
 
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@include file="header.jsp" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,10 @@
 </head>
 <body>
 
+
+<div class="container-fluid">
+                <div class="block-header">
+                
 	<!-- 1  -->
 	<!-- <video id="v" width="300" height="300"></video>
 	<input id="b" type="button" disabled="true" value="Take Picture"></input>
@@ -72,7 +77,9 @@
     </div>
     <!-- 5  -->
     
+    </div>
     
+   </div>
     
     
 </body>

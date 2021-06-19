@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,6 +47,133 @@ public class HealthController {
 	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
 	SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	AllInsertDao allInserDao = new AllInsertDao();
+	
+	
+	@RequestMapping(value="/loadindex")
+	public ModelAndView loadindex(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("index");
+	}
+	
+	@RequestMapping(value="/doctorprofile")
+	public ModelAndView doctorprofile(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("doctor-profile");
+	}
+	
+	@RequestMapping(value="/loadappointment")
+	public ModelAndView loadappointment(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("appointment_user");
+	}
+	
+	@RequestMapping(value="/loadcalendar")
+	public ModelAndView loadcalendar(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("fullcalendar");
+	}
+	
+	@RequestMapping(value="/loaddepartment")
+	public ModelAndView loaddepartment(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("depa-add");
+	}
+	
+	@RequestMapping(value="/loadtestsnapshot")
+	public ModelAndView loadtestsnapshot(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("testsnapshot");
+	}
+	
+	@RequestMapping(value="/oldusersearch")
+	public ModelAndView oldusersearch(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		String onPage = "2";
+		
+		if (request.getParameter("page") != null && !("").equalsIgnoreCase(request.getParameter("page"))) {
+			onPage = request.getParameter("page");
+		}
+		request.setAttribute("onPage", onPage);
+		
+		String query="";
+		if (request.getParameter("query") != null && !("").equalsIgnoreCase(request.getParameter("query"))) {
+			query = request.getParameter("query");
+		}
+		
+		List<PatientBean> listpatient = allListDao.findQueryOldCase(query);
+		if(listpatient != null)
+		{
+			if(listpatient.size()>0)
+			{
+				request.setAttribute("listpatient", listpatient);
+				request.setAttribute("search", "search");
+			}
+		}
+		
+		return new ModelAndView("appointment_user");
+	}
+	
+	
+	@RequestMapping(value="/saveAppointmenttime")
+	public ModelAndView saveAppointmenttime(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		String onPage = "2";
+		
+		if (request.getParameter("page") != null && !("").equalsIgnoreCase(request.getParameter("page"))) {
+			onPage = request.getParameter("page");
+		}
+		request.setAttribute("onPage", onPage);
+		
+		String appointmentTime = !CommonUtility.checkString(request.getParameter("hiddenappointmenttime"))?request.getParameter("hiddenappointmenttime"):"";
+		String description = !CommonUtility.checkString(request.getParameter("hiddendescription"))?request.getParameter("hiddendescription"):"";
+		String patientid = !CommonUtility.checkString(request.getParameter("patientid"))?request.getParameter("patientid"):"";
+		
+		PatientAppointmentBean patientbean = new PatientAppointmentBean();
+		
+		DateFormat outputformat24 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	  	String sightingDateString = appointmentTime;
+	  	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	  	Date date=null;
+	  	try {
+	  		date= formatter.parse(sightingDateString.replace("T"," "));
+	  	}catch(Exception e)
+	  	{
+	  		System.out.println("Catch Exception-->"+e.getMessage());
+	  	}
+	  	
+	  	boolean status = false;
+	  	
+	  	PatientBean patient_userid = new PatientBean();
+	  	patient_userid.setPatient_id(Integer.valueOf(patientid));
+	  	
+	  	PatientAppointmentBean  saveappointment = new PatientAppointmentBean(patient_userid,date,new Date(),description);
+	  	status =  AllInsertDao.save(saveappointment);
+		
+		if(status)
+	  	{
+	  		request.setAttribute("msg", "success");
+	  	}else
+	  	{
+	  		request.setAttribute("msg", "fail");
+	  	}
+		
+		return new ModelAndView("appointment_user");
+	}
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/appointment_user") // Mapping for Call the controller
 	public ModelAndView appointment_user(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception
@@ -53,73 +181,103 @@ public class HealthController {
 		//,@RequestParam MultipartFile uploadfile
 		//HttpSession session = request.getSession(false);
 
-		if(patientbean.getUploadfile() != null && patientbean.getUploadfile().getBytes().length > 0)
+		String onPage = "1";
+		
+		if (request.getParameter("page") != null && !("").equalsIgnoreCase(request.getParameter("page"))) {
+			onPage = request.getParameter("page");
+		}
+		request.setAttribute("onPage", onPage);
+		
+		
+		if(patientbean.getAppointment_date_time() != null && !("").equals(patientbean.getAppointment_date_time()))
 		{
-			String file_path=null;
-			String file_name = null;
-			MultipartFile file = patientbean.getUploadfile();
-
-			String fileName="",fileExtension="",DocumentName="",fileNameWithoutExtension="";
-			byte[] fileByteData=null;
-			boolean fileWriteFlag=true;
-			String filePath=CommonUtility.getFilePathFromcommonConfigVariable("TestUploadFile");
-			fileName=patientbean.getUploadfile().getOriginalFilename();
-			fileByteData=patientbean.getUploadfile().getBytes();
-
-			if(fileName != null && !("").equalsIgnoreCase(fileName)){
-				fileExtension=CommonUtility.getFileExtensionFromFileName(fileName);
-				fileNameWithoutExtension = CommonUtility.getFileNameWithoutExtension(fileName);
+//			if(patientbean.getUploadfile() != null && patientbean.getUploadfile().getBytes().length > 0)
+//			{
+//				String file_path=null;
+//				String file_name = null;
+//				MultipartFile file = patientbean.getUploadfile();
+//
+//				String fileName="",fileExtension="",DocumentName="",fileNameWithoutExtension="";
+//				byte[] fileByteData=null;
+//				boolean fileWriteFlag=true;
+//				String filePath=CommonUtility.getFilePathFromcommonConfigVariable("TestUploadFile");
+//				fileName=patientbean.getUploadfile().getOriginalFilename();
+//				fileByteData=patientbean.getUploadfile().getBytes();
+//
+//				if(fileName != null && !("").equalsIgnoreCase(fileName)){
+//					fileExtension=CommonUtility.getFileExtensionFromFileName(fileName);
+//					fileNameWithoutExtension = CommonUtility.getFileNameWithoutExtension(fileName);
+//				}
+//
+//				DocumentName=fileNameWithoutExtension+"_"+new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SSS").format(Calendar.getInstance().getTime())+"."+fileExtension;
+//
+//				// write file in folder
+//				fileWriteFlag=CommonUtility.writeDocument(fileByteData, filePath, DocumentName, fileExtension);
+//
+//			  	if(fileWriteFlag)
+//			  	{
+//			  		patientbean.setPhoto(DocumentName);
+////				  	copyFileFromSharingToServer(response, request, DocumentName,"TestUploadFile");
+//			  	}else
+//			  	{
+//			  		// File Not Exists..
+//			  	}
+//			}
+			if(patientbean.getPatientpicturebase64() != null && !("").equalsIgnoreCase(patientbean.getPatientpicturebase64()))
+			{
+				String DocumentName="";
+				DocumentName=patientbean.getFirst_name()+"_"+patientbean.getLast_name()+"_"+new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SSS").format(Calendar.getInstance().getTime())+".png";
+				
+				Map<Integer, Object> map = new HashMap<Integer, Object>();
+				map.put(1, patientbean.getPatientpicturebase64());
+				map.put(2, "TestUploadFile");
+				map.put(3, DocumentName);
+				boolean fileupload=CommonUtility.uploadBase64WithDocumentNameAndMachineNumber(map);
+				
+			  	if(fileupload)
+			  	{
+			  		patientbean.setPhoto(DocumentName);
+			  		patientbean.setPhotobase64(patientbean.getPatientpicturebase64());
+			  	}
 			}
 
-			DocumentName=fileNameWithoutExtension+"_"+new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SSS").format(Calendar.getInstance().getTime())+"."+fileExtension;
+			DateFormat outputformat24 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		  	//DateFormat outputformat12 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
+		  	String sightingDateString = patientbean.getAppointment_date_time();
+		  	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-			// write file in folder
-			fileWriteFlag=CommonUtility.writeDocument(fileByteData, filePath, DocumentName, fileExtension);
-
-		  	if(fileWriteFlag)
+		  	//DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		  	//LocalDateTime dateTime = LocalDateTime.parse(sightingDateString.replace("T"," "), format);
+		  	Date date=null;
+		  	//String output=null;
+		  	try {
+		  		date= formatter.parse(sightingDateString.replace("T"," "));
+		  		//date= outputformat24.parse(patientbean.getAppointment_date_time());
+		  		//output = outputformat24.format(date);
+		  	}catch(Exception e)
 		  	{
-		  		patientbean.setPhoto(DocumentName);
-//			  	copyFileFromSharingToServer(response, request, DocumentName,"TestUploadFile");
+		  		//e.printStackTrace();
+		  		System.out.println("Catch Exception-->"+e.getMessage());
+		  	}
+
+		  	patientbean.setAppointment_date(date);
+		  	patientbean.setCrt_date(new Date());
+		  	patientbean.setFull_name(patientbean.getFirst_name()+" "+patientbean.getLast_name());
+		  	boolean value = false;
+		  	value =  AllInsertDao.savepatient(patientbean);
+		  //	String page = "appointment_user";
+
+		  	if(value)
+		  	{
+		  		request.setAttribute("msg", "success");
 		  	}else
 		  	{
-		  		// File Not Exists..
+		  		request.setAttribute("msg", "fail");
 		  	}
 		}
-
-		DateFormat outputformat24 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	  	//DateFormat outputformat12 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss aa");
-	  	String sightingDateString = patientbean.getAppointment_date_time();
-	  	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-	  	//DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-	  	//LocalDateTime dateTime = LocalDateTime.parse(sightingDateString.replace("T"," "), format);
-	  	Date date=null;
-	  	//String output=null;
-	  	try {
-	  		date= formatter.parse(sightingDateString.replace("T"," "));
-	  		//date= outputformat24.parse(patientbean.getAppointment_date_time());
-	  		//output = outputformat24.format(date);
-	  	}catch(Exception e)
-	  	{
-	  		//e.printStackTrace();
-	  		System.out.println("Catch Exception-->"+e.getMessage());
-	  	}
-
-	  	patientbean.setAppointment_date(date);
-	  	patientbean.setCrt_date(new Date());
-	  	patientbean.setFull_name(patientbean.getFirst_name()+" "+patientbean.getLast_name());
-	  	boolean value = false;
-	  	value =  AllInsertDao.savepatient(patientbean);
-	  //	String page = "appointment_user";
-
-	  	if(value)
-	  	{
-	  		request.setAttribute("msg", "success");
-	  	}else
-	  	{
-	  		request.setAttribute("msg", "fail");
-	  	}
-
+		
+		
+        
 
 	  	return new ModelAndView("appointment_user");
 //	  	response.sendRedirect(request.getContextPath() + "/view/appointment_user.jsp");

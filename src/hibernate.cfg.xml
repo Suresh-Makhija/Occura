@@ -9,8 +9,8 @@
       <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/occura</property>
 		<property name="hibernate.connection.username">root</property>
-		 <property name="hibernate.connection.password">1234</property> 
-<!-- 		<property name="hibernate.connection.password">Occura@$1$</property> -->
+<!-- 		 <property name="hibernate.connection.password">1234</property>  -->
+		<property name="hibernate.connection.password">Occura@$1$</property>
 		
         
 <!--      	<property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->

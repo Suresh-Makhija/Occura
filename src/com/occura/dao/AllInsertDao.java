@@ -115,6 +115,7 @@ public class AllInsertDao {
 			appBean.setAppointment_date_time(patient.getAppointment_date());
 			appBean.setCrt_date(patient.getCrt_date());
 			appBean.setPatient_id(patientBean);
+			appBean.setDescription(patient.getDescription());
 			session.saveOrUpdate(appBean);
 			if(session != null)
 			{

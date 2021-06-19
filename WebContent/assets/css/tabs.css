@@ -1,0 +1,92 @@
+.sucmain {
+	position: absolute;
+	top: 162px;
+	left: 444px;
+	
+}
+.errmain {
+	position: absolute;
+	top: 176px;
+	left: 674px;
+	
+}
+.successBlk {
+	border: 1px solid green;
+	padding: 4px -4px;
+	width: 398px;
+	border-radius: 10px;
+	background: #B7FFB7;
+	box-shadow: 0px 0px 5px green;
+	margin-left: 250px;
+	margin-top: 17px;
+}
+.errorBlk {
+	border: 1px solid red;
+	padding: 4px 5px;
+	width: 398px;
+	border-radius: 10px;
+	background: rgba(255, 185, 185, 0.94);
+	box-shadow: 0px 0px 5px red;
+}
+
+
+div.TabView
+{
+  /*   height: 24px;
+    width: 100%;
+    float:left; */
+}
+
+div.Pages
+{
+    clear: both;
+    vertical-align: top;
+   border: 1px solid rgba(0, 0, 0, 0.41);
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(113, 109, 135, 0.91);
+}
+div.Tabs a
+{
+    float: left;
+    display: block;
+    text-align: center;
+    height: 24px;
+    vertical-align: middle;
+    font-family: Calibri;
+    color: #111111;
+    font-size: 14px;
+    vertical-align: center;
+    padding-top: 5px;
+    font-weight: 900;
+    width: 25%;
+    background-color: #e9ecef;
+    border-radius: 8px 8px 0px 0px;
+    text-decoration: none;
+/*     box-shadow: 0px 5px 0px 0px #ED605C; */
+}
+div.Tabs a:hover
+{
+/* 	background-color: #F6A367; */
+    width:25%;
+    text-decoration: none;
+}
+div.Tabs a.Active
+{
+    color: blue;
+    display: block;
+    width: 25%;
+/*     background-color: #ED605C; */
+    text-decoration:none;
+    border-radius:  8px 8px 0px 0px;;
+    font-size: 14px;
+/*    	box-shadow: 0px 5px 0px 0px #F6A367; */
+}
+
+div.pageBorder
+{
+    clear: both;
+    vertical-align: top;
+    border: 1px solid black;
+    background-color: #EDEDED;
+    width: 98%;
+}

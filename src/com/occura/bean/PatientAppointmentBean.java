@@ -1,5 +1,6 @@
 package com.occura.bean;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +25,8 @@ public class PatientAppointmentBean implements Serializable {
 	private Date appointment_date_time;
 	private Date crt_date;
 	private String description;
+	
+	
 	public String getDescription() {
 		return description;
 	}
@@ -89,16 +92,14 @@ public class PatientAppointmentBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 
-	public PatientAppointmentBean( PatientBean patient_id, Date appointment_date_time, Date crt_date) {
+	public PatientAppointmentBean( PatientBean patient_id, Date appointment_date_time, Date crt_date,String description) {
 		super();
 		this.patient_id = patient_id;
 		this.appointment_date_time = appointment_date_time;
 		this.crt_date = crt_date;
+		this.description = description;
 	}
 
 	

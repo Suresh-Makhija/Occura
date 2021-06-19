@@ -1,5 +1,7 @@
 package com.occura.utility;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,10 +9,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 public class CommonUtility {
@@ -25,7 +30,7 @@ public class CommonUtility {
 	
 	public static boolean checkString(String s){
 		boolean bError=true;
-		if(s != null && !"".equals(s)){
+		if(s != null && !"".equalsIgnoreCase(s)){
 			bError=false;
 		}
 		return bError;
@@ -151,7 +156,61 @@ public class CommonUtility {
 			}
 			return f_year;
 		}
+	 
+	 
+	 public static boolean uploadBase64WithDocumentNameAndMachineNumber(Map<Integer, Object> mapObj) throws Exception{
+
+			String imagefile=null,folderName=null,documentName=null,hwuniquenos=null,currentdate=null,tag_no=null;
+			if(mapObj!=null) {
+				imagefile = (String) mapObj.get(1);
+				folderName = (String) mapObj.get(2);
+				documentName = (String) mapObj.get(3);
+			}
+			boolean flag = false;
+			Map<String, Object> map = new HashMap<>();
+			String filePath = getAnyFilePathWithFolder(folderName);
+		try {
+			BufferedImage image = null;
+			byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(imagefile);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+			image = ImageIO.read(bis);
+			if(image != null)
+			{
+				File f = new File(filePath + documentName);
+				try {
+				if(!f.exists()){
+				ImageIO.write(image, "png", f);
+				       if(f.exists() && f.length() > 0){
+				        flag = true;
+				       }
+				}
+				}catch (IOException e) {
+				e.printStackTrace();
+				flag = false;
+				f.delete();
+				}finally{
+				bis.close();
+				}
+			}
+		} catch (IOException e) {
+		e.printStackTrace();
+		flag = false;
+		}
+		return flag;
+		}
 		
 
+		public static String getAnyFilePathWithFolder(String folderName)
+		{
+			String filePath = "";
+			ResourceBundle rb = ResourceBundle.getBundle("conf/CommonConfig");
+			filePath = rb.getString(folderName+".windows");
+			File f=new File(filePath);
+			if(!f.exists()){
+				f.mkdirs();
+			}
+			return filePath;
+		}
+		
 	 
 }

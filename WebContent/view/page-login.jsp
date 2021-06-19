@@ -59,7 +59,11 @@
                               
                                 <input type="button" class="btn btn-primary btn-lg btn-block" onclick="login();" value="LOGIN"/>
                                 <div class="bottom">
-                                 <%
+                                
+                                <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a onclick="forgetpassword();" style="cursor: pointer;">Forgot password</a></span> <!--  href="page-forgot-password.jsp" -->
+        						<span>Don't have an account? <a onclick="loadregister();" style="cursor: pointer;">Register</a></span>    <!-- href="pageregister.jsp" -->
+        						                        
+                                <%--  <%
                                   if(details){%>
 	  <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.jsp">Forgot password?</a></span>
 		<%}else{%>
@@ -71,7 +75,7 @@
 		<span>Don't have an account? <a href="pageregister.jsp">Register</a></span>
 		<%}else{%>
 	<span>Don't have an account? <a href="view/pageregister.jsp">Register</a></span>
-	<%} %>
+	<%} %> --%>
 
                                 </div>
                             </form>
@@ -86,6 +90,26 @@
 
 <%-- 	 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-3.6.1.min.js"></script>   --%>
 	<script type="text/javascript">
+
+	
+	function forgetpassword()
+	{
+		document.loginformName.action = "../controller/loadforgetpage.htm";  
+		document.loginformName.submit();
+	}
+	
+	function loadregister()
+	{
+		document.loginformName.action = "../controller/loadregister.htm";  
+		document.loginformName.submit();
+	}
+	
+
+	<%-- <%if(details){%>
+	window.location = "index.jsp";
+<%}else{%>
+	window.location = "view/index.jsp";
+<%}%> --%>
 
 function login()
 {
@@ -102,11 +126,8 @@ function login()
 			{
 				if(resdata == "true")
 				{
-					<%if(details){%>
-							window.location = "index.jsp";
-					<%}else{%>
-							window.location = "view/index.jsp";
-					<%}%>
+					document.loginformName.action = "../health/loadindex.htm";  
+					document.loginformName.submit();
 				}
 				else
 					{
