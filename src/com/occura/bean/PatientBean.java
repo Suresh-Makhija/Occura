@@ -39,6 +39,11 @@ public class PatientBean implements Serializable {
 	private String patientpicturebase64;
 	private String photobase64;
 	
+	
+
+
+
+
 	public PatientBean() {
 	}
 

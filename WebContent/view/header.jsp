@@ -183,7 +183,12 @@
                         <ul class="main-menu metismenu">
                             <li class="active"><a onclick="loadindex();" style="cursor: pointer;"><i class="icon-home"></i><span>Dashboard</span></a></li>  <!-- href="index.jsp" -->
 <!--                             <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li> -->
-                            
+                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-calendar"></i>
+                            	<span>Session</span> </a>
+                                 <ul> 
+                                     <li><a onclick="startSession();" style="cursor: pointer;">Start Session</a></li>   <!-- href="appointment_user.jsp" -->
+                                 </ul> 
+                             </li> 
                             <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-calendar"></i>
                             	<span>Appointment</span> </a>
                                  <ul> 
@@ -458,7 +463,10 @@ function loadappointment()
 	document.loadmenu.action = "../health/loadappointment.htm";  
 	document.loadmenu.submit();
 }
-
+function startSession()
+{document.loadmenu.action = "../health/startSession.htm";  
+document.loadmenu.submit();
+	}
 function loadcalendar()
 {
 	document.loadmenu.action = "../health/loadcalendar.htm";  

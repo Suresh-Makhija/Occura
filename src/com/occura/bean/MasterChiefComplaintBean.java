@@ -14,6 +14,10 @@ import javax.persistence.Table;
 public class MasterChiefComplaintBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public MasterChiefComplaintBean() {
+		// TODO Auto-generated constructor stub
+	}
 	public MasterChiefComplaintBean(String cc_description, Date crt_date) {
 		super();
 		this.cc_description = cc_description;

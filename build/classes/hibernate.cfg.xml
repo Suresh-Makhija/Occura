@@ -47,6 +47,7 @@
 <!--       	<mapping class="com.occura.bean.MasterOperationBean"/> -->
       	<mapping class="com.occura.bean.PatientAppointmentBean"/>
        	<mapping class="com.occura.bean.PatientBean"/>
+       		<mapping class="com.occura.bean.MasterChiefComplaintBean"/>
 <!--       	<mapping class="com.occura.bean.PatientDiagnoHistory"/> -->
 <!--       	<mapping class="com.occura.bean.PatientMedicineHistory"/> -->
 <!--       	<mapping class="com.occura.bean.PatientOperationHistoryBean"/> -->

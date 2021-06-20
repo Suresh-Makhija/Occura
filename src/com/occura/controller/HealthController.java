@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.occura.bean.MasterChiefComplaintBean;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
@@ -49,6 +50,12 @@ public class HealthController {
 	AllInsertDao allInserDao = new AllInsertDao();
 	
 	
+	@RequestMapping(value="/startSession")
+	public ModelAndView startSession(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("Session");
+	}
 	@RequestMapping(value="/loadindex")
 	public ModelAndView loadindex(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
@@ -136,9 +143,6 @@ public class HealthController {
 		String description = !CommonUtility.checkString(request.getParameter("hiddendescription"))?request.getParameter("hiddendescription"):"";
 		String patientid = !CommonUtility.checkString(request.getParameter("patientid"))?request.getParameter("patientid"):"";
 		
-		PatientAppointmentBean patientbean = new PatientAppointmentBean();
-		
-		DateFormat outputformat24 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	  	String sightingDateString = appointmentTime;
 	  	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	  	Date date=null;
@@ -157,7 +161,17 @@ public class HealthController {
 	  	PatientAppointmentBean  saveappointment = new PatientAppointmentBean(patient_userid,date,new Date(),description);
 	  	status =  AllInsertDao.save(saveappointment);
 		
-		if(status)
+//		if(status)
+
+//	  	patientbean.setAppointment_date(date);
+//	  	patientbean.setCrt_date(new Date());
+//	  	patientbean.setFull_name(patientbean.getFirst_name()+" "+patientbean.getLast_name());
+//	  
+//	  	boolean value = false;
+//	  	value =  AllInsertDao.savepatient(patientbean);
+//	  //	String page = "appointment_user";
+
+	  	if(status)
 	  	{
 	  		request.setAttribute("msg", "success");
 	  	}else
@@ -522,5 +536,28 @@ public class HealthController {
 		json = json.replace("}{", "},{");
 		json = json + "]";
 		response.getWriter().print(json);
+	}
+	
+	@RequestMapping(value = "/selectionChiefComplaint", method = RequestMethod.POST) // Mapping for Call the controller
+	public void selectionChiefComplaint(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		List<MasterChiefComplaintBean> masterChiefComplaintBean = allListDao.getChiefComplaintList();
+		String json = "[";
+		for(MasterChiefComplaintBean masterChiefComplaintBean2 : masterChiefComplaintBean)
+		{
+			json = json + "{\"id\":\"" +masterChiefComplaintBean2.getMaster_cc_id()+"\",\"value\":\"" +masterChiefComplaintBean2.getCc_description()+"\"}";
+		}
+		json = json.replace("}{", "},{");
+		json = json + "]";
+		response.getWriter().print(json);
+	}
+	
+	@RequestMapping(value = "/chiefComplain") // Mapping for Call the controller
+	public void chiefComplain(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		
+	String complaints[] = 	request.getParameterValues("chielfComplaintSelectName");
+	String durations[] = 	request.getParameterValues("chiefDuration");
+	String description[] =	request.getParameterValues("description");
 	}
 }

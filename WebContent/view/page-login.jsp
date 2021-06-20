@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="signin-password" class="control-label sr-only">Password</label>
-                                    <input type="password" class="form-control ValidateInput" id="signin-password"  placeholder="Password" autocomplete="new-password">
+                                    <input type="password" class="form-control ValidateInput" id="signin-password" placeholder="Password" autocomplete="new-password">
                                 </div>
                               
                                 <input type="button" class="btn btn-primary btn-lg btn-block" onclick="login();" value="LOGIN"/>
@@ -260,6 +260,13 @@ function formValidate(divName)   /* add header  */
             }
             return flag;
 }
+var input = document.getElementById('signin-password');
+input.addEventListener("keyup", function(event) {
+	  if (event.keyCode === 13) {
+		  login();
+	  }
+
+});
 </script>
 
 
