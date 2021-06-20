@@ -68,7 +68,11 @@ List<MasterChiefComplaintBean> ChiefComplaintList = allListDao.getChiefComplaint
 	</div></div>
 	<div class="col-sm-3">
   <div class="form-group" style="margin-top: 9%">
+<<<<<<< Updated upstream
 	<input type="text" id="chiefDuration1" class="form-control" autocomplete="off" name="chiefDuration" onkeyup="insertRecords(this.id,1);"  placeholder="duration"></div></div>
+=======
+	<input type="text" id="chiefDuration1" class="form-control" name="chiefDuration" onkeyup="insertRecords(this.id,1);"  placeholder="duration"></div></div>
+>>>>>>> Stashed changes
 	<div class="col-sm-6" >
   <div class="form-group" style="margin-top: 9%">
   <label class="icon-eye"  id="left1"   onclick="selectEye(this.id)"></label>
@@ -102,6 +106,7 @@ List<MasterChiefComplaintBean> ChiefComplaintList = allListDao.getChiefComplaint
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 
+<<<<<<< Updated upstream
 function insertRecords(id,count)
 {
 	var input = document.getElementById(id);
@@ -113,6 +118,23 @@ function insertRecords(id,count)
 	
 }
 
+=======
+// insertRecords("chielfComplaint1","1");
+function insertRecords(id,count)
+{
+	var input = document.getElementById(id);
+	input.addEventListener("keyup", test(event,id));
+	
+}
+function  test(event,id)
+{
+	var input = document.getElementById(id);
+	 if (event.keyCode === 13) {
+	        addRow(1);
+	    }
+	 input.removeEventListener("keyup",test(event,id));
+}
+>>>>>>> Stashed changes
 function submitForm()
 {
 	document.insertCCId.action="../health/chiefComplain.htm";
@@ -167,6 +189,13 @@ function selectEye(inputId)
 			});
 		}});
 	}
+<<<<<<< Updated upstream
    
+=======
+    $(function() {
+//         $('.chosen-select').chosen();
+//         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+      });
+>>>>>>> Stashed changes
 </script>
 </html>

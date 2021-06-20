@@ -53,6 +53,7 @@ public class HealthController {
 	@RequestMapping(value="/startSession")
 	public ModelAndView startSession(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
+
 		HttpSession session  = request.getSession(false);
 		return new ModelAndView("Session");
 	}
@@ -144,6 +145,11 @@ public class HealthController {
 		String patientid = !CommonUtility.checkString(request.getParameter("patientid"))?request.getParameter("patientid"):"";
 		
 	  	String sightingDateString = appointmentTime;
+
+
+
+
+		DateFormat outputformat24 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	  	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	  	Date date=null;
 	  	try {
@@ -161,15 +167,8 @@ public class HealthController {
 	  	PatientAppointmentBean  saveappointment = new PatientAppointmentBean(patient_userid,date,new Date(),description);
 	  	status =  AllInsertDao.save(saveappointment);
 		
-//		if(status)
 
-//	  	patientbean.setAppointment_date(date);
-//	  	patientbean.setCrt_date(new Date());
-//	  	patientbean.setFull_name(patientbean.getFirst_name()+" "+patientbean.getLast_name());
-//	  
-//	  	boolean value = false;
-//	  	value =  AllInsertDao.savepatient(patientbean);
-//	  //	String page = "appointment_user";
+	  
 
 	  	if(status)
 	  	{
