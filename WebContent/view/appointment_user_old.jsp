@@ -109,7 +109,7 @@
 									</td>
 									
 									<td style="text-align: left; vertical-align: middle; border: solid 1px; border-collapse: collapse;">
-											<input type="button" value="Submit" onclick="loadsubmit('${rowNo.count}','${i.patient_id}');">
+											<input type="button" value="Submit" onclick="loadsubmitold('${rowNo.count}','${i.patient_id}');">
 									</td> 
 								</tr>
 							</c:forEach>
@@ -157,7 +157,7 @@ $(document).ready(function() {
 	}
 });
 
-function loadsubmit(count,patientid)
+function loadsubmitold(count,patientid)
 {
     var appointment_date_time = $('#appointment_date_time'+count).val();
 	var description = $('#description'+count).val();

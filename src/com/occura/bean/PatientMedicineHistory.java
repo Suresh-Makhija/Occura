@@ -24,6 +24,8 @@ public class PatientMedicineHistory implements Serializable {
 	private Double total_price_per_medicine;
 	private String description;
 	private Date crt_date;
+	private String eye;
+	private String duration;
 	
 	public PatientMedicineHistory() {
 	}
@@ -93,9 +95,27 @@ public class PatientMedicineHistory implements Serializable {
 		this.crt_date = crt_date;
 	}
 
+	
+
+	public String getEye() {
+		return eye;
+	}
+
+	public void setEye(String eye) {
+		this.eye = eye;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 
 	public PatientMedicineHistory(int master_medicine_id, int appointment_id,
-			int patient_id, Double medicine_Qty, Double total_price_per_medicine, String description, Date crt_date) {
+			int patient_id, Double medicine_Qty, Double total_price_per_medicine, String description, Date crt_date,
+			 String eye,String duration) {
 		super();
 		this.master_medicine_id = master_medicine_id;
 		this.appointment_id = appointment_id;
@@ -104,6 +124,8 @@ public class PatientMedicineHistory implements Serializable {
 		this.total_price_per_medicine = total_price_per_medicine;
 		this.description = description;
 		this.crt_date = crt_date;
+		this.eye = eye;
+		this.duration =duration;
 	}
 
 	
