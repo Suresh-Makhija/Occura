@@ -177,7 +177,7 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
                <br>
                	<div class="col-lg-12">
 	               <div class="col-lg-2">
-	               		<button data-toggle="collapse" data-target="#diagnosis_target"  class="btn btn-primary">Diagnosis</button>
+	               		<div data-toggle="collapse" data-target="#diagnosis_target"  class="btn btn-primary">Diagnosis</div>
 	               	</div>
                	</div>
                	<br>
@@ -217,7 +217,7 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
                <br>
                	<div class="col-lg-12">
 	                	<div class="col-lg-2">
-	               		<button data-toggle="collapse" data-target="#treatment_target"  class="btn btn-primary">Treatment</button>
+	               		<div data-toggle="collapse" data-target="#treatment_target"  class="btn btn-primary">Treatment</div>
 	               	</div>
                	</div>
                	<br>
