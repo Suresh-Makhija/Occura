@@ -46,6 +46,9 @@ public class MasterDiagnoBean implements Serializable {
 		this.crt_date = crt_date;
 	}
 	
+	public MasterDiagnoBean() {
+		super();
+	}
 	
 	
 	

@@ -31,7 +31,10 @@
     width: 50%;
     margin-left: 20%;
 }
-
+#chiefDiv1{
+    width: 70%;
+    margin-left: 20%;
+}
 </style>
 
 <script type="text/javascript">
@@ -102,15 +105,15 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 								
 								<thead style="text-align: left;">
 									<tr>
-										<th style="text-align: left;">Chief Complaint</th>
-										<th style="text-align: left;">Duration(In Days)</th>
-										<th style="text-align: left;" width="50%">Eye</th>
-										<th style="text-align: left;">Action</th>
+										<th width="40%" style="text-align: left;">Chief Complaint</th>
+										<th width="30%" style="text-align: left;">Duration(In Days)</th>
+										<th width="20%" style="text-align: left;">Eye</th>
+										<th width="10%" style="text-align: left;">Action</th>
 									</tr>
 								</thead>
 								<tbody id="tbodyID">
 									<tr class="" id="">
-										<td width="50%">
+										<td >
 											<select id="chielfComplaint0" class="form-control"   style="height:50%"  
 											name="boPatientCCHistory[0].master_cc_id"  data-show-subtext="true" data-live-search="true"
 											onfocus="hideError1(this);" onclick="hideError1(this);">
@@ -120,13 +123,13 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 												<%} %>
 											</select>
 										</td>
-										<td width="50%">
+										<td >
 											<input type="text" id="chiefDuration0" class="form-control" autocomplete="off" 
 											name="boPatientCCHistory[0].duration" onchange="onlyNumber(this);"
 											onfocus="hideError1(this);" onclick="hideError1(this);" placeholder="duration">
 										</td><!-- onkeyup="insertRecords(this.id,1);" --> 
 										
-										<td width="50%">
+										<td>
 											<!-- <label class="icon-eye"  id="left0"   onclick="selectEye(this.id)"></label>
 											<label class="icon-eye"  id="right0" onclick="selectEye(this.id)"></label> -->
 											
@@ -222,22 +225,22 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
                	</div>
                	<br>
 					<div id="treatment_target" class="collapse">
-						<div id="chiefDiv">
+						<div id="chiefDiv1">
 								<table class="table table-bordered table-condensed" id="datatable1">
 								
 								<thead style="text-align: left;">
 									<tr>
-										<th style="text-align: left;">Treatment</th>
-										<th style="text-align: left;">Quantity</th>
-										<th style="text-align: left;">Duration</th>
-										<th style="text-align: left;">Eye</th>
-										<th style="text-align: left;">Description</th>
+										<th width= "30%" style="text-align: left;">Treatment</th>
+										<th width= "10%" style="text-align: left;">Quantity</th>
+										<th width= "10%" style="text-align: left;">Duration</th>
+										<th width= "20%" style="text-align: left;">Eye</th>
+										<th width= "30%" style="text-align: left;">Description</th>
 										<th style="text-align: left;">Action</th>
 									</tr>
 								</thead>
 								<tbody id="tbodyID_medicine">
 									<tr class="" id="">
-										<td width="50%">
+										<td>
 											<select id="treatmentmedicine0" class="form-control"   style="height:50%"  
 											name="boPatientMedicine[0].master_medicine_id" 
 											onfocus="hideError1(this);" onclick="hideError1(this);">
@@ -248,13 +251,13 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 											</select>
 										</td>
 										
-										<td style="width: 50%">
+										<td >
 											<input type="text" id="Quantity0" class="form-control" autocomplete="off" 
 											name="boPatientMedicine[0].medicine_Qty" onchange="onlyNumber(this);"
 											onfocus="hideError1(this);" onclick="hideError1(this);" placeholder="Quantity">
 										</td>
 										
-										<td style="width: 50%">
+										<td >
 											<input type="text" id="treatmentDuration0" class="form-control" autocomplete="off" 
 											name="boPatientMedicine[0].duration" onchange="onlyNumber(this);"
 											onfocus="hideError1(this);" onclick="hideError1(this);" placeholder="duration">
