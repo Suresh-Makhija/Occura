@@ -2,6 +2,7 @@ package com.occura.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class MasterMedicineBean implements Serializable {
 	private Date crt_date;
 	private Double medicine_price;
 	
-	private MasterDiagnoBean masterDiagnoBean;
+	private Set<MasterDiagnoBean> masterDiagnoBean;
 	@Id
 	public int getMaster_medicine_id() {
 		return master_medicine_id;
@@ -58,16 +59,16 @@ public class MasterMedicineBean implements Serializable {
 
 	@ManyToMany
 	@JoinColumn(name = "master_diagno_id")
-	public MasterDiagnoBean getMasterDiagnoBean() {
+	public Set<MasterDiagnoBean>  getMasterDiagnoBean() {
 		return masterDiagnoBean;
 	}
 
-	public void setMasterDiagnoBean(MasterDiagnoBean masterDiagnoBean) {
+	public void setMasterDiagnoBean(Set<MasterDiagnoBean> masterDiagnoBean) {
 		this.masterDiagnoBean = masterDiagnoBean;
 	}
 
 	public MasterMedicineBean(String medicine_description, Date crt_date, Double medicine_price,
-			MasterDiagnoBean masterDiagnoBean) {
+			Set<MasterDiagnoBean> masterDiagnoBean) {
 		super();
 		this.medicine_description = medicine_description;
 		this.crt_date = crt_date;
