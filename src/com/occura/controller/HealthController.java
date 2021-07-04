@@ -35,6 +35,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.occura.bean.MasterChiefComplaintBean;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
+import com.occura.bean.PatientCCHistory;
+import com.occura.bean.PatientDiagnoHistory;
+import com.occura.bean.PatientMedicineHistory;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
 import com.occura.dao.AllInsertDao;
@@ -250,7 +253,7 @@ public class HealthController {
 			  	if(fileupload)
 			  	{
 			  		patientbean.setPhoto(DocumentName);
-			  		patientbean.setPhotobase64(patientbean.getPatientpicturebase64());
+			  		//patientbean.setPhotobase64(patientbean.getPatientpicturebase64());
 			  	}
 			}
 
@@ -296,6 +299,56 @@ public class HealthController {
 //	  	response.sendRedirect(request.getContextPath() + "/view/appointment_user.jsp");
 	}
 
+	
+	@RequestMapping(value="/saveComplain")
+	public ModelAndView saveComplain(@ModelAttribute("GeneralDTO") GeneralDTO generalDTO,
+			HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		
+		boolean statusCC =  false,statusMed =  false,statusDiagnos =  false;
+		
+				
+				
+				//allInserDao.save(userProfileBean);
+		
+		List<PatientCCHistory> saveCCHistory=generalDTO.getBoPatientCCHistory();
+		if(saveCCHistory != null && saveCCHistory.size() > 0)
+		{
+			for (int i = 0; i < saveCCHistory.size(); i++) {
+				saveCCHistory.get(i).setCrt_date(new Date());
+				statusCC = allInserDao.save(saveCCHistory.get(i));
+			}
+			
+		}
+		
+		List<PatientMedicineHistory> saveMedHistory=generalDTO.getBoPatientMedicine();
+		if(saveMedHistory != null && saveMedHistory.size() > 0)
+		{
+			for (int i = 0; i < saveMedHistory.size(); i++) {
+				saveMedHistory.get(i).setCrt_date(new Date());
+				statusCC = allInserDao.save(saveMedHistory.get(i));
+			}
+		}
+		
+		PatientDiagnoHistory savediagnosHistory = generalDTO.getBoPatientDiagnos();
+		
+		if(savediagnosHistory != null)
+		{
+			statusDiagnos = allInserDao.save(savediagnosHistory);
+		}
+		
+//		if(value)
+//	  	{
+	  		request.setAttribute("msg", "success");
+//	  	}else
+//	  	{
+//	  		request.setAttribute("msg", "fail");
+//	  	}
+		
+		return new ModelAndView("Session");
+	}
+	
 
 //	@RequestMapping(value = "/testing") // Mapping for Call the controller
 //	public void testing(HttpServletRequest request, HttpServletResponse response) throws Exception,ServletException,IOException
@@ -485,6 +538,11 @@ public class HealthController {
 		boolean value =  allInserDao.save(userProfileBean);
 		response.getWriter().print(value);
 	}
+	
+	
+	
+
+	
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST) // Mapping for Call the controller
 	public void changePassword(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("PatientBean")PatientBean patientbean) throws Exception

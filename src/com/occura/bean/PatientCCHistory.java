@@ -18,19 +18,21 @@ public class PatientCCHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int patient_cc_history_id;
-	private MasterChiefComplaintBean master_cc_id;
+	private int master_cc_id;
 	private PatientAppointmentBean appointment_id;
 	private PatientBean patient_id;
 	private Date crt_date;
 	private String eye;
-	public PatientCCHistory(MasterChiefComplaintBean master_cc_id, PatientAppointmentBean appointment_id,
-			PatientBean patient_id, Date crt_date, String eye) {
+	private String duration;
+	public PatientCCHistory(int master_cc_id, PatientAppointmentBean appointment_id,
+			PatientBean patient_id, Date crt_date, String eye,String duration) {
 		super();
 		this.master_cc_id = master_cc_id;
 		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;
 		this.crt_date = crt_date;
 		this.eye = eye;
+		this.duration=duration;
 	}
 	
 	@Id
@@ -41,12 +43,12 @@ public class PatientCCHistory implements Serializable {
 		this.patient_cc_history_id = patient_cc_history_id;
 	}
 	
-	@ManyToMany
-	@JoinColumn(name="master_cc_id")
-	public MasterChiefComplaintBean getMaster_cc_id() {
+//	@ManyToMany
+//	@JoinColumn(name="master_cc_id")
+	public int getMaster_cc_id() {
 		return master_cc_id;
 	}
-	public void setMaster_cc_id(MasterChiefComplaintBean master_cc_id) {
+	public void setMaster_cc_id(int master_cc_id) {
 		this.master_cc_id = master_cc_id;
 	}
 	
@@ -79,6 +81,14 @@ public class PatientCCHistory implements Serializable {
 	}
 	public void setEye(String eye) {
 		this.eye = eye;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
 	
 

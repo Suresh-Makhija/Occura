@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.occura.bean.MasterChiefComplaintBean;
+import com.occura.bean.MasterDiagnoBean;
+import com.occura.bean.MasterMedicineBean;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.UserBean;
@@ -90,6 +92,40 @@ public class AllListDao {
 			session.close();
 		}
 		return ChiefComplaintList;
+	}
+	
+	public  List<MasterMedicineBean> getTreatmentList()
+	{
+		Session session = HibernateUtil.openSession();
+		List<MasterMedicineBean> masterMedicineBeans = new ArrayList<MasterMedicineBean>();
+		try {
+		  Query query = session.createQuery("FROM MasterMedicineBean");
+		  masterMedicineBeans =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return masterMedicineBeans;
+	}
+	
+	public  List<MasterDiagnoBean> getDiagnosList()
+	{
+		Session session = HibernateUtil.openSession();
+		List<MasterDiagnoBean> masterDiagnoBeans = new ArrayList<MasterDiagnoBean>();
+		try {
+		  Query query = session.createQuery("FROM MasterDiagnoBean");
+		  masterDiagnoBeans =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return masterDiagnoBeans;
 	}
 	
 	public  UserProfileBean findUserProfile(int user_id)

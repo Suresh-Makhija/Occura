@@ -18,31 +18,23 @@ public class PatientDiagnoHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int Patient_diagno_History_id;
-	private MasterDiagnoBean master_diagno_id;
+	private String master_diagno_id;
 	private PatientAppointmentBean appointment_id;
 	private PatientBean patient_id;
 	private Date crt_date;
-	public PatientDiagnoHistory(int patient_diagno_History_id, MasterDiagnoBean master_diagno_id, PatientAppointmentBean appointment_id, PatientBean patient_id,
-			Date crt_date, String eye) {
+	public PatientDiagnoHistory(int patient_diagno_History_id, String master_diagno_id, 
+			PatientAppointmentBean appointment_id, PatientBean patient_id,Date crt_date) {
 		super();
 		Patient_diagno_History_id = patient_diagno_History_id;
 		this.master_diagno_id = master_diagno_id;
 		this.appointment_id = appointment_id;
 		this.patient_id = patient_id;
 		this.crt_date = crt_date;
-		this.eye = eye;
-	}
-
-	public String getEye() {
-		return eye;
-	}
-
-	public void setEye(String eye) {
-		this.eye = eye;
 	}
 
 
-	private String eye;
+
+
 	
 	public PatientDiagnoHistory() {
 	}
@@ -56,13 +48,13 @@ public class PatientDiagnoHistory implements Serializable {
 		Patient_diagno_History_id = patient_diagno_History_id;
 	}
 
-	@ManyToMany
-	@JoinColumn(name="master_diagno_id")
-	public MasterDiagnoBean getMaster_diagno_id() {
+//	@ManyToMany
+//	@JoinColumn(name="master_diagno_id")
+	public String getMaster_diagno_id() {
 		return master_diagno_id;
 	}
 
-	public void setMaster_diagno_id(MasterDiagnoBean master_diagno_id) {
+	public void setMaster_diagno_id(String master_diagno_id) {
 		this.master_diagno_id = master_diagno_id;
 	}
 
@@ -93,15 +85,6 @@ public class PatientDiagnoHistory implements Serializable {
 		this.crt_date = crt_date;
 	}
 
-
-	public PatientDiagnoHistory( MasterDiagnoBean master_diagno_id, PatientAppointmentBean appointment_id, PatientBean patient_id,
-			Date crt_date) {
-		super();
-		this.master_diagno_id = master_diagno_id;
-		this.appointment_id = appointment_id;
-		this.patient_id = patient_id;
-		this.crt_date = crt_date;
-	}
 
 
 }

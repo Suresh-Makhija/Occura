@@ -66,6 +66,15 @@ public class MasterMedicineBean implements Serializable {
 		this.masterDiagnoBean = masterDiagnoBean;
 	}
 
+	public MasterMedicineBean(String medicine_description, Date crt_date, Double medicine_price,
+			MasterDiagnoBean masterDiagnoBean) {
+		super();
+		this.medicine_description = medicine_description;
+		this.crt_date = crt_date;
+		this.medicine_price = medicine_price;
+		this.masterDiagnoBean = masterDiagnoBean;
+	}
+
 	
 	
 	
