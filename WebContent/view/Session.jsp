@@ -72,6 +72,9 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 
 	 <form:form name="sessionname" method="post" id="sessionid"
 		modelAttribute="GeneralDTO" enctype="multipart/form-data" autocomplete="off"> 
+
+		<input id="appointment_id" name="appointment_id" value="${requestScope.appointment_id}">
+		<input id="patient_id" name="patient_id" value="${requestScope.patient_id}">
 		
  <div id="main-content">
         <div class="container-fluid">
@@ -232,6 +235,7 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 									<tr>
 										<th width= "30%" style="text-align: left;">Treatment</th>
 										<th width= "10%" style="text-align: left;">Quantity</th>
+										<th width= "10%" style="text-align: left;">Price</th>
 										<th width= "10%" style="text-align: left;">Duration</th>
 										<th width= "20%" style="text-align: left;">Eye</th>
 										<th width= "30%" style="text-align: left;">Description</th>
@@ -253,8 +257,13 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 										
 										<td >
 											<input type="text" id="Quantity0" class="form-control" autocomplete="off" 
-											name="boPatientMedicine[0].medicine_Qty" onchange="onlyNumber(this);"
+											name="boPatientMedicine[0].medicine_Qty" onchange="onlyNumber(this);getPriceMedicine('treatmentmedicine0',this,'0');"
 											onfocus="hideError1(this);" onclick="hideError1(this);" placeholder="Quantity">
+										</td>
+										
+										<td>
+											<input type="text" id="medicine_price0" class="form-control" autocomplete="off" 
+											name="boPatientMedicine[0].total_price_per_medicine" readonly="readonly">
 										</td>
 										
 										<td >
@@ -352,7 +361,45 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 /* $(document).on('change', '.selectpicker', function () {
     $('.selectpicker').selectpicker('refresh');
 }); */
+
+
+
+function getPriceMedicine(med_id,quantity,idvalue)
+{
+	var med_value = med_id.value;
+	var quan = quantity.value;
 	
+	
+	alert(med_value);
+	alert(quan);
+	alert(idvalue);
+	
+	if(med_value != null && med_value != '' &&
+		quan != null && quan != ''){
+		
+		$.ajax({
+			type :'POST',
+			url: "../health/getPriceMedicine.htm",
+			data :{med_id : med_value,quantity : quan},
+			success :function(resdata,status,xhr)
+			{
+				if(resdata != null)
+					{
+						$("#medicine_price"+idvalue).val();
+					}else
+						{
+						swal("ERROR!","This medicine price not available","error");
+						}
+			},
+			error : function(xhr, status, errorThrown) {
+			},
+			complete : function(xhr, status) {
+			}
+		});
+		
+	}
+}
+
 function checkAddRowValidation(){
 	var flg1=validateAddrowFields();
 	if(flg1){
@@ -597,10 +644,20 @@ function addRow1(t_id){
     element7.id="Quantity"+nRow1;
     element7.onclick=function(){hideError1(this);};
     element7.onfocus=function(){hideError1(this);};
-    element7.onchange=function(){onlyNumber(this);};
+    element7.onchange=function(){onlyNumber(this);getPriceMedicine(element1.id,this,nRow1);};
     td7.appendChild(element7);
     row.appendChild(td7);
     
+    var td9 = document.createElement("TD");
+    var element9 = document.createElement("input");
+    element9.type = "text";
+    element9.className="form-control";
+    element9.name = "boPatientMedicine["+nRow1+"].total_price_per_medicine";
+    element9.autocomplete = "off";
+    element9.readonly = "readonly";
+    element9.id="medicine_price"+nRow1;
+    td9.appendChild(element9);
+    row.appendChild(td9);
     
     var td2 = document.createElement("TD");
     var element2 = document.createElement("input");

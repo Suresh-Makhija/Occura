@@ -38,7 +38,7 @@ public class PatientBean implements Serializable {
 	private String description;
 	private String patientpicturebase64;
 	private String photobase64;
-	
+	private String filebyte;
 	
 
 
@@ -220,6 +220,18 @@ public class PatientBean implements Serializable {
 	}
 
 	
+
+	@Transient
+	public String getFilebyte() {
+		return filebyte;
+	}
+
+
+
+	public void setFilebyte(String filebyte) {
+		this.filebyte = filebyte;
+	}
+
 
 
 	public String getPhotobase64() {
