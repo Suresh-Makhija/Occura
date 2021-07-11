@@ -1,6 +1,7 @@
 package com.occura.dao;
 
 
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,21 +9,29 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 
 import com.occura.bean.MasterChiefComplaintBean;
 import com.occura.bean.MasterDiagnoBean;
 import com.occura.bean.MasterMedicineBean;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
+import com.occura.bean.PatientCCHistory;
+import com.occura.bean.PatientDiagnoHistory;
+import com.occura.bean.PatientMedicineHistory;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
 import com.occura.util.HibernateUtil;
+import com.occura.utility.CommonUtility;
 
 public class AllListDao {
 
@@ -448,6 +457,236 @@ public class AllListDao {
 		return patientList;
 	}
 	
+	public static String getPriceMedicine(String med_id,String quantity)
+	{
+		Session session = HibernateUtil.openSession();
+		MasterMedicineBean medicineBo = new MasterMedicineBean();
+		Double medicine_price,output = null;
+		int count_per_tab;
+		try {
+				Query query = session.createQuery("FROM MasterMedicineBean where master_medicine_id = "+med_id+" ");
+				query.setMaxResults(1);
+				medicineBo = (MasterMedicineBean) query.uniqueResult();
+				
+				if(medicineBo != null)
+				{
+					medicine_price = medicineBo.getMedicine_price();
+					count_per_tab = medicineBo.getCount_per_tab();
+					output = (double) Integer.parseInt(quantity) * (medicine_price/count_per_tab);
+				}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return output.toString();
+	}
+	
+	
+	public  List<Object[]> getCalendardata()
+	{
+		Session session = HibernateUtil.openSession();
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		String query = "";
+		try {
+			 query = "SELECT a.appointment_id,a.patient_id,a.appointment_date_time,b.full_name,a.description, " + 
+			 		"DATE_FORMAT(a.appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			 		" FROM occura.patient_appointment_tbl a left join patient_tbl b on a.patient_id=b.patient_id " + 
+			 		" order by a.appointment_date_time";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 dataList = sqlQuery.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return dataList ;
+	}
+	
+	public static PatientBean getPatientlistfromHistory(String patient_id)
+	{
+		Session session = HibernateUtil.openSession();
+		PatientBean patientBo = new PatientBean();
+		
+		try {
+			    Query query = session.createQuery("FROM PatientBean where patient_id = "+patient_id+" ");
+				query.setMaxResults(1);
+				patientBo = (PatientBean) query.uniqueResult();
+				
+				if(patientBo != null)
+				{
+					String documentName = patientBo.getPhoto();
+					String propertiesName = "TestUploadFile";
+					
+					String fileName=null;
+					if(!CommonUtility.checkString(documentName)) {
+						fileName=CommonUtility.getFilePathFromcommonConfigVariable(propertiesName)+documentName;
+						
+						if(fileName != null && !("").equals(fileName) && new File(fileName).exists()) {
+							byte[] bArray=CommonUtility.readFileToByteArray(new File(fileName));
+							patientBo.setFilebyte(DatatypeConverter.printBase64Binary(bArray));
+						}
+					}else
+					{// No Image
+						fileName=CommonUtility.getFilePathFromcommonConfigVariable(propertiesName)+"no_image.jpg";
+						if(fileName != null && !("").equals(fileName) && new File(fileName).exists()) {
+							byte[] bArray=CommonUtility.readFileToByteArray(new File(fileName));
+							patientBo.setFilebyte(DatatypeConverter.printBase64Binary(bArray));
+						}
+					}
+					
+				}
+			 
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patientBo ;
+	}
+	
+	
+	public  List<Object[]> getPatientHistory(String patient_id)
+	{
+		Session session = HibernateUtil.openSession();
+		List<Object[]> patienthistorylist = new ArrayList<Object[]>();
+		String query = "";
+		try {
+			 query = "SELECT a.appointment_id,a.patient_id,a.appointment_date_time,b.full_name,a.description, " + 
+			 		" DATE_FORMAT(a.appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			 		" FROM occura.patient_appointment_tbl a left join patient_tbl b on a.patient_id=b.patient_id " + 
+			 		" where a.patient_id = "+patient_id+" order by a.appointment_date_time";
+			 SQLQuery sqlQuery = session.createSQLQuery(query);
+			 patienthistorylist = sqlQuery.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patienthistorylist ;
+	}
+	
+	public static String getAppointmentlistfromHistory(String patient_id,String appointment_id)
+	{
+		Session session = HibernateUtil.openSession();
+		String appointementdate_str = null;
+		try {
+			    Query query = session.createQuery(" SELECT DATE_FORMAT(appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			    		" FROM occura.patient_appointment_tbl " + 
+			    		" where patient_id = "+patient_id+" and appointment_id = "+appointment_id+" ");
+			    query.setMaxResults(1);
+			    appointementdate_str = (String) query.uniqueResult();
+		    }
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return appointementdate_str ;
+	}
+	
+	public Map<String, Object> getSessionlist(String appointment_id,String patient_id)  throws Exception {
+				
+				Map<String,Object> mapList = new HashMap<String, Object>();
+				Session session = HibernateUtil.openSession();
+				
+				List<PatientDiagnoHistory> list_diagno = null;
+				List<PatientCCHistory> list_cc = null;
+				List<PatientMedicineHistory> list_medicine = null;
+				String patient_name = null;
+				String appointment_date_str = null;
+				Query query = null;
+				try {
+						
+						query = session.createSQLQuery("SELECT appointment_id,patient_id, " + 
+								"  (case when crt_date is not null then DATE_FORMAT(crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
+								"  (select GROUP_CONCAT(diagno_description SEPARATOR ', ') from master_diagno_tbl as diagno " + 
+								"  where FIND_IN_SET (diagno.master_diagno_id,ord_diagno.master_diagno_id)) as diagno_name " + 
+								"  FROM `patient_diagno_history_tbl` as ord_diagno "+
+								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+										.addScalar("appointment_id")
+										.addScalar("patient_id")
+										.addScalar("crt_date_str")
+										.addScalar("diagno_name")
+										.setResultTransformer(Transformers.aliasToBean(PatientDiagnoHistory.class));		
+						list_diagno = query.list();
+						
+						
+						
+						query = session.createSQLQuery(" select appointment_id,patient_id,cc_description as cc_name," + 
+								" (case when a.crt_date is not null then DATE_FORMAT(a.crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
+								" (case when a.duration is not null then a.duration else '-' end) as duration, " + 
+								" (case when a.eye is not null then a.eye else '-' end) as eye " + 
+								" from patient_cc_history_tbl a " + 
+								"left join master_cc_tbl b on a.master_cc_id=b.master_cc_id" + 
+								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+										.addScalar("appointment_id")
+										.addScalar("patient_id")
+										.addScalar("cc_name")
+										.addScalar("crt_date_str")
+										.addScalar("duration")
+										.addScalar("eye")
+										.setResultTransformer(Transformers.aliasToBean(PatientCCHistory.class));		
+						list_cc = query.list();
+						
+						
+						query = session.createSQLQuery(" select appointment_id,patient_id,medicine_description as medicine_name," + 
+								"	(case when a.crt_date is not null then DATE_FORMAT(a.crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
+								"	(case when a.duration is not null then a.duration else '-' end) as duration, " + 
+								"	(case when a.eye is not null then a.eye else '-' end) as eye, " + 
+								"	(case when a.description is not null then a.description else '-' end) as description, " + 
+								"	medicine_Qty,total_price_per_medicine " + 
+								"	from patient_medicine_history_tbl a " + 
+								"	left join master_medicine_tbl b on a.master_medicine_id=b.master_medicine_id " + 
+								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+										.addScalar("appointment_id")
+										.addScalar("patient_id")
+										.addScalar("medicine_name")
+										.addScalar("crt_date_str")
+										.addScalar("duration")
+										.addScalar("eye")
+										.addScalar("description")
+										.addScalar("medicine_Qty")
+										.addScalar("total_price_per_medicine")
+										.setResultTransformer(Transformers.aliasToBean(PatientMedicineHistory.class));		
+						list_medicine = query.list();
+						
+						
+						 query = session.createQuery(" SELECT DATE_FORMAT(appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+					    		" FROM occura.patient_appointment_tbl " + 
+					    		" where patient_id = "+patient_id+" and appointment_id = "+appointment_id+" ");
+					    query.setMaxResults(1);
+					    appointment_date_str = (String) query.uniqueResult();
+						
+					    query = session.createQuery(" SELECT full_name FROM occura.patient_tbl where patient_id="+patient_id+" ");
+					    query.setMaxResults(1);
+					    patient_name = (String) query.uniqueResult();
+						
+						
+						mapList.put("list_diagno", list_diagno);
+						mapList.put("list_cc", list_cc);
+						mapList.put("list_medicine", list_medicine);
+						mapList.put("appointment_date_str", appointment_date_str);
+						mapList.put("patient_name", patient_name);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					if (session != null) {
+						session.close();
+						}
+				}
+				return mapList;
+			}
+			
 }
 
 //}

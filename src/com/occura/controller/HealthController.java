@@ -56,10 +56,105 @@ public class HealthController {
 	@RequestMapping(value="/startSession")
 	public ModelAndView startSession(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
-
 		HttpSession session  = request.getSession(false);
+		
+		String appointment_id = !CommonUtility.checkString(request.getParameter("appointment_id"))?request.getParameter("appointment_id"):"";
+		String patient_id = !CommonUtility.checkString(request.getParameter("patient_id"))?request.getParameter("patient_id"):"";
+		request.setAttribute("appointment_id", appointment_id);
+		request.setAttribute("patient_id", patient_id);
 		return new ModelAndView("Session");
 	}
+	
+	@RequestMapping(value="/patientHistory")
+	public ModelAndView patientHistory(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		
+		String appointment_id = !CommonUtility.checkString(request.getParameter("appointment_id"))?request.getParameter("appointment_id"):"";
+		String patient_id = !CommonUtility.checkString(request.getParameter("patient_id"))?request.getParameter("patient_id"):"";
+		request.setAttribute("appointment_id", appointment_id);
+		request.setAttribute("patient_id", patient_id);
+		
+		
+		String recently_session = null;
+		if(!CommonUtility.checkString(patient_id) && !CommonUtility.checkString(appointment_id))
+		{
+			recently_session = allListDao.getAppointmentlistfromHistory(patient_id,appointment_id);
+		}
+		request.setAttribute("appointmentdate_str", recently_session);
+		
+		PatientBean patientlist = allListDao.getPatientlistfromHistory(patient_id);
+		request.setAttribute("patientlist", patientlist);
+		
+		List<Object[]> patienthistory = allListDao.getPatientHistory(patient_id);
+		if(patienthistory != null)
+		{
+			request.setAttribute("patienthistory", patienthistory);
+		}
+		request.setAttribute("patientlist_size", patienthistory.size());
+		
+		
+		return new ModelAndView("patient_history");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/patientHistorySessionDetails")
+	public ModelAndView patientHistorySessionDetails(HttpServletRequest request,HttpServletResponse response) throws Exception
+	{
+		HttpSession session  = request.getSession(false);
+		
+		String appointment_id = !CommonUtility.checkString(request.getParameter("appointmentname_hidden"))?request.getParameter("appointmentname_hidden"):"";
+		String patient_id = !CommonUtility.checkString(request.getParameter("patientname_hidden"))?request.getParameter("patientname_hidden"):"";
+		request.setAttribute("appointment_id", appointment_id);
+		request.setAttribute("patient_id", patient_id);
+		
+		
+		Map<String, Object> map = allListDao.getSessionlist(appointment_id,patient_id);
+
+		List<PatientDiagnoHistory> list_diagno = null;
+		List<PatientCCHistory> list_cc = null;
+		List<PatientMedicineHistory> list_medicine = null;
+		String patient_name = null;
+		String appointment_date_str = null;
+		
+		if (map != null) {
+			
+			if (map.get("list_diagno") != null) {
+				list_diagno = (List<PatientDiagnoHistory>) map.get("list_diagno");
+				if (list_diagno.size() > 0) {
+					request.setAttribute("list_diagno", list_diagno);
+				}
+			}
+			
+			if (map.get("list_cc") != null) {
+				list_cc = (List<PatientCCHistory>) map.get("list_cc");
+				if (list_cc.size() > 0) {
+					request.setAttribute("list_cc", list_cc);
+				}
+			}
+			
+			if (map.get("list_medicine") != null) {
+				list_medicine = (List<PatientMedicineHistory>) map.get("list_medicine");
+				if (list_cc.size() > 0) {
+					request.setAttribute("list_medicine", list_medicine);
+				}
+			}
+			
+			if (map.get("appointment_date_str") != null) {
+				appointment_date_str =  (String) map.get("appointment_date_str");
+				request.setAttribute("appointment_date_str", appointment_date_str);
+			}
+			
+			if (map.get("patient_name") != null) {
+				patient_name =  (String) map.get("patient_name");
+				request.setAttribute("patient_name", patient_name);
+			}
+			
+		}
+		
+		return new ModelAndView("patient_sessiondetails");
+	}
+	
 	@RequestMapping(value="/loadindex")
 	public ModelAndView loadindex(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
@@ -85,7 +180,14 @@ public class HealthController {
 	public ModelAndView loadcalendar(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
 		HttpSession session  = request.getSession(false);
-		return new ModelAndView("fullcalendar");
+		
+		List<Object[]> calendarBo = allListDao.getCalendardata();
+		if(calendarBo != null && calendarBo.size() > 0)
+		{
+			request.setAttribute("calendar_list", calendarBo);
+		}
+		
+		return new ModelAndView("calendar");
 	}
 	
 	@RequestMapping(value="/loaddepartment")
@@ -299,16 +401,16 @@ public class HealthController {
 //	  	response.sendRedirect(request.getContextPath() + "/view/appointment_user.jsp");
 	}
 
-	
-	@RequestMapping(value="/saveComplain")
-	public ModelAndView saveComplain(@ModelAttribute("GeneralDTO") GeneralDTO generalDTO,
-			HttpServletRequest request,HttpServletResponse response) throws IOException
+	@RequestMapping(value= "/saveComplain")
+	public ModelAndView saveComplain(HttpServletRequest request,HttpServletResponse response,
+			@ModelAttribute("GeneralDTO") GeneralDTO generalDTO) throws IOException
 	{
 		HttpSession session  = request.getSession(false);
 		
 		boolean statusCC =  false,statusMed =  false,statusDiagnos =  false;
 		
-				
+		String appointment_id = !CommonUtility.checkString(request.getParameter("appointment_id"))?request.getParameter("appointment_id"):"";
+		String patient_id = !CommonUtility.checkString(request.getParameter("patient_id"))?request.getParameter("patient_id"):"";
 				
 				//allInserDao.save(userProfileBean);
 		
@@ -317,6 +419,8 @@ public class HealthController {
 		{
 			for (int i = 0; i < saveCCHistory.size(); i++) {
 				saveCCHistory.get(i).setCrt_date(new Date());
+				saveCCHistory.get(i).setAppointment_id(Integer.valueOf(appointment_id));
+				saveCCHistory.get(i).setPatient_id(Integer.valueOf(patient_id));
 				statusCC = allInserDao.save(saveCCHistory.get(i));
 			}
 			
@@ -327,6 +431,8 @@ public class HealthController {
 		{
 			for (int i = 0; i < saveMedHistory.size(); i++) {
 				saveMedHistory.get(i).setCrt_date(new Date());
+				saveMedHistory.get(i).setAppointment_id(Integer.valueOf(appointment_id));
+				saveMedHistory.get(i).setPatient_id(Integer.valueOf(patient_id));
 				statusCC = allInserDao.save(saveMedHistory.get(i));
 			}
 		}
@@ -335,6 +441,8 @@ public class HealthController {
 		
 		if(savediagnosHistory != null)
 		{
+			savediagnosHistory.setAppointment_id(Integer.valueOf(appointment_id));
+			savediagnosHistory.setPatient_id(Integer.valueOf(patient_id));
 			statusDiagnos = allInserDao.save(savediagnosHistory);
 		}
 		
@@ -378,6 +486,15 @@ public class HealthController {
 			returnString = "not exist";
 		}
 		response.getWriter().print(returnString);
+	}
+	
+	@RequestMapping(value="/getPriceMedicine")
+	public void getPriceMedicine(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		String med_id = 	request.getParameter("med_id");
+		String quantity = 	request.getParameter("quantity");
+		String Medicine_price = AllListDao.getPriceMedicine(med_id,quantity);
+		response.getWriter().print(Medicine_price);
 	}
 	
 	@RequestMapping(value="/checkdatetime")

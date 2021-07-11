@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 
@@ -26,6 +27,8 @@ public class PatientMedicineHistory implements Serializable {
 	private Date crt_date;
 	private String eye;
 	private String duration;
+	private String crt_date_str;
+	private String medicine_name;
 	
 	public PatientMedicineHistory() {
 	}
@@ -111,6 +114,27 @@ public class PatientMedicineHistory implements Serializable {
 
 	public void setDuration(String duration) {
 		this.duration = duration;
+	}
+	
+	
+	
+	
+	@Transient
+	public String getCrt_date_str() {
+		return crt_date_str;
+	}
+
+	public void setCrt_date_str(String crt_date_str) {
+		this.crt_date_str = crt_date_str;
+	}
+
+	@Transient
+	public String getMedicine_name() {
+		return medicine_name;
+	}
+
+	public void setMedicine_name(String medicine_name) {
+		this.medicine_name = medicine_name;
 	}
 
 	public PatientMedicineHistory(int master_medicine_id, int appointment_id,
