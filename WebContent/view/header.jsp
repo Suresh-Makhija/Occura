@@ -195,6 +195,7 @@
                                      <li><a onclick="loadappointment();" style="cursor: pointer;">Book Appointment</a></li>   <!-- href="appointment_user.jsp" -->
                                      <li><a onclick="loadcalendar();" style="cursor: pointer;">Test Calendar</a></li>   <!-- href="fullcalendar.jsp" -->
                                  	<li><a onclick="loadtestsnapshot();" style="cursor: pointer;">Test Snapshot</a></li>
+                                 	<li><a onclick="loadtestprint();" style="cursor: pointer;">Test Print</a></li>
                                  </ul> 
                              </li> 
 
@@ -214,6 +215,7 @@
                                     <li><a href="patients-all.html">All Patients</a></li>
                                     <li><a href="patient-add.html">Add Patient</a></li>
                                     <li><a href="patient-profile.html">Patient Profile</a></li>
+                                    <li><a onclick="loadpatienthistory();" style="cursor: pointer;">Patient History</a></li>
                                     <li><a href="patient-invoice.html">Invoice</a></li>
                                 </ul>
                             </li>
@@ -484,6 +486,19 @@ function loadtestsnapshot()
 	document.loadmenu.action = "../health/loadtestsnapshot.htm";  
 	document.loadmenu.submit();
 }
+
+function loadtestprint()
+{
+	document.loadmenu.action = "../health/loadtestprint.htm";  
+	document.loadmenu.submit();
+}
+
+function loadpatienthistory()
+{
+	document.loadmenu.action = "../health/loadpatienthistory.htm";  
+	document.loadmenu.submit();
+}
+
 
 
 

@@ -49,7 +49,8 @@ for(int i=0;i<5;i++)
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;" ><i class="icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;" >
+                            <font color="007bff"><i class="icon-home"></i></font></a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                     </div>
@@ -318,8 +319,9 @@ for(int i=0;i<5;i++)
 
                     </div>
                 </div>
-
-
+			</div>
+		</div>
+		</div>
 
 <script type="text/javascript">
 

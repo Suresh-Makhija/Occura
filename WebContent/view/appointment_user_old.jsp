@@ -48,7 +48,7 @@
                            <i class="fa fa-arrow-left"></i></a> Book Appointment</h2>
 	                        <ul class="breadcrumb">
 	                            <li class="breadcrumb-item"><a onclick="oldcancel();" style="cursor: pointer;">    <%-- href="<%=request.getContextPath()%>/view/index.jsp" --%>
-	                            <i class="icon-home"></i></a></li><li class="breadcrumb-item active">Dashboard</li>
+	                           <font color="007bff"> <i class="icon-home"></i></font></a></li><li class="breadcrumb-item active">Dashboard</li>
 	                        </ul>
                    	  </div>
                 	</div>

@@ -114,8 +114,9 @@ public class AllInsertDao {
 			PatientAppointmentBean appBean = new PatientAppointmentBean();
 			appBean.setAppointment_date_time(patient.getAppointment_date());
 			appBean.setCrt_date(patient.getCrt_date());
-			appBean.setPatient_id(patientBean);
+			appBean.setPatient_id(patientBean.getPatient_id());
 			appBean.setDescription(patient.getDescription());
+			appBean.setStatus("Y");
 			session.saveOrUpdate(appBean);
 			if(session != null)
 			{
@@ -149,4 +150,40 @@ public class AllInsertDao {
 		return value;
 	}
 	
+	
+	public static boolean saveAppointmentStatus(String appointment_id,String patient_id)
+	{
+		boolean value = false;
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		Query query=null;
+		try {
+			tx = session.getTransaction();
+			tx.begin();
+
+			query = session.createQuery("update PatientAppointmentBean set status=:status "
+					  + " where appointment_id=:appointment_id and patient_id=:patient_id ");
+			query.setParameter("appointment_id", Integer.valueOf(appointment_id));
+			query.setParameter("patient_id", Integer.valueOf(patient_id));
+			query.setParameter("status", "N");
+			int count = query.executeUpdate();
+			if(count > 0)
+			{
+				value = true;
+				tx.commit();
+			}
+			
+		}
+		catch (Exception e) {
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return value;
+	}
 }

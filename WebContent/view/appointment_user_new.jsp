@@ -98,8 +98,8 @@
                            <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth">
                            <i class="fa fa-arrow-left"></i></a> Book Appointment</h2>
 	                        <ul class="breadcrumb">
-	                            <li class="breadcrumb-item"><a onclick="loadcancel();" style="cursor: pointer;">     <%-- href="<%=request.getContextPath()%>/view/index.jsp" --%>
-	                            <i class="icon-home"></i></a></li><li class="breadcrumb-item active">Dashboard</li>
+	                            <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;">     <%-- href="<%=request.getContextPath()%>/view/index.jsp" --%>
+	                            <font color="007bff"><i class="icon-home"></i></font></a></li><li class="breadcrumb-item active">Dashboard</li>
 	                        </ul>
                            
                            
@@ -349,9 +349,9 @@ function loadsubmit()
 /* window.location = "${pageContext.request.contextPath}/view/index.jsp"; */
 
 
-function loadcancel()
+function loadindex()
 {
-		
+	
 	document.userformName.action = "../health/loadindex.htm";  
 	document.userformName.submit();	
 }

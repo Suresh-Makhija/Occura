@@ -37,6 +37,7 @@ import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
+import com.occura.bean.PatientEyeSightHistory;
 import com.occura.bean.PatientMedicineHistory;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
@@ -64,6 +65,17 @@ public class HealthController {
 		request.setAttribute("patient_id", patient_id);
 		return new ModelAndView("Session");
 	}
+	
+	@RequestMapping(value="/loadpatienthistory")
+	public ModelAndView loadpatienthistory(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		List<PatientBean> list_patient = allListDao.getPatientList();
+		request.setAttribute("list_patient", list_patient);
+		return new ModelAndView("search_patienthistory");
+	}
+	
+	
 	
 	@RequestMapping(value="/patientHistory")
 	public ModelAndView patientHistory(HttpServletRequest request,HttpServletResponse response) throws IOException
@@ -97,6 +109,8 @@ public class HealthController {
 		return new ModelAndView("patient_history");
 	}
 	
+	
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/patientHistorySessionDetails")
 	public ModelAndView patientHistorySessionDetails(HttpServletRequest request,HttpServletResponse response) throws Exception
@@ -114,6 +128,7 @@ public class HealthController {
 		List<PatientDiagnoHistory> list_diagno = null;
 		List<PatientCCHistory> list_cc = null;
 		List<PatientMedicineHistory> list_medicine = null;
+		List<PatientEyeSightHistory> list_eyesight=null;
 		String patient_name = null;
 		String appointment_date_str = null;
 		
@@ -135,10 +150,19 @@ public class HealthController {
 			
 			if (map.get("list_medicine") != null) {
 				list_medicine = (List<PatientMedicineHistory>) map.get("list_medicine");
-				if (list_cc.size() > 0) {
+				if (list_medicine.size() > 0) {
 					request.setAttribute("list_medicine", list_medicine);
 				}
 			}
+			
+			if (map.get("list_eyesight") != null) {
+				list_eyesight = (List<PatientEyeSightHistory>) map.get("list_eyesight");
+				if (list_eyesight.size() > 0) {
+					request.setAttribute("list_eyesight", list_eyesight);
+				}
+			}
+			
+			
 			
 			if (map.get("appointment_date_str") != null) {
 				appointment_date_str =  (String) map.get("appointment_date_str");
@@ -204,6 +228,71 @@ public class HealthController {
 		return new ModelAndView("testsnapshot");
 	}
 	
+	@RequestMapping(value="/loadtestprint")
+	public ModelAndView loadtestprint(HttpServletRequest request,HttpServletResponse response) throws Exception
+	{
+		HttpSession session  = request.getSession(false);
+		
+		UserBean user = (UserBean)session.getAttribute("loginUser");
+		
+		String appointment_id="",patient_id="";
+		String patienthis = request.getParameter("patienthistory");
+		
+		if(!CommonUtility.checkString(patienthis) && ("patienthistory").equalsIgnoreCase(patienthis))
+		{
+			appointment_id = !CommonUtility.checkString(request.getParameter("appointmentname_hidden"))?request.getParameter("appointmentname_hidden"):"";
+			 patient_id = !CommonUtility.checkString(request.getParameter("patientname_hidden"))?request.getParameter("patientname_hidden"):"";	
+		}else
+		{
+			appointment_id = !CommonUtility.checkString(request.getParameter("appointment_id"))?request.getParameter("appointment_id"):"";
+			 patient_id = !CommonUtility.checkString(request.getParameter("patient_id"))?request.getParameter("patient_id"):"";	
+		}
+		 
+		
+		Map<Integer, Object> mapBo = new HashMap<Integer, Object>();
+		mapBo.put(1, user.getUser_id());
+		mapBo.put(2, appointment_id);
+		mapBo.put(3, patient_id);
+		UserProfileBean userProfileBean = null;
+		List<PatientMedicineHistory> list_medicine = null;
+		String patient_name = null,appointment_date_str=null;
+		
+		Map<String, Object> map = allListDao.getBillPrint(mapBo);
+		
+		if(map != null)
+		{
+			if (map.get("userProfileBean") != null) {
+				userProfileBean = (UserProfileBean) map.get("userProfileBean");
+				if (userProfileBean != null) {
+					request.setAttribute("userProfileBean", userProfileBean);
+				}
+			}
+			
+			if (map.get("list_medicine") != null) {
+				list_medicine = (List<PatientMedicineHistory>) map.get("list_medicine");
+				if (list_medicine != null && list_medicine.size() > 0) {
+					request.setAttribute("list_medicine", list_medicine);
+				}
+			}
+			
+			if (map.get("patient_name") != null) {
+				patient_name =  (String) map.get("patient_name");
+				request.setAttribute("patient_name", patient_name);
+			}
+			
+			if (map.get("appointment_date_str") != null) {
+				appointment_date_str =  (String) map.get("appointment_date_str");
+				request.setAttribute("appointment_date_str", appointment_date_str);
+			}
+			
+			
+			
+		}
+		
+		
+		return new ModelAndView("loadtestprint");
+	}
+	
 	@RequestMapping(value="/oldusersearch")
 	public ModelAndView oldusersearch(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
@@ -266,14 +355,11 @@ public class HealthController {
 	  	
 	  	boolean status = false;
 	  	
-	  	PatientBean patient_userid = new PatientBean();
-	  	patient_userid.setPatient_id(Integer.valueOf(patientid));
+//	  	PatientBean patient_userid = new PatientBean();
+//	  	patient_userid.setPatient_id(Integer.valueOf(patientid));
 	  	
-	  	PatientAppointmentBean  saveappointment = new PatientAppointmentBean(patient_userid,date,new Date(),description);
+	  	PatientAppointmentBean  saveappointment = new PatientAppointmentBean(Integer.valueOf(patientid),date,new Date(),description,"Y");
 	  	status =  AllInsertDao.save(saveappointment);
-		
-
-	  
 
 	  	if(status)
 	  	{
@@ -403,11 +489,11 @@ public class HealthController {
 
 	@RequestMapping(value= "/saveComplain")
 	public ModelAndView saveComplain(HttpServletRequest request,HttpServletResponse response,
-			@ModelAttribute("GeneralDTO") GeneralDTO generalDTO) throws IOException
+			@ModelAttribute("GeneralDTO") GeneralDTO generalDTO) throws Exception
 	{
 		HttpSession session  = request.getSession(false);
 		
-		boolean statusCC =  false,statusMed =  false,statusDiagnos =  false;
+		boolean statusCC =  false,statusMed =  false,statusDiagnos =  false,statusEyeSight=false;
 		
 		String appointment_id = !CommonUtility.checkString(request.getParameter("appointment_id"))?request.getParameter("appointment_id"):"";
 		String patient_id = !CommonUtility.checkString(request.getParameter("patient_id"))?request.getParameter("patient_id"):"";
@@ -433,7 +519,7 @@ public class HealthController {
 				saveMedHistory.get(i).setCrt_date(new Date());
 				saveMedHistory.get(i).setAppointment_id(Integer.valueOf(appointment_id));
 				saveMedHistory.get(i).setPatient_id(Integer.valueOf(patient_id));
-				statusCC = allInserDao.save(saveMedHistory.get(i));
+				statusMed = allInserDao.save(saveMedHistory.get(i));
 			}
 		}
 		
@@ -441,20 +527,36 @@ public class HealthController {
 		
 		if(savediagnosHistory != null)
 		{
+			savediagnosHistory.setCrt_date(new Date());
 			savediagnosHistory.setAppointment_id(Integer.valueOf(appointment_id));
 			savediagnosHistory.setPatient_id(Integer.valueOf(patient_id));
 			statusDiagnos = allInserDao.save(savediagnosHistory);
 		}
 		
-//		if(value)
-//	  	{
-	  		request.setAttribute("msg", "success");
-//	  	}else
-//	  	{
-//	  		request.setAttribute("msg", "fail");
-//	  	}
+		PatientEyeSightHistory saveEyeSight = generalDTO.getBoPatientEyeSight();
 		
-		return new ModelAndView("Session");
+		if(saveEyeSight != null)
+		{
+			saveEyeSight.setCrt_date(new Date());
+			saveEyeSight.setAppointment_id(Integer.valueOf(appointment_id));
+			saveEyeSight.setPatient_id(Integer.valueOf(patient_id));
+			statusEyeSight = allInserDao.save(saveEyeSight);
+		}
+		
+		boolean status = allInserDao.saveAppointmentStatus(appointment_id,patient_id);
+		
+		
+		if(status)
+	  	{
+	  		request.setAttribute("msg", "success");
+	  		return this.loadtestprint(request, response);
+	  	}else
+	  	{
+	  		request.setAttribute("msg", "fail");
+	  		return new ModelAndView("Session");
+	  	}
+		
+		
 	}
 	
 
@@ -512,9 +614,9 @@ public class HealthController {
 			
 			appointmentdate = appointmentdate.replace("T"," ").concat(":00");
 	  		//date= formatter.parse(appointmentdate.replace("T"," "));
-	  		PatientAppointmentBean patient = AllListDao.findDateTimeByPatient(appointmentdate);
+	  		boolean status = AllListDao.findDateTimeByPatient(appointmentdate);
 	  		
-	  		if(patient != null)
+	  		if(status)
 			{
 				returnString = "exist";
 			}

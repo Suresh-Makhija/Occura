@@ -1,6 +1,7 @@
 package com.occura.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -29,7 +30,8 @@ public class PatientMedicineHistory implements Serializable {
 	private String duration;
 	private String crt_date_str;
 	private String medicine_name;
-	
+	private BigDecimal medicine_quantity;
+	private BigDecimal total_price;
 	public PatientMedicineHistory() {
 	}
 
@@ -135,6 +137,27 @@ public class PatientMedicineHistory implements Serializable {
 
 	public void setMedicine_name(String medicine_name) {
 		this.medicine_name = medicine_name;
+	}
+	
+	
+	
+	@Transient
+	public BigDecimal getMedicine_quantity() {
+		return medicine_quantity;
+	}
+
+	public void setMedicine_quantity(BigDecimal medicine_quantity) {
+		this.medicine_quantity = medicine_quantity;
+	}
+	
+	
+	@Transient
+	public BigDecimal getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(BigDecimal total_price) {
+		this.total_price = total_price;
 	}
 
 	public PatientMedicineHistory(int master_medicine_id, int appointment_id,

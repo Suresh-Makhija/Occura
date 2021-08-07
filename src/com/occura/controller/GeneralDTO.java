@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
+import com.occura.bean.PatientEyeSightHistory;
 import com.occura.bean.PatientMedicineHistory;
 
 public class GeneralDTO {
@@ -38,6 +39,17 @@ public class GeneralDTO {
 
 	public void setBoPatientDiagnos(PatientDiagnoHistory boPatientDiagnos) {
 		this.boPatientDiagnos = boPatientDiagnos;
+	}
+	
+	
+	PatientEyeSightHistory boPatientEyeSight=new PatientEyeSightHistory();
+
+	public PatientEyeSightHistory getBoPatientEyeSight() {
+		return boPatientEyeSight;
+	}
+
+	public void setBoPatientEyeSight(PatientEyeSightHistory boPatientEyeSight) {
+		this.boPatientEyeSight = boPatientEyeSight;
 	}
 	
 	

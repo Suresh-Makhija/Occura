@@ -27,6 +27,10 @@ public class PatientCCHistory implements Serializable {
 	private String duration;
 	private String crt_date_str;
 	private String cc_name;
+	
+	public PatientCCHistory() {
+	}
+	
 	public PatientCCHistory(int master_cc_id, int appointment_id,
 			int patient_id, Date crt_date, String eye,String duration) {
 		super();

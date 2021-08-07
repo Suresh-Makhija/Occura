@@ -13,10 +13,10 @@
 <title>Insert title here</title>
 <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap-treeview/bootstrap-treeview.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"> --%>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/select2/select2.css">
+<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+ <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/select2/select2.css"> 
 
 <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> -->
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" /> -->
@@ -84,12 +84,10 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth">
                         <i class="fa fa-arrow-left"></i></a> Session</h2>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/view/index.jsp">
-                            <i class="icon-home"></i></a></li>
-                            <li class="breadcrumb-item active">Session</li>
+                             <li class="breadcrumb-item"><a onclick="loadindex();" style="cursor: pointer;">     <%-- href="<%=request.getContextPath()%>/view/index.jsp" --%>
+	                            <font color="007bff"> <i class="icon-home"></i></font></a></li><li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                     </div>
-
                 </div>
             </div>
             
@@ -196,7 +194,7 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 										<th style="text-align: left;">Diagnosis</th>
 									</tr>
 								</thead>
-								<tbody id="tbodyID">
+								<tbody>
 									<tr class="" id="">
 										<td width="50%">
 											<select id="diagnosisId" class="form-control" style="height:50%"  multiple="multiple"
@@ -233,11 +231,11 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 								
 								<thead style="text-align: left;">
 									<tr>
-										<th width= "30%" style="text-align: left;">Treatment</th>
-										<th width= "10%" style="text-align: left;">Quantity</th>
-										<th width= "10%" style="text-align: left;">Price</th>
+										<th width= "26%" style="text-align: left;">Treatment</th>
+										<th width= "11%" style="text-align: left;">Quantity</th>
+										<th width= "17%" style="text-align: left;">Price</th>
 										<th width= "10%" style="text-align: left;">Duration</th>
-										<th width= "20%" style="text-align: left;">Eye</th>
+										<th width= "16%" style="text-align: left;">Eye</th>
 										<th width= "30%" style="text-align: left;">Description</th>
 										<th style="text-align: left;">Action</th>
 									</tr>
@@ -257,7 +255,7 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 										
 										<td >
 											<input type="text" id="Quantity0" class="form-control" autocomplete="off" 
-											name="boPatientMedicine[0].medicine_Qty" onchange="onlyNumber(this);getPriceMedicine('treatmentmedicine0',this,'0');"
+											name="boPatientMedicine[0].medicine_Qty" onchange="onlyNumber(this);getPriceMedicine(treatmentmedicine0,this,'0','0');"
 											onfocus="hideError1(this);" onclick="hideError1(this);" placeholder="Quantity">
 										</td>
 										
@@ -304,12 +302,93 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 								</tr>
 							</table>
 						</div>
+						<br>
 						
 					</div>
 					
 					
            		</div>
               </div>
+              
+               <div class="col-lg-12 col-md-12">
+            		<div class="card">
+               	<br>
+               	<div class="col-lg-12">
+	               	<div class="col-lg-2">
+	               		<div data-toggle="collapse" data-target="#eyesight_target"  class="btn btn-primary">Eye Sight</div>
+	               	</div>
+               	</div>
+					<br>
+					<div id="eyesight_target" class="collapse">
+						<div id="chiefDiv1">
+								<table class="table table-bordered table-condensed">
+								
+								<thead style="text-align: left;">
+									<tr>
+										<th  style="text-align: left;"></th>
+										<th  style="text-align: left;">Sphere</th>
+										<th  style="text-align: left;">Cylinder</th>
+										<th  style="text-align: left;">Axis</th>
+										<th  style="text-align: left;">Vn</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="" id="">
+										<td>
+											 Right(OD)
+										</td>
+										<td>
+											<input type="text" id="eye_sphere_r" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.sphere_r" >
+										</td> 
+										<td>
+											<input type="text" id="eye_cylinder_r" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.cylinder_r" >
+										</td> 
+										<td>
+											<input type="text" id="eye_axis_r" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.axis_r" >
+										</td>
+										<td>
+											<input type="text" id="eye_vn_r" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.vn_r" >
+										</td>
+									</tr>
+									<tr class="" id="">
+										<td>
+											 Left(OS)
+										</td>
+										<td>
+											<input type="text" id="eye_sphere_l" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.sphere_l" >
+										</td> 
+										<td>
+											<input type="text" id="eye_cylinder_l" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.cylinder_l" >
+										</td> 
+										<td>
+											<input type="text" id="eye_axis_l" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.axis_l" >
+										</td>
+										<td>
+											<input type="text" id="eye_vn_l" class="form-control" autocomplete="off" 
+											name="boPatientEyeSight.vn_l" >
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<br>
+           		</div>
+						
+							
+					</div>
+					
+					<br>
+					
+				
 	             
 	             
 	             <div class="col-lg-12 col-md-12">
@@ -347,6 +426,15 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> -->
 <script type="text/javascript">
+
+
+function loadindex()
+{
+	document.sessionname.action = "../health/loadindex.htm";  
+	document.sessionname.submit();
+}
+
+
 /* function insertRecords(id,count)
 {
 	var input = document.getElementById(id);
@@ -364,17 +452,17 @@ List<MasterDiagnoBean> masterDiagnoBeans = allListDao.getDiagnosList();
 
 
 
-function getPriceMedicine(med_id,quantity,idvalue)
+function getPriceMedicine(med_id,quantity,idvalue,value)
 {
+	
 	var med_value = med_id.value;
 	var quan = quantity.value;
+	if(value == '1')
+	{
+		--idvalue;
+	}
 	
-	
-	alert(med_value);
-	alert(quan);
-	alert(idvalue);
-	
-	if(med_value != null && med_value != '' &&
+ 	if(med_value != null && med_value != '' &&
 		quan != null && quan != ''){
 		
 		$.ajax({
@@ -385,7 +473,8 @@ function getPriceMedicine(med_id,quantity,idvalue)
 			{
 				if(resdata != null)
 					{
-						$("#medicine_price"+idvalue).val();
+					var num = parseInt(resdata);
+						$("#medicine_price"+idvalue).val(num.toFixed(2));
 					}else
 						{
 						swal("ERROR!","This medicine price not available","error");
@@ -397,7 +486,7 @@ function getPriceMedicine(med_id,quantity,idvalue)
 			}
 		});
 		
-	}
+	} 
 }
 
 function checkAddRowValidation(){
@@ -606,7 +695,7 @@ function addRow1(t_id){
 	  var table = document.getElementById(t_id);
 	  
     var row = document.createElement("TR");
-    row.setAttribute('id', 'n' + nRow1);
+    row.setAttribute('id', 'treat_med'+nRow1);
     var td1 = document.createElement("TD");
     var element1 = document.createElement("SELECT");
     element1.name="boPatientMedicine["+nRow1+"].master_medicine_id"; 
@@ -642,9 +731,9 @@ function addRow1(t_id){
     element7.autocomplete = "off";
     element7.placeholder = "Quantity";
     element7.id="Quantity"+nRow1;
-    element7.onclick=function(){hideError1(this);};
-    element7.onfocus=function(){hideError1(this);};
-    element7.onchange=function(){onlyNumber(this);getPriceMedicine(element1.id,this,nRow1);};
+    element7.onclick=function(){hideError1(this)};
+    element7.onfocus=function(){hideError1(this)};
+    element7.onchange=function(){onlyNumber(this);getPriceMedicine(element1,this,nRow1,'1')};
     td7.appendChild(element7);
     row.appendChild(td7);
     
@@ -654,8 +743,8 @@ function addRow1(t_id){
     element9.className="form-control";
     element9.name = "boPatientMedicine["+nRow1+"].total_price_per_medicine";
     element9.autocomplete = "off";
-    element9.readonly = "readonly";
     element9.id="medicine_price"+nRow1;
+    element9.setAttribute('readonly','readonly');
     td9.appendChild(element9);
     row.appendChild(td9);
     
@@ -736,11 +825,11 @@ function addRow1(t_id){
     var td4 = document.createElement("TD");
 	    td4.setAttribute("align","center");
 	    var element6 = document.createElement("A");
-	    td4.setAttribute("id","treat_med"+nRow1);
+	    td4.setAttribute("id","treat_med_add"+nRow1);
 	    element6.className="fa fa-remove";
 	    element6.title="Remove";
 	    element6.style="font-size: 25px;color: #FF9797;";	
-	    element6.setAttribute('href', 'javascript:deleteItem("treat_med"\'n'+nRow1+'\');');
+	    element6.setAttribute('href', 'javascript:deleteItemTreatment(\'treat_med'+nRow1+'\')');
 	    td4.appendChild(element6);
 	    row.appendChild(td4);
     table.appendChild(row);
@@ -749,6 +838,13 @@ function addRow1(t_id){
     nRow1++;
    }
 
+function deleteItemTreatment(id){
+	 var table = document.getElementById("tbodyID_medicine");
+		table.removeChild(document.getElementById(id));
+		$("#"+id).closest("tr").find("input:text").val('');
+		rowCount1--;
+		nRow1--;
+}
 
 
 

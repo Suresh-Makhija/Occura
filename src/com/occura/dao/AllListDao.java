@@ -2,6 +2,7 @@ package com.occura.dao;
 
 
 import java.io.File;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -27,6 +29,7 @@ import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
+import com.occura.bean.PatientEyeSightHistory;
 import com.occura.bean.PatientMedicineHistory;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
@@ -39,20 +42,12 @@ public class AllListDao {
 	public static UserBean findUserByName(String user,String email)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		 UserBean userBean = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
-		  Query query = session.createQuery("FROM UserBean where lower(name) = lower('"+user+"') or lower(email) = lower('"+email+"')");
-		 userBean = (UserBean) query.uniqueResult();
-			tx.commit();
+			Query query = session.createQuery("FROM UserBean where lower(name) = lower('"+user+"') or lower(email) = lower('"+email+"')");
+			userBean = (UserBean) query.uniqueResult();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -64,20 +59,12 @@ public class AllListDao {
 	public  List<UserBean> getUserList()
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		List<UserBean> usList = new ArrayList<UserBean>();
 		try {
-			tx = session.getTransaction();
-			tx.begin();
-		  Query query = session.createQuery("FROM UserBean");
-		  usList =  query.list();
-			tx.commit();
+			  Query query = session.createQuery("FROM UserBean");
+			  usList =  query.list();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -157,20 +144,12 @@ public class AllListDao {
 	public  UserBean findUser(int user_id)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		UserBean userBean = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 		  Query query = session.createQuery("FROM UserBean where user_id = "+user_id+"");
 		  userBean = (UserBean) query.uniqueResult();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -181,21 +160,13 @@ public class AllListDao {
 	public static String findPassword(String email)
 	{
 		Session session = HibernateUtil.openSession();
-		Transaction tx = null;
 		 String password = null;
 		try {
-			tx = session.getTransaction();
-			tx.begin();
 		  Query query = session.createQuery("select  u.password from UserBean u where  lower(email) = lower('"+email+"')");
 		  query.setMaxResults(1);
 		 password = (String) query.uniqueResult();
-			tx.commit();
 		}
 		catch (Exception e) {
-			if(tx != null)
-			{
-				tx.rollback();
-			}
 			e.printStackTrace();
 		}
 		finally {
@@ -419,15 +390,26 @@ public class AllListDao {
 		return patient;
 	}
 	
-	public static PatientAppointmentBean findDateTimeByPatient(String appointmentdate)
+	public static boolean findDateTimeByPatient(String appointmentdate)
 	{
+		boolean status=false;
 		Session session = HibernateUtil.openSession();
 		PatientAppointmentBean patient = null;
+		//System.out.println("Appointment-Date: "+appointmentdate);
 		try {
-				Query query = session.createQuery("FROM PatientAppointmentBean where DATE_FORMAT(appointment_date_time,'%d/%m/%Y %h:%i:%s %p') "
-						+ " = DATE_FORMAT('"+appointmentdate+"','%d/%m/%Y %h:%i:%s %p') ");
-				query.setMaxResults(1);
-				patient = (PatientAppointmentBean) query.uniqueResult();
+				//Query query = session.createQuery("FROM PatientAppointmentBean where DATE_FORMAT(appointment_date_time,'%d/%m/%Y %h:%i:%s %p') "
+				//		+ " = DATE_FORMAT('"+appointmentdate+"','%d/%m/%Y %h:%i:%s %p') ");
+				
+				Query query = session.createSQLQuery("select count(1) FROM patient_appointment_tbl	 where appointment_date_time"
+						+ " between '"+appointmentdate+"'-INTERVAL 15 MINUTE " + 
+						"and '"+appointmentdate+"'+INTERVAL 15 MINUTE  ");
+				BigInteger count = (BigInteger) query.uniqueResult();
+				//query.setMaxResults(1);
+				//patient = (PatientAppointmentBean) query.uniqueResult();
+				if(count.intValue() > 0)
+				{
+					status=true;
+				}
 		}
 		catch (Exception e) {
 	
@@ -436,7 +418,7 @@ public class AllListDao {
 		finally {
 			session.close();
 		}
-		return patient;
+		return status;
 	}
 	
 	public  List<PatientBean> findQueryOldCase(String oldcasequery)
@@ -492,9 +474,9 @@ public class AllListDao {
 		String query = "";
 		try {
 			 query = "SELECT a.appointment_id,a.patient_id,a.appointment_date_time,b.full_name,a.description, " + 
-			 		"DATE_FORMAT(a.appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			 		"DATE_FORMAT(a.appointment_date_time, '%d/%m/%Y %T') as appointment_date_str " + 
 			 		" FROM occura.patient_appointment_tbl a left join patient_tbl b on a.patient_id=b.patient_id " + 
-			 		" order by a.appointment_date_time";
+			 		" where a.status = 'Y' order by a.appointment_date_time";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
 			 dataList = sqlQuery.list();
 		}
@@ -559,7 +541,7 @@ public class AllListDao {
 		String query = "";
 		try {
 			 query = "SELECT a.appointment_id,a.patient_id,a.appointment_date_time,b.full_name,a.description, " + 
-			 		" DATE_FORMAT(a.appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			 		" DATE_FORMAT(a.appointment_date_time, '%d/%m/%Y %T') as appointment_date_str,a.status " + 
 			 		" FROM occura.patient_appointment_tbl a left join patient_tbl b on a.patient_id=b.patient_id " + 
 			 		" where a.patient_id = "+patient_id+" order by a.appointment_date_time";
 			 SQLQuery sqlQuery = session.createSQLQuery(query);
@@ -579,7 +561,7 @@ public class AllListDao {
 		Session session = HibernateUtil.openSession();
 		String appointementdate_str = null;
 		try {
-			    Query query = session.createQuery(" SELECT DATE_FORMAT(appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+			    Query query = session.createSQLQuery(" SELECT DATE_FORMAT(appointment_date_time, '%d/%m/%Y %T') as appointment_date_str " + 
 			    		" FROM occura.patient_appointment_tbl " + 
 			    		" where patient_id = "+patient_id+" and appointment_id = "+appointment_id+" ");
 			    query.setMaxResults(1);
@@ -598,53 +580,54 @@ public class AllListDao {
 				
 				Map<String,Object> mapList = new HashMap<String, Object>();
 				Session session = HibernateUtil.openSession();
-				
-				List<PatientDiagnoHistory> list_diagno = null;
-				List<PatientCCHistory> list_cc = null;
-				List<PatientMedicineHistory> list_medicine = null;
+				//List<Object[]> list_diagno = new ArrayList<Object[]>();
+				List<PatientDiagnoHistory> list_diagno = new ArrayList<PatientDiagnoHistory>();
+				List<PatientCCHistory> list_cc = new ArrayList<PatientCCHistory>();
+				List<PatientMedicineHistory> list_medicine = new ArrayList<PatientMedicineHistory>();
+				List<PatientEyeSightHistory> list_eyesight = new ArrayList<PatientEyeSightHistory>();
 				String patient_name = null;
 				String appointment_date_str = null;
-				Query query = null;
+				Query q = null;
 				try {
 						
-						query = session.createSQLQuery("SELECT appointment_id,patient_id, " + 
-								"  (case when crt_date is not null then DATE_FORMAT(crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
-								"  (select GROUP_CONCAT(diagno_description SEPARATOR ', ') from master_diagno_tbl as diagno " + 
-								"  where FIND_IN_SET (diagno.master_diagno_id,ord_diagno.master_diagno_id)) as diagno_name " + 
-								"  FROM `patient_diagno_history_tbl` as ord_diagno "+
-								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
-										.addScalar("appointment_id")
-										.addScalar("patient_id")
-										.addScalar("crt_date_str")
-										.addScalar("diagno_name")
-										.setResultTransformer(Transformers.aliasToBean(PatientDiagnoHistory.class));		
-						list_diagno = query.list();
+
+					q = session.createSQLQuery("SELECT appointment_id,patient_id, " + 
+							"  (case when crt_date is not null and crt_date not in ('') then DATE_FORMAT(crt_date, '%d/%m/%Y %T') else '-' end) as crt_date_str," + 
+							"  (select GROUP_CONCAT(diagno_description SEPARATOR ', ') from master_diagno_tbl as diagno " + 
+							"  where FIND_IN_SET (diagno.master_diagno_id,ord_diagno.master_diagno_id)) as diagno_name " + 
+							"  FROM patient_diagno_history_tbl as ord_diagno "+
+							"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+									.addScalar("appointment_id",Hibernate.INTEGER)
+									.addScalar("patient_id",Hibernate.INTEGER)
+									.addScalar("crt_date_str",Hibernate.STRING)
+									.addScalar("diagno_name",Hibernate.STRING)
+									.setResultTransformer(Transformers.aliasToBean(PatientDiagnoHistory.class));		
+					list_diagno = q.list();
+				    
+					q = session.createSQLQuery(" select appointment_id,patient_id,cc_description as cc_name," + 
+							" (case when a.crt_date is not null and a.crt_date not in ('') then DATE_FORMAT(a.crt_date, '%d/%m/%Y %T') else '-' end) as crt_date_str," + 
+							" (case when a.duration is not null and a.duration not in ('') then a.duration else '-' end) as duration, " + 
+							" (case when a.eye is not null and a.eye not in ('') then a.eye else '-' end) as eye " + 
+							" from patient_cc_history_tbl a " + 
+							"left join master_cc_tbl b on a.master_cc_id=b.master_cc_id" + 
+							"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+									.addScalar("appointment_id")
+									.addScalar("patient_id")
+									.addScalar("cc_name")
+									.addScalar("crt_date_str")
+									.addScalar("duration")
+									.addScalar("eye")
+									.setResultTransformer(Transformers.aliasToBean(PatientCCHistory.class));		
+					list_cc = q.list();
+
 						
 						
-						
-						query = session.createSQLQuery(" select appointment_id,patient_id,cc_description as cc_name," + 
-								" (case when a.crt_date is not null then DATE_FORMAT(a.crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
-								" (case when a.duration is not null then a.duration else '-' end) as duration, " + 
-								" (case when a.eye is not null then a.eye else '-' end) as eye " + 
-								" from patient_cc_history_tbl a " + 
-								"left join master_cc_tbl b on a.master_cc_id=b.master_cc_id" + 
-								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
-										.addScalar("appointment_id")
-										.addScalar("patient_id")
-										.addScalar("cc_name")
-										.addScalar("crt_date_str")
-										.addScalar("duration")
-										.addScalar("eye")
-										.setResultTransformer(Transformers.aliasToBean(PatientCCHistory.class));		
-						list_cc = query.list();
-						
-						
-						query = session.createSQLQuery(" select appointment_id,patient_id,medicine_description as medicine_name," + 
-								"	(case when a.crt_date is not null then DATE_FORMAT(a.crt_date, '%m/%d/%Y %T') else '-' end) as crt_date_str," + 
-								"	(case when a.duration is not null then a.duration else '-' end) as duration, " + 
-								"	(case when a.eye is not null then a.eye else '-' end) as eye, " + 
-								"	(case when a.description is not null then a.description else '-' end) as description, " + 
-								"	medicine_Qty,total_price_per_medicine " + 
+						 q = session.createSQLQuery(" select appointment_id,patient_id,medicine_description as medicine_name," + 
+								"	(case when a.crt_date is not null and a.crt_date not in ('') then DATE_FORMAT(a.crt_date, '%d/%m/%Y %T') else '-' end) as crt_date_str," + 
+								"	(case when a.duration is not null and a.duration not in ('') then a.duration else '-' end) as duration, " + 
+								"	(case when a.eye is not null and a.eye not in ('') then a.eye else '-' end) as eye, " + 
+								"	(case when a.description is not null and a.description not in ('') then a.description else '-' end) as description, " + 
+								"	medicine_Qty as medicine_quantity,total_price_per_medicine as total_price " + 
 								"	from patient_medicine_history_tbl a " + 
 								"	left join master_medicine_tbl b on a.master_medicine_id=b.master_medicine_id " + 
 								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
@@ -655,26 +638,58 @@ public class AllListDao {
 										.addScalar("duration")
 										.addScalar("eye")
 										.addScalar("description")
-										.addScalar("medicine_Qty")
-										.addScalar("total_price_per_medicine")
+										.addScalar("medicine_quantity")
+										.addScalar("total_price")
 										.setResultTransformer(Transformers.aliasToBean(PatientMedicineHistory.class));		
-						list_medicine = query.list();
+						list_medicine = q.list();
+						
+						q = session.createSQLQuery(" select appointment_id,patient_id," + 
+								" (case when crt_date is not null and crt_date not in ('') then DATE_FORMAT(crt_date, '%d/%m/%Y %T') else '-' end) as crt_date_str," + 
+								" (case when sphere_r is not null and sphere_r not in ('') then sphere_r else '-' end) as sphere_r, " +
+								" (case when sphere_l is not null and sphere_l not in ('') then sphere_l else '-' end) as sphere_l, " +
+								" (case when cylinder_r is not null and cylinder_r not in ('') then cylinder_r else '-' end) as cylinder_r, " +
+								" (case when cylinder_l is not null and cylinder_l not in ('') then cylinder_l else '-' end) as cylinder_l, " +
+								" (case when axis_r is not null and axis_r not in ('') then axis_r else '-' end) as axis_r, " +
+								" (case when axis_l is not null and axis_l not in ('') then axis_l else '-' end) as axis_l, " +
+								" (case when vn_r is not null and vn_r not in ('') then vn_r else '-' end) as vn_r, " +
+								" (case when vn_l is not null and vn_l not in ('') then vn_l else '-' end) as vn_l " +
+								" from patient_eyesight_history_tbl  " + 
+								"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+										.addScalar("appointment_id")
+										.addScalar("patient_id")
+										.addScalar("crt_date_str")
+										.addScalar("sphere_r")
+										.addScalar("sphere_l")
+										.addScalar("cylinder_r")
+										.addScalar("cylinder_l")
+										.addScalar("axis_r")
+										.addScalar("axis_l")
+										.addScalar("vn_r")
+										.addScalar("vn_l")
+										.setResultTransformer(Transformers.aliasToBean(PatientEyeSightHistory.class));		
+						list_eyesight = q.list();
 						
 						
-						 query = session.createQuery(" SELECT DATE_FORMAT(appointment_date_time, '%m/%d/%Y %T') as appointment_date_str " + 
+						 q = session.createSQLQuery(" SELECT DATE_FORMAT(appointment_date_time, '%d/%m/%Y %T') as appointment_date_str " + 
 					    		" FROM occura.patient_appointment_tbl " + 
 					    		" where patient_id = "+patient_id+" and appointment_id = "+appointment_id+" ");
-					    query.setMaxResults(1);
-					    appointment_date_str = (String) query.uniqueResult();
+					    q.setMaxResults(1);
+					    appointment_date_str = (String) q.uniqueResult();
 						
-					    query = session.createQuery(" SELECT full_name FROM occura.patient_tbl where patient_id="+patient_id+" ");
-					    query.setMaxResults(1);
-					    patient_name = (String) query.uniqueResult();
+					    q = session.createSQLQuery(" SELECT full_name FROM occura.patient_tbl where patient_id="+patient_id+" ");
+					    q.setMaxResults(1);
+					    patient_name = (String) q.uniqueResult();
 						
+						
+						
+						
+						
+					    
 						
 						mapList.put("list_diagno", list_diagno);
 						mapList.put("list_cc", list_cc);
 						mapList.put("list_medicine", list_medicine);
+						mapList.put("list_eyesight", list_eyesight);
 						mapList.put("appointment_date_str", appointment_date_str);
 						mapList.put("patient_name", patient_name);
 				} catch (Exception e) {
@@ -686,7 +701,95 @@ public class AllListDao {
 				}
 				return mapList;
 			}
+	
+	public Map<String, Object> getBillPrint(Map<Integer, Object> mapBo)  throws Exception {
+		
+		Map<String,Object> mapList = new HashMap<String, Object>();
+		Session session = HibernateUtil.openSession();
+		Integer user_id = null;
+		String appointment_id = null,patient_id = null;
+		if(mapBo != null)
+		{
+			user_id=(Integer) mapBo.get(1);
+			appointment_id=(String) mapBo.get(2);
+			patient_id=(String) mapBo.get(3);
+		}
+		
+		List<PatientMedicineHistory> list_medicine = null;
+		UserProfileBean userProfileBean = null;
+		String patient_name = null,appointment_date_str=null;
+		Query query = null;
+		try {
+				
+			  query = session.createQuery("FROM UserProfileBean where user_id = "+user_id+"");
+			  query.setMaxResults(1);
+			  userProfileBean = (UserProfileBean) query.uniqueResult();
+				
+				query = session.createSQLQuery(" select appointment_id,patient_id,medicine_description as medicine_name," + 
+						"	(case when a.crt_date is not null and a.crt_date not in ('') then DATE_FORMAT(a.crt_date, '%d/%m/%Y %T') else '-' end) as crt_date_str," + 
+						"	(case when a.duration is not null and a.duration not in ('') then a.duration else '-' end) as duration, " + 
+						"	(case when a.eye is not null and a.eye not in ('') then a.eye else '-' end) as eye, " + 
+						"	(case when a.description is not null and a.description not in ('') then a.description else '-' end) as description, " + 
+						"	medicine_Qty as medicine_quantity,total_price_per_medicine as total_price " + 
+						"	from patient_medicine_history_tbl a " + 
+						"	left join master_medicine_tbl b on a.master_medicine_id=b.master_medicine_id " + 
+						"  where appointment_id="+appointment_id+" and patient_id="+patient_id+" ")
+								.addScalar("appointment_id")
+								.addScalar("patient_id")
+								.addScalar("medicine_name")
+								.addScalar("crt_date_str")
+								.addScalar("duration")
+								.addScalar("eye")
+								.addScalar("description")
+								.addScalar("medicine_quantity")
+								.addScalar("total_price")
+								.setResultTransformer(Transformers.aliasToBean(PatientMedicineHistory.class));		
+				list_medicine = query.list();
 			
+				
+			    query = session.createSQLQuery(" SELECT full_name FROM occura.patient_tbl where patient_id="+patient_id+" ");
+			    query.setMaxResults(1);
+			    patient_name = (String) query.uniqueResult();
+				
+			    query = session.createSQLQuery(" SELECT DATE_FORMAT(appointment_date_time, '%d/%m/%Y %T') as appointment_date_str " + 
+			    		" FROM occura.patient_appointment_tbl " + 
+			    		" where patient_id = "+patient_id+" and appointment_id = "+appointment_id+" ");
+			    query.setMaxResults(1);
+			    appointment_date_str = (String) query.uniqueResult();
+			    
+				
+				mapList.put("userProfileBean", userProfileBean);
+				mapList.put("list_medicine", list_medicine);
+				mapList.put("patient_name", patient_name);
+				mapList.put("appointment_date_str", appointment_date_str);
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+				}
+		}
+		return mapList;
+	}
+	
+	public  List<PatientBean> getPatientList()
+	{
+		Session session = HibernateUtil.openSession();
+		List<PatientBean> patientlist = new ArrayList<PatientBean>();
+		try {
+			  Query query = session.createQuery("FROM PatientBean");
+			  patientlist =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return patientlist;
+	}
+	
 }
 
 //}
