@@ -3,9 +3,11 @@ package com.occura.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.occura.bean.MasterMedicineBean;
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
 import com.occura.bean.PatientMedicineHistory;
+import com.occura.bean.StockEntry;
 
 public class GeneralDTO {
 	
@@ -40,5 +42,24 @@ public class GeneralDTO {
 		this.boPatientDiagnos = boPatientDiagnos;
 	}
 	
+	List<MasterMedicineBean> masterMedicineBeans=new ArrayList<>();
+
+	public List<MasterMedicineBean> getMasterMedicineBeans() {
+		return masterMedicineBeans;
+	}
+	
+	public void setMasterMedicineBeans(List<MasterMedicineBean> masterMedicineBeans) {
+		this.masterMedicineBeans = masterMedicineBeans;
+	}
+
+	List<StockEntry> stockEntries=new ArrayList<>();
+
+	public List<StockEntry> getStockEntries() {
+		return stockEntries;
+	}
+
+	public void setStockEntries(List<StockEntry> stockEntries) {
+		this.stockEntries = stockEntries;
+	}
 	
 }

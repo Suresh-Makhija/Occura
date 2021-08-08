@@ -28,6 +28,7 @@ import com.occura.bean.PatientBean;
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
 import com.occura.bean.PatientMedicineHistory;
+import com.occura.bean.StockEntry;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
 import com.occura.util.HibernateUtil;
@@ -119,6 +120,57 @@ public class AllListDao {
 		}
 		return masterMedicineBeans;
 	}
+	
+	
+	public  List<MasterMedicineBean> getStockList()
+	{
+		Session session = HibernateUtil.openSession();
+		List<MasterMedicineBean> masterMedicineBeans = new ArrayList<MasterMedicineBean>();
+		try {
+		  Query query = session.createQuery("FROM StockEntry");
+		  masterMedicineBeans =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return masterMedicineBeans;
+	}
+	public  List<StockEntry> getEntries()
+	{
+		Session session = HibernateUtil.openSession();
+		List<StockEntry> entries = new ArrayList<StockEntry>();
+		try {
+		  Query query = session.createQuery("FROM StockEntry");
+		  entries =  query.list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return entries;
+	}
+	public  MasterMedicineBean getTreatmentListById(int id)
+	{
+		Session session = HibernateUtil.openSession();
+		MasterMedicineBean masterMedicineBeans = new MasterMedicineBean();
+		try {
+		  Query query = session.createQuery("FROM MasterMedicineBean where master_medicine_id = '"+id+"'");
+		  masterMedicineBeans = (MasterMedicineBean) query.uniqueResult();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return masterMedicineBeans;
+	}
+	
 	
 	public  List<MasterDiagnoBean> getDiagnosList()
 	{

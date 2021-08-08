@@ -33,11 +33,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.occura.bean.MasterChiefComplaintBean;
+import com.occura.bean.MasterMedicineBean;
 import com.occura.bean.PatientAppointmentBean;
 import com.occura.bean.PatientBean;
 import com.occura.bean.PatientCCHistory;
 import com.occura.bean.PatientDiagnoHistory;
 import com.occura.bean.PatientMedicineHistory;
+import com.occura.bean.StockEntry;
 import com.occura.bean.UserBean;
 import com.occura.bean.UserProfileBean;
 import com.occura.dao.AllInsertDao;
@@ -52,7 +54,20 @@ public class HealthController {
 	SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	AllInsertDao allInserDao = new AllInsertDao();
 	
-	
+	@RequestMapping(value="/addStock")
+	public ModelAndView startSessionP(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		return new ModelAndView("addStock");
+	}
+	@RequestMapping(value="/viewStock")
+	public ModelAndView patientHistoryP(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		List<MasterMedicineBean> listmedicine = allListDao.getStockList();
+		request.setAttribute("liststock", listmedicine);
+		return new ModelAndView("viewStock");
+	}
 	@RequestMapping(value="/startSession")
 	public ModelAndView startSession(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
@@ -727,11 +742,30 @@ public class HealthController {
 	}
 	
 	@RequestMapping(value = "/chiefComplain") // Mapping for Call the controller
-	public void chiefComplain(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public void chiefComplain(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("GeneralDTO") GeneralDTO generalDTO) throws Exception
 	{
 		
-	String complaints[] = 	request.getParameterValues("chielfComplaintSelectName");
-	String durations[] = 	request.getParameterValues("chiefDuration");
-	String description[] =	request.getParameterValues("description");
+		HttpSession session  = request.getSession(false);
+		List<StockEntry> saveMedHistory=generalDTO.getStockEntries();
+			for(StockEntry stockEntry :saveMedHistory)
+			{
+				stockEntry.setCrt_date(new Date());
+				boolean val = allInserDao.save(stockEntry);
+			}
+			
+	}
+	
+	@RequestMapping(value="/submitStockList")
+	public ModelAndView submitStockList(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("GeneralDTO") GeneralDTO generalDTO) throws IOException
+	{
+		HttpSession session  = request.getSession(false);
+		List<StockEntry> saveMedHistory=generalDTO.getStockEntries();
+			for(StockEntry stockEntry :saveMedHistory)
+			{
+				stockEntry.setCrt_date(new Date());
+				boolean val = allInserDao.save(stockEntry);
+			}
+			
+		return new ModelAndView("addStock");
 	}
 }
